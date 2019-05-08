@@ -2,6 +2,9 @@ package org.earthchem.sesarrestapi.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.earthchem.sesarrestapi.dao.ClassificationDAO;
+
 import java.util.List;
 
 
@@ -161,5 +164,16 @@ public class Classification implements Serializable {
 
 		return samples2;
 	}
-
+    
+	public ClassificationDAO getDAO()
+	{
+		ClassificationDAO d = new ClassificationDAO();
+		d.setClassificationId(this.classificationId);
+		d.setDescription(this.description);
+		d.setName(this.name);
+		if(this.classification != null)
+		  d.setParentClassificationId(this.classification.getClassificationId());
+		
+		return d;
+	}
 }

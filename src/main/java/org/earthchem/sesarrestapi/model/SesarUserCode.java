@@ -15,6 +15,12 @@ import java.util.List;
 public class SesarUserCode implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	private Long id;
+
+	@Column(name="user_code")
+	private String userCode;
+	
 	@Column(name="igsn_count")
 	private Long igsnCount;
 
@@ -34,6 +40,22 @@ public class SesarUserCode implements Serializable {
 	private SesarUser sesarUser;
 
 	public SesarUserCode() {
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getUserCode() {
+		return this.userCode;
+	}
+	
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
 	}
 
 	public Long getIgsnCount() {

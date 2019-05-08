@@ -28,8 +28,14 @@ public class Classification implements Serializable {
 
 	private String name;
 
-	@Column(name="parent_classification_id")
-	private Integer parentClassificationId;
+	//bi-directional many-to-one association to Classification
+	@ManyToOne
+	@JoinColumn(name="parent_classification_id")
+	private Classification classification;
+
+	//bi-directional many-to-one association to Classification
+	@OneToMany(mappedBy="classification")
+	private List<Classification> classifications;
 
 	//bi-directional many-to-one association to Sample
 	@OneToMany(mappedBy="classification1")
@@ -82,12 +88,34 @@ public class Classification implements Serializable {
 		this.name = name;
 	}
 
-	public Integer getParentClassificationId() {
-		return this.parentClassificationId;
+	public Classification getClassification() {
+		return this.classification;
 	}
 
-	public void setParentClassificationId(Integer parentClassificationId) {
-		this.parentClassificationId = parentClassificationId;
+	public void setClassification(Classification classification) {
+		this.classification = classification;
+	}
+
+	public List<Classification> getClassifications() {
+		return this.classifications;
+	}
+
+	public void setClassifications(List<Classification> classifications) {
+		this.classifications = classifications;
+	}
+
+	public Classification addClassification(Classification classification) {
+		getClassifications().add(classification);
+		classification.setClassification(this);
+
+		return classification;
+	}
+
+	public Classification removeClassification(Classification classification) {
+		getClassifications().remove(classification);
+		classification.setClassification(null);
+
+		return classification;
 	}
 
 	public List<Sample> getSamples1() {

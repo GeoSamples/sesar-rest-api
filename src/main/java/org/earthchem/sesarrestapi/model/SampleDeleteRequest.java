@@ -15,6 +15,9 @@ import java.sql.Timestamp;
 public class SampleDeleteRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	private Long id;
+
 	@Column(name="deactivated_by")
 	private Integer deactivatedBy;
 
@@ -43,6 +46,14 @@ public class SampleDeleteRequest implements Serializable {
 	private Integer sampleId;
 
 	public SampleDeleteRequest() {
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Integer getDeactivatedBy() {

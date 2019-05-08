@@ -17,7 +17,7 @@ public class NavType implements Serializable {
 
 	@Id
 	@Column(name="nav_type_id")
-	private Integer navTypeId;
+	private Long navTypeId;
 
 	private String description;
 
@@ -30,11 +30,11 @@ public class NavType implements Serializable {
 	public NavType() {
 	}
 
-	public Integer getNavTypeId() {
+	public Long getNavTypeId() {
 		return this.navTypeId;
 	}
 
-	public void setNavTypeId(Integer navTypeId) {
+	public void setNavTypeId(Long navTypeId) {
 		this.navTypeId = navTypeId;
 	}
 

@@ -79,6 +79,10 @@ public class SesarUser implements Serializable {
 	@Column(name="upload_permission_status")
 	private Integer uploadPermissionStatus;
 
+	//bi-directional many-to-one association to Group
+	@OneToMany(mappedBy="sesarUser")
+	private List<Group> groups;
+
 	//bi-directional many-to-one association to Sample
 	@OneToMany(mappedBy="sesarUser1")
 	private List<Sample> samples1;
@@ -313,6 +317,28 @@ public class SesarUser implements Serializable {
 
 	public void setUploadPermissionStatus(Integer uploadPermissionStatus) {
 		this.uploadPermissionStatus = uploadPermissionStatus;
+	}
+
+	public List<Group> getGroups() {
+		return this.groups;
+	}
+
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
+	}
+
+	public Group addGroup(Group group) {
+		getGroups().add(group);
+		group.setSesarUser(this);
+
+		return group;
+	}
+
+	public Group removeGroup(Group group) {
+		getGroups().remove(group);
+		group.setSesarUser(null);
+
+		return group;
 	}
 
 	public List<Sample> getSamples1() {

@@ -2,6 +2,8 @@ package org.earthchem.sesarrestapi.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.postgresql.geometric.PGpoint;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -106,9 +108,10 @@ public class Sample implements Serializable {
 	@Column(name="geological_unit")
 	private String geologicalUnit;
 
-	@Column(name="geom_latlong")
-	private Object geomLatlong;
-
+	
+	@Column(name="geom_latlong", columnDefinition = "geometry(Point,4326)")
+	private PGpoint geomLatlong;
+	
 	private String igsn;
 
 	@Column(name="igsn_digit")
@@ -248,6 +251,10 @@ public class Sample implements Serializable {
 	private String verticalDatum;
 
 	private String zone;
+
+	//bi-directional many-to-one association to GroupSample
+	@OneToMany(mappedBy="sample")
+	private List<GroupSample> groupSamples;
 
 	//bi-directional many-to-one association to Classification
 	@ManyToOne
@@ -608,11 +615,11 @@ public class Sample implements Serializable {
 		this.geologicalUnit = geologicalUnit;
 	}
 
-	public Object getGeomLatlong() {
+	public PGpoint getGeomLatlong() {
 		return this.geomLatlong;
 	}
 
-	public void setGeomLatlong(Object geomLatlong) {
+	public void setGeomLatlong(PGpoint geomLatlong) {
 		this.geomLatlong = geomLatlong;
 	}
 
@@ -1014,6 +1021,28 @@ public class Sample implements Serializable {
 
 	public void setZone(String zone) {
 		this.zone = zone;
+	}
+
+	public List<GroupSample> getGroupSamples() {
+		return this.groupSamples;
+	}
+
+	public void setGroupSamples1(List<GroupSample> groupSamples) {
+		this.groupSamples = groupSamples;
+	}
+
+	public GroupSample addGroupSamples(GroupSample groupSamples) {
+		getGroupSamples().add(groupSamples);
+		groupSamples.setSample(this);
+
+		return groupSamples;
+	}
+
+	public GroupSample removeGroupSamples1(GroupSample groupSamples) {
+		getGroupSamples().remove(groupSamples);
+		groupSamples.setSample(null);
+
+		return groupSamples;
 	}
 
 	public Classification getClassification1() {

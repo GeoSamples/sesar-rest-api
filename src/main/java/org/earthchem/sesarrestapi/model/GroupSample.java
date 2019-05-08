@@ -14,7 +14,44 @@ import javax.persistence.*;
 public class GroupSample implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	private Long id;
+
+	//bi-directional many-to-one association to Group
+	@ManyToOne
+	@JoinColumn(name="group_id")
+	private Group group;
+
+	//bi-directional many-to-one association to Sample
+	@ManyToOne
+	@JoinColumn(name="sample_id")
+	private Sample sample;
+
 	public GroupSample() {
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Group getGroup() {
+		return this.group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
+	public Sample getSample() {
+		return this.sample;
+	}
+
+	public void setSample(Sample sample) {
+		this.sample = sample;
 	}
 
 }

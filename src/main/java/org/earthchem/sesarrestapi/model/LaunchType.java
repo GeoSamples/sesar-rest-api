@@ -17,7 +17,7 @@ public class LaunchType implements Serializable {
 
 	@Id
 	@Column(name="launch_type_id")
-	private Integer launchTypeId;
+	private Long launchTypeId;
 
 	private String description;
 
@@ -30,11 +30,11 @@ public class LaunchType implements Serializable {
 	public LaunchType() {
 	}
 
-	public Integer getLaunchTypeId() {
+	public Long getLaunchTypeId() {
 		return this.launchTypeId;
 	}
 
-	public void setLaunchTypeId(Integer launchTypeId) {
+	public void setLaunchTypeId(Long launchTypeId) {
 		this.launchTypeId = launchTypeId;
 	}
 

@@ -1,6 +1,5 @@
 package org.earthchem.sesarrestapi.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 

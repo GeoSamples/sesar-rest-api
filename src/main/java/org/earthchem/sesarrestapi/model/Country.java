@@ -2,6 +2,9 @@ package org.earthchem.sesarrestapi.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.earthchem.sesarrestapi.dao.CountryDAO;
+
 import java.util.List;
 
 
@@ -21,6 +24,7 @@ public class Country implements Serializable {
 	@Column(name="is_active")
 	private Integer isActive;
 
+	@Column(name="name")
 	private String name;
 
 	//bi-directional many-to-one association to Sample
@@ -102,4 +106,12 @@ public class Country implements Serializable {
 		return sesarUser;
 	}
 
+	public CountryDAO getDAO()
+	{
+		CountryDAO a = new CountryDAO();
+		a.setCountryId(this.countryId);
+		a.setName(this.name);
+		a.setIsActive(this.isActive);
+		return a;
+	}
 }

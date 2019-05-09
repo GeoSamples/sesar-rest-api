@@ -4,6 +4,7 @@ package org.earthchem.sesarrestapi.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -41,11 +42,20 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 	 
   @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("sesarapi.html")
+        registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
  
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
- 
+  
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+      registry.addRedirectViewController("/documentation/v2/api-docs", "/v2/api-docs");
+      registry.addRedirectViewController("/documentation/configuration/ui", "/configuration/ui");
+      registry.addRedirectViewController("/documentation/configuration/security", "/configuration/security");
+      registry.addRedirectViewController("/documentation/swagger-resources", "/swagger-resources");
+      registry.addRedirectViewController("/documentation", "/swagger-ui.html");
+  }
+
 }

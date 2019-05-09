@@ -2,6 +2,9 @@ package org.earthchem.sesarrestapi.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.earthchem.sesarrestapi.dao.SampleTypeDAO;
+
 import java.util.List;
 
 
@@ -179,4 +182,15 @@ public class SampleType implements Serializable {
 		return sampleType;
 	}
 
+	public SampleTypeDAO getDAO()
+	{
+		SampleTypeDAO a = new SampleTypeDAO();
+		a.setSampleTypeId(this.sampleTypeId);
+		a.setName(this.name);
+		a.setLegacyId(this.legacyId);
+		a.setLegacyParentId(this.legacyParentId);
+		if(this.sampleType != null)
+		  a.setParentSampleTypeId(this.sampleType.getSampleTypeId());
+		return a;
+	}
 }

@@ -2,6 +2,9 @@ package org.earthchem.sesarrestapi.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.earthchem.sesarrestapi.dao.NavTypeDAO;
+
 import java.util.List;
 
 
@@ -17,7 +20,7 @@ public class NavType implements Serializable {
 
 	@Id
 	@Column(name="nav_type_id")
-	private Long navTypeId;
+	private Integer navTypeId;
 
 	private String description;
 
@@ -30,11 +33,11 @@ public class NavType implements Serializable {
 	public NavType() {
 	}
 
-	public Long getNavTypeId() {
+	public Integer getNavTypeId() {
 		return this.navTypeId;
 	}
 
-	public void setNavTypeId(Long navTypeId) {
+	public void setNavTypeId(Integer navTypeId) {
 		this.navTypeId = navTypeId;
 	}
 
@@ -76,4 +79,12 @@ public class NavType implements Serializable {
 		return sample;
 	}
 
+	public NavTypeDAO getDAO()
+	{
+		NavTypeDAO a = new NavTypeDAO();
+		a.setNavTypeId(this.navTypeId);
+		a.setName(this.name);
+		a.setDescription(this.description);
+		return a;
+	}
 }

@@ -2,6 +2,9 @@ package org.earthchem.sesarrestapi.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.earthchem.sesarrestapi.dao.LaunchTypeDAO;
+
 import java.util.List;
 
 
@@ -17,7 +20,7 @@ public class LaunchType implements Serializable {
 
 	@Id
 	@Column(name="launch_type_id")
-	private Long launchTypeId;
+	private Integer launchTypeId;
 
 	private String description;
 
@@ -30,11 +33,11 @@ public class LaunchType implements Serializable {
 	public LaunchType() {
 	}
 
-	public Long getLaunchTypeId() {
+	public Integer getLaunchTypeId() {
 		return this.launchTypeId;
 	}
 
-	public void setLaunchTypeId(Long launchTypeId) {
+	public void setLaunchTypeId(Integer launchTypeId) {
 		this.launchTypeId = launchTypeId;
 	}
 
@@ -76,4 +79,12 @@ public class LaunchType implements Serializable {
 		return sample;
 	}
 
+	public LaunchTypeDAO getDAO()
+	{
+		LaunchTypeDAO a = new LaunchTypeDAO();
+		a.setLaunchTypeId(this.launchTypeId);
+		a.setDescription(this.description);
+		a.setName(this.name);		
+		return a;
+	}
 }

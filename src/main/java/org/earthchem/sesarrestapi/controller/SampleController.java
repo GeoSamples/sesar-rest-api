@@ -52,7 +52,7 @@ public class SampleController {
 	}
 	
 	@ApiOperation(value = "Get existing list of platform type from SESAR")
-	@GetMapping(path="/samples/platformtypes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/vocabularies/platformtypes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
 	@ResponseBody
 	public ResponseEntity<List<String> > getPlatformTypes() {  
 		List<String> l = service.getPlatformTypes();
@@ -82,7 +82,7 @@ public class SampleController {
 	}
 	
 	@ApiOperation(value = "Get the existing list of physionic features from SESAR")
-	@GetMapping(path="/samples/physiogeographicfeatures", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/vocabularies/physiogeographicfeatures", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
 	@ResponseBody
 	public ResponseEntity<List<String> > getPhysiographicFeatures() { 
 		List<String> l = service.getPrimaryLocationTypes();
@@ -109,7 +109,7 @@ public class SampleController {
 	}
 	
 	@ApiOperation(value = "Get the existing list of collection  methods from SESAR")
-	@GetMapping(path="/samples/collectionmethods", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/vocabularies/collectionmethods", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
 	@ResponseBody
 	public ResponseEntity<List<String> > getCollectionMethods() { 
 		

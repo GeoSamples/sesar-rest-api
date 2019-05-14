@@ -84,8 +84,28 @@ public class SampleController {
 	@ApiOperation(value = "Get the existing list of physionic features from SESAR")
 	@GetMapping(path="/samples/physiogeographicfeatures", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
 	@ResponseBody
-	public ResponseEntity<List<String> > getPhysionicFeatures() {  
-		return new ResponseEntity<List<String> >(service.getPrimaryLocationTypes(), HttpStatus.OK);
+	public ResponseEntity<List<String> > getPhysiographicFeatures() { 
+		List<String> l = service.getPrimaryLocationTypes();
+		List<String> nl = new ArrayList<String>();
+		try {
+            InputStream in = new ClassPathResource(
+            	      "volcabulary_mapping/physiographic_feature_mapping.json").getInputStream();
+            ObjectMapper mapper = new ObjectMapper();
+            TypeReference< HashMap<String, String> > typeReference = new TypeReference< HashMap<String,String> >(){};
+			HashMap<String,String> pl = mapper.readValue(in,typeReference);
+		    for( String s: l)
+		    {
+		    	String s2;
+		  	    if(pl.containsKey(s)) s2 = pl.get(s);
+		  	    else s2 = s;
+			    if(nl.contains(s2)) continue;
+			    nl.add(s2);
+		    }
+        } catch (IOException e) {
+           return new ResponseEntity<List<String> >(new ArrayList<String>(), HttpStatus.NOT_FOUND);
+        }
+		
+		return new ResponseEntity<List<String> >(nl, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "Get the existing list of collection  methods from SESAR")

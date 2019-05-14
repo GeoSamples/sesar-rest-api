@@ -35,10 +35,6 @@ public class SampleType implements Serializable {
 	private List<Sample> samples1;
 
 	//bi-directional many-to-one association to Sample
-	@OneToMany(mappedBy="sampleType2")
-	private List<Sample> samples2;
-
-	//bi-directional many-to-one association to Sample
 	@OneToMany(mappedBy="sampleType3")
 	private List<Sample> samples3;
 
@@ -106,28 +102,6 @@ public class SampleType implements Serializable {
 		samples1.setSampleType1(null);
 
 		return samples1;
-	}
-
-	public List<Sample> getSamples2() {
-		return this.samples2;
-	}
-
-	public void setSamples2(List<Sample> samples2) {
-		this.samples2 = samples2;
-	}
-
-	public Sample addSamples2(Sample samples2) {
-		getSamples2().add(samples2);
-		samples2.setSampleType2(this);
-
-		return samples2;
-	}
-
-	public Sample removeSamples2(Sample samples2) {
-		getSamples2().remove(samples2);
-		samples2.setSampleType2(null);
-
-		return samples2;
 	}
 
 	public List<Sample> getSamples3() {

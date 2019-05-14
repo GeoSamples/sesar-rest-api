@@ -294,11 +294,6 @@ public class Sample implements Serializable {
 
 	//bi-directional many-to-one association to SampleType
 	@ManyToOne
-	@JoinColumn(name="sample_type_class")
-	private SampleType sampleType2;
-
-	//bi-directional many-to-one association to SampleType
-	@ManyToOne
 	@JoinColumn(name="sample_type_id")
 	private SampleType sampleType3;
 
@@ -316,11 +311,6 @@ public class Sample implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="last_changed_by")
 	private SesarUser sesarUser3;
-
-	//bi-directional many-to-one association to SesarUser
-	@ManyToOne
-	@JoinColumn(name="org_registrant_id")
-	private SesarUser sesarUser4;
 
 	//bi-directional many-to-one association to SesarUser
 	@ManyToOne
@@ -1111,15 +1101,7 @@ public class Sample implements Serializable {
 	public void setSampleType1(SampleType sampleType1) {
 		this.sampleType1 = sampleType1;
 	}
-
-	public SampleType getSampleType2() {
-		return this.sampleType2;
-	}
-
-	public void setSampleType2(SampleType sampleType2) {
-		this.sampleType2 = sampleType2;
-	}
-
+	
 	public SampleType getSampleType3() {
 		return this.sampleType3;
 	}
@@ -1150,14 +1132,6 @@ public class Sample implements Serializable {
 
 	public void setSesarUser3(SesarUser sesarUser3) {
 		this.sesarUser3 = sesarUser3;
-	}
-
-	public SesarUser getSesarUser4() {
-		return this.sesarUser4;
-	}
-
-	public void setSesarUser4(SesarUser sesarUser4) {
-		this.sesarUser4 = sesarUser4;
 	}
 
 	public SesarUser getSesarUser5() {

@@ -96,10 +96,6 @@ public class SesarUser implements Serializable {
 	private List<Sample> samples3;
 
 	//bi-directional many-to-one association to Sample
-	@OneToMany(mappedBy="sesarUser4")
-	private List<Sample> samples4;
-
-	//bi-directional many-to-one association to Sample
 	@OneToMany(mappedBy="sesarUser5")
 	private List<Sample> samples5;
 
@@ -405,28 +401,6 @@ public class SesarUser implements Serializable {
 		samples3.setSesarUser3(null);
 
 		return samples3;
-	}
-
-	public List<Sample> getSamples4() {
-		return this.samples4;
-	}
-
-	public void setSamples4(List<Sample> samples4) {
-		this.samples4 = samples4;
-	}
-
-	public Sample addSamples4(Sample samples4) {
-		getSamples4().add(samples4);
-		samples4.setSesarUser4(this);
-
-		return samples4;
-	}
-
-	public Sample removeSamples4(Sample samples4) {
-		getSamples4().remove(samples4);
-		samples4.setSesarUser4(null);
-
-		return samples4;
 	}
 
 	public List<Sample> getSamples5() {

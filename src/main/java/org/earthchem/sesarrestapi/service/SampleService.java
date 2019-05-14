@@ -40,7 +40,7 @@ public class SampleService {
 
 	/**
 	 * Get a navigation type information from Table 'nav_type' according to navigation type name.
-	 * @return all table data in JSON format.
+	 * @return Sample object.
 	 */
 	public Sample getByIGSN(String name)
 	{
@@ -50,7 +50,7 @@ public class SampleService {
 		
 	/**
 	 * Get a existing list of platform type from table 'sample' platform_type column.
-	 * @return all data in JSON format.
+	 * @return  a list of string.
 	 */
 	public List<String> getPlatformTypes()
 	{
@@ -59,7 +59,7 @@ public class SampleService {
 
 	/**
 	 * Get a existing list of collection method from table 'sample' collection_method column.
-	 * @return all data in JSON format.
+	 * @return  a list of string.
 	 */
 	public List<String> getCollectionMethods()
 	{
@@ -69,11 +69,43 @@ public class SampleService {
 
 	/**
 	 * Get a existing list of physiographic feature from table 'sample' primary_location_type column.
-	 * @return all data in JSON format.
+	 * @return  a list of string.
 	 */
 	public List<String> getPrimaryLocationTypes()
 	{
 	    return repo.getPrimaryLocationTypes() ;
 	}
 
+
+	/**
+	 * Get a existing list of platform name from table 'sample' platform_name column.
+	 * @return a list of string.
+	 */
+	public List<String> getPlatformNames()
+	{
+		List<String> rl =  repo.getPlatformNames() ;
+		return rl;
+	}
+	
+	/**
+	 * Get a existing list of cruise or field program names from table 'sample' field_name column.
+	 * @return  a list of string.
+	 */
+	public List<String> getCruiseFieldPrgrm()
+	{
+		List<String> rl =  repo.getCruiseFieldPrgrm() ;
+		return rl;
+	}
+	
+	
+	/**
+	 * Get a existing list of collector from table 'sample' collector column.
+	 * @return  a list of string.
+	 */
+	public List<String> getCollectors()
+	{
+		List<String> rl =  repo.getCollectors() ;
+		return rl;
+	}
+	
 }

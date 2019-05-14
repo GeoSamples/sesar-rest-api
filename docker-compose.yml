@@ -1,0 +1,9 @@
+version: '3'
+services:
+  sesar:
+    image: earthchemrepo/sesar-rest-api:0.0.1
+    container_name: sesar_api_0.0.1
+    ports:
+     - "8080:8080"
+    volumes:
+     - $PWD:/tmp

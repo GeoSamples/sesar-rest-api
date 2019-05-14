@@ -123,9 +123,6 @@ public class Sample implements Serializable {
 	@Column(name="igsn_to_int")
 	private Long igsnToInt;
 
-	@Column(name="is_private")
-	private Integer isPrivate;
-
 	@Column(name="last_registrant_id")
 	private Integer lastRegistrantId;
 
@@ -653,14 +650,6 @@ public class Sample implements Serializable {
 
 	public void setIgsnToInt(Long igsnToInt) {
 		this.igsnToInt = igsnToInt;
-	}
-
-	public Integer getIsPrivate() {
-		return this.isPrivate;
-	}
-
-	public void setIsPrivate(Integer isPrivate) {
-		this.isPrivate = isPrivate;
 	}
 
 	public Integer getLastRegistrantId() {

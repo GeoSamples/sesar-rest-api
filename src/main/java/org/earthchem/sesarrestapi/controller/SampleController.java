@@ -36,7 +36,7 @@ public class SampleController {
 	private SampleService service;
 	
 	@ApiOperation(value = "Get sample profile by id")
-	@GetMapping(path="/sample/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/sample/id/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
 	@ResponseBody
 	public ResponseEntity<SampleProfileDAO> get(@PathVariable Integer id) {      
 		Sample s = service.get(id);

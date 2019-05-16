@@ -7,6 +7,7 @@ import org.earthchem.sesarrestapi.dao.SampleDocDAO;
 import org.earthchem.sesarrestapi.dao.SampleProfileDAO;
 import org.earthchem.sesarrestapi.dao.SamplePublicationUrlDAO;
 import org.postgresql.geometric.PGpoint;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -110,11 +111,11 @@ public class Sample implements Serializable {
 
 	@Column(name="geological_unit")
 	private String geologicalUnit;
-
 	
 	@Column(name="geom_latlong", columnDefinition = "geometry(Point,4326)")
-	private PGpoint geomLatlong;
+	private transient PGpoint geomLatlong;
 	
+	@Column(name="igsn")
 	private String igsn;
 
 	@Column(name="igsn_digit")
@@ -132,6 +133,7 @@ public class Sample implements Serializable {
 	@Column(name="last_update_date")
 	private Timestamp lastUpdateDate;
 
+	@Column(name="latitude")
 	private Double latitude;
 
 	@Column(name="latitude_end")
@@ -596,11 +598,11 @@ public class Sample implements Serializable {
 	public void setGeologicalUnit(String geologicalUnit) {
 		this.geologicalUnit = geologicalUnit;
 	}
-
+	@Transient
 	public PGpoint getGeomLatlong() {
 		return this.geomLatlong;
 	}
-
+    @Transient
 	public void setGeomLatlong(PGpoint geomLatlong) {
 		this.geomLatlong = geomLatlong;
 	}
@@ -1333,7 +1335,6 @@ public class Sample implements Serializable {
 		a.setLatitudeEnd(latitudeEnd);
 		a.setLaunchId(launchId);
 		a.setLaunchPlatformName(launchPlatformName);
-	
 		if(launchType != null)
 		  a.setLaunchTypeName(launchType.getName());
 		a.setLocality(locality);
@@ -1347,10 +1348,20 @@ public class Sample implements Serializable {
 		a.setNorthing(northing);
 		a.setOriginalArchive(originalArchive);
 		a.setOriginalArchiveContact(originalArchiveContact);
-/*
+
 		if(sample != null)
 		  a.setParentIGSN(sample.getIgsn());
-		  */
+
+		//Set up children IGSN
+		if(samples != null)
+		{
+			List<String> l = new ArrayList<String>();
+			for(Sample s: samples)
+			{
+				l.add(s.getIgsn());
+			}
+			a.setSampleChildrenIGSNs(l);
+		}
 		
 		a.setPlatformDescr(platformDescr);
 		a.setPlatformName(launchPlatformName);

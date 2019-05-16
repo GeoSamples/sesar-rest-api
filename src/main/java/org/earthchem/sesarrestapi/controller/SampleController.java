@@ -51,8 +51,8 @@ public class SampleController {
 	@ApiOperation(value = "Get sample profile by igsn")
 	@GetMapping(path="/sample/igsn/{igsn}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
 	@ResponseBody
-	public ResponseEntity<SampleProfileDAO> getByIGSN(@PathVariable String name) {
-		Sample s = service.getByIGSN(name);
+	public ResponseEntity<SampleProfileDAO> getByIGSN(@PathVariable String igsn) {
+		Sample s = service.getByIGSN(igsn);
 		if(s == null )
 		{
 			return new ResponseEntity<SampleProfileDAO>(new SampleProfileDAO(), HttpStatus.NOT_FOUND);		

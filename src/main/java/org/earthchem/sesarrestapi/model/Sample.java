@@ -3,8 +3,14 @@ package org.earthchem.sesarrestapi.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.earthchem.sesarrestapi.dao.SampleDocDAO;
+import org.earthchem.sesarrestapi.dao.SampleProfileDAO;
+import org.earthchem.sesarrestapi.dao.SamplePublicationUrlDAO;
 import org.postgresql.geometric.PGpoint;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -22,10 +28,10 @@ public class Sample implements Serializable {
 	private Integer sampleId;
 
 	@Column(name="age_max")
-	private double ageMax;
+	private Double ageMax;
 
 	@Column(name="age_min")
-	private double ageMin;
+	private Double ageMin;
 
 	@Column(name="age_unit")
 	private String ageUnit;
@@ -70,10 +76,10 @@ public class Sample implements Serializable {
 	private String currentArchiveContact;
 
 	@Column(name="depth_max")
-	private double depthMax;
+	private Double depthMax;
 
 	@Column(name="depth_min")
-	private double depthMin;
+	private Double depthMin;
 
 	@Column(name="depth_scale")
 	private String depthScale;
@@ -82,10 +88,10 @@ public class Sample implements Serializable {
 
 	private String easting;
 
-	private double elevation;
+	private Double elevation;
 
 	@Column(name="elevation_end")
-	private double elevationEnd;
+	private Double elevationEnd;
 
 	@Column(name="elevation_unit")
 	private String elevationUnit;
@@ -98,9 +104,6 @@ public class Sample implements Serializable {
 
 	@Column(name="field_name")
 	private String fieldName;
-
-	@Column(name="geo_data")
-	private Integer geoData;
 
 	@Column(name="geological_age")
 	private String geologicalAge;
@@ -129,10 +132,10 @@ public class Sample implements Serializable {
 	@Column(name="last_update_date")
 	private Timestamp lastUpdateDate;
 
-	private double latitude;
+	private Double latitude;
 
 	@Column(name="latitude_end")
-	private double latitudeEnd;
+	private Double latitudeEnd;
 
 	@Column(name="launch_id")
 	private String launchId;
@@ -190,10 +193,10 @@ public class Sample implements Serializable {
 	@Column(name="location_description")
 	private String locationDescription;
 
-	private double longitude;
+	private Double longitude;
 
 	@Column(name="longitude_end")
-	private double longitudeEnd;
+	private Double longitudeEnd;
 
 	@Column(name="metadata_store_status")
 	private String metadataStoreStatus;
@@ -576,14 +579,6 @@ public class Sample implements Serializable {
 
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
-	}
-
-	public Integer getGeoData() {
-		return this.geoData;
-	}
-
-	public void setGeoData(Integer geoData) {
-		this.geoData = geoData;
 	}
 
 	public String getGeologicalAge() {
@@ -1246,4 +1241,180 @@ public class Sample implements Serializable {
 		return sampleUploadHistory;
 	}
 
+	public SampleProfileDAO getDAO()
+	{
+		SampleProfileDAO a = new SampleProfileDAO();
+		a.setIgsn(igsn);
+		
+		if(sesarUserCode != null)
+		  a.setSesarUserCode(sesarUserCode.getUserCode());
+			
+		Date today= new Date();		
+		if(archiveDate == null)
+		{
+		  if(publishDate.after(today) )
+		  {
+			a.setStatus("Private");
+			return a;
+		  }
+		  else
+	        a.setStatus("Public");
+		}
+		else if(archiveDate.before(today))
+		{
+			a.setStatus("Deleted");
+			return a;
+		}
+		
+		a.setAgeMax(ageMax);
+		a.setAgeMin(ageMin);
+		a.setAgeUnit(ageUnit);
+		
+		a.setCity(city);
+	
+		if(classification1 !=null )
+		  a.setClassification(classification1.getName());
+			
+		if(classification2 !=null )
+		  a.setMaterial(classification2.getName());
+		
+	    a.setClassificationComment(classificationComment);
+		a.setCollectionDatePrecision(collectionDatePrecision);
+		
+		String pattern = "yyyy-MM-dd";
+		if(collectionDatePrecision != null)
+		{
+		if(collectionDatePrecision.equalsIgnoreCase("time"))
+			pattern = "yyyy-MM-dd HH:mm:ss";
+		else if(collectionDatePrecision.equalsIgnoreCase("year"))
+				pattern = "yyyy";
+		else if(collectionDatePrecision.equalsIgnoreCase("day"))
+			pattern = "yyyy-MM-dd";
+		else if(collectionDatePrecision.equalsIgnoreCase("month"))
+			pattern = "yyyy-MM";
+		}
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		
+		if(collectionStartDate != null)
+		  a.setCollectionStartDate(simpleDateFormat.format(collectionStartDate));		
+		if(collectionEndDate != null)
+	      a.setCollectionEndDate(simpleDateFormat.format(collectionEndDate));
+	    
+		a.setCollectionMethod(collectionMethod);
+		a.setCollectionMethodDescr(collectionMethodDescr);
+		
+		a.setCollector(collector);
+		a.setCollectorDetail(collectorDetail);
+	
+		if(country != null)
+		  a.setCountry(country.getName());
+		
+		a.setCounty(county);
+		a.setCruiseFieldPrgrm(cruiseFieldPrgrm);
+		a.setCurrentArchive(currentArchive);
+		a.setCurrentArchiveContact(currentArchiveContact);
+		a.setDepthMax(depthMax);
+		a.setDepthMin(depthMin);
+		a.setDepthScale(depthScale);
+		a.setDescription(description);
+		a.setEasting(easting);
+		a.setElevation(elevation);
+		a.setElevationEnd(elevationEnd);
+		a.setElevationUnit(elevationUnit);
+		a.setExternalParentName(externalParentName);
+		if(sampleType1 != null)
+		  a.setExternalParentSampleTypeId(sampleType1.getSampleTypeId());
+		a.setExternalSampleId(externalSampleId);
+		a.setFieldName(fieldName);
+		a.setGeologicalAge(geologicalAge);
+		a.setGeologicalUnit(geologicalUnit);
+		a.setLatitude(latitude);
+		a.setLatitudeEnd(latitudeEnd);
+		a.setLaunchId(launchId);
+		a.setLaunchPlatformName(launchPlatformName);
+	
+		if(launchType != null)
+		  a.setLaunchTypeName(launchType.getName());
+		a.setLocality(locality);
+		a.setLocalityDescription(localityDescription);
+		a.setLocationDescription(locationDescription);
+		a.setLongitude(longitude);
+		a.setLongitudeEnd(longitudeEnd);
+		a.setName(name);
+		if(navType !=null)
+		  a.setNavigationType(navType.getName());
+		a.setNorthing(northing);
+		a.setOriginalArchive(originalArchive);
+		a.setOriginalArchiveContact(originalArchiveContact);
+/*
+		if(sample != null)
+		  a.setParentIGSN(sample.getIgsn());
+		  */
+		
+		a.setPlatformDescr(platformDescr);
+		a.setPlatformName(launchPlatformName);
+		a.setPlatformType(platformType);
+		a.setPrimaryLocationName(primaryLocationName);
+		a.setPrimaryLocationType(primaryLocationType);
+		a.setProvince(province);
+		pattern = "yyyy-MM-dd";
+		simpleDateFormat = new SimpleDateFormat(pattern);
+		
+		if( publishDate != null )
+		  a.setPublishDate(simpleDateFormat.format(publishDate));
+		a.setPurpose(purpose);
+		if( registrationDate != null )
+		  a.setRegistrationDate(simpleDateFormat.format(registrationDate));
+		a.setSampleComment(sampleComment);
+		a.setSampleId(sampleId);
+
+		if(sampleAdditionalNames != null)
+		{
+		  List<String> nl = new ArrayList<String>();
+		  for(SampleAdditionalName sdn : sampleAdditionalNames)
+		  {
+			  nl.add(sdn.getName());
+		  }
+		  a.setSampleOtherNames(nl);
+		}
+		
+		if(sampleType3 != null)
+		{
+			if(sampleType3.getSampleType() != null) //parent sample type
+			{
+		      a.setSampleSubType(sampleType3.getName());
+		      a.setSampleType(sampleType3.getSampleType().getName());
+			}
+			else
+			{
+				a.setSampleType(sampleType3.getName());
+			}
+		}
+		a.setSampleUnit(sampleUnit);
+		a.setSize(size);
+		a.setSizeUnit(sizeUnit);
+		a.setVerticalDatum(legcyVerticaldatum);
+		a.setZone(zone);
+
+		if( samplePublicationUrls !=null)
+		{   List<SamplePublicationUrlDAO> l = new ArrayList<SamplePublicationUrlDAO>();
+			for(SamplePublicationUrl p : samplePublicationUrls)
+			{
+				l.add(p.getDAO());
+			}
+			a.setSamplePublicationUrls(l);
+		}
+		if(sampleDocs != null)
+		{   
+			List<SampleDocDAO> l = new ArrayList<SampleDocDAO>();
+		    for(SampleDoc p : sampleDocs)
+		    {		    
+			  l.add(p.getDAO());
+		    }
+		     a.setSampleDocs(l);
+        }
+
+		return a;
+	}
 }

@@ -1,28 +1,22 @@
 package org.earthchem.sesarrestapi.dao;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
 /**
- * The persistent class for the sample_type database table.
+ * The presentation class for the sample_type database table.
  * 
  */
-public class SampleTypeDAO implements Serializable {
+public class SampleTypeDAO  implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name="sample_type_id")
 	private Integer SampleTypeId;
 
-	@Column(name="legacy_id")
 	private Integer legacyId;
 
-	@Column(name="legacy_parent_id")
 	private Integer legacyParentId;
 
 	private String name;
 
-	@Column(name="parent_sample_type_id")
 	private Integer parent_sample_type_id;
 
 	public SampleTypeDAO() {

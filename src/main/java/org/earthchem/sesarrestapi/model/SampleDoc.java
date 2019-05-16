@@ -2,6 +2,9 @@ package org.earthchem.sesarrestapi.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.earthchem.sesarrestapi.dao.SampleDocDAO;
+
 import java.sql.Time;
 
 
@@ -99,5 +102,27 @@ public class SampleDoc implements Serializable {
 	public void setSesarUser(SesarUser sesarUser) {
 		this.sesarUser = sesarUser;
 	}
-
+    
+	public SampleDocDAO getDAO()
+	{
+		SampleDocDAO a = new SampleDocDAO();
+		a.setFileName(fileName);
+		String[] dirl = pathToFile.split("/");
+		int l = dirl.length;
+		String str="";
+		boolean f=false;
+		for(int i=0; i<l; i++)
+		{
+			if(dirl[i].equalsIgnoreCase("uploads"))
+			{
+				f=true;
+			}
+			if(f == true)
+				str +="/"+dirl[i];
+		}
+		//FIXME: Domain URL needs to be configurable
+		a.setUrlToFile("https://app.geosamples.org"+str);		
+		a.setPrimaryImage(primaryImage);
+		return a;
+	}
 }

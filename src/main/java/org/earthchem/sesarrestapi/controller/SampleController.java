@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.earthchem.sesarrestapi.dao.SampleProfileDAO;
 import org.earthchem.sesarrestapi.model.Sample;
 import org.earthchem.sesarrestapi.service.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,18 +35,30 @@ public class SampleController {
 	@Autowired
 	private SampleService service;
 	
-	@ApiOperation(value = "Get navigation type content by id")
+	@ApiOperation(value = "Get sample profile by id")
 	@GetMapping(path="/sample/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
 	@ResponseBody
-	public ResponseEntity<Sample> get(@PathVariable Integer id) {      
-		return new ResponseEntity<Sample>(service.get(id), HttpStatus.OK);
+	public ResponseEntity<SampleProfileDAO> get(@PathVariable Integer id) {      
+		Sample s = service.get(id);
+		if(s == null )
+		{
+			return new ResponseEntity<SampleProfileDAO>(new SampleProfileDAO(), HttpStatus.NOT_FOUND);		
+		}
+		SampleProfileDAO sp = s.getDAO();
+		return new ResponseEntity<SampleProfileDAO>(sp, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Get navigation type content by igsn")
+	@ApiOperation(value = "Get sample profile by igsn")
 	@GetMapping(path="/sample/igsn/{igsn}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
 	@ResponseBody
-	public Sample getByName(@PathVariable String name) {
-		return service.getByIGSN(name);
+	public ResponseEntity<SampleProfileDAO> getByIGSN(@PathVariable String name) {
+		Sample s = service.getByIGSN(name);
+		if(s == null )
+		{
+			return new ResponseEntity<SampleProfileDAO>(new SampleProfileDAO(), HttpStatus.NOT_FOUND);		
+		}
+		SampleProfileDAO sp = s.getDAO();
+		return new ResponseEntity<SampleProfileDAO>(sp, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "Get existing list of platform type from SESAR")

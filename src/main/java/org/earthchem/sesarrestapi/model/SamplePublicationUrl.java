@@ -3,6 +3,8 @@ package org.earthchem.sesarrestapi.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.earthchem.sesarrestapi.dao.SamplePublicationUrlDAO;
+
 
 /**
  * The persistent class for the sample_publication_url database table.
@@ -73,4 +75,13 @@ public class SamplePublicationUrl implements Serializable {
 		this.sample = sample;
 	}
 
+	public SamplePublicationUrlDAO getDAO()
+	{
+		SamplePublicationUrlDAO a = new SamplePublicationUrlDAO();
+		a.setDescription(description);
+		a.setUrl(url);
+		a.setUrlType(urlType);
+		
+		return a;
+	}
 }

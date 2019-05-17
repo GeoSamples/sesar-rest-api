@@ -2,10 +2,13 @@ package org.earthchem.sesarrestapi.dao;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * The presentation class for the sample_publication_url database table.
  * 
  */
+@JacksonXmlRootElement(localName="sample_publication_url")
 public class SamplePublicationUrlDAO  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	 

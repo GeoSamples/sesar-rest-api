@@ -3,10 +3,13 @@ package org.earthchem.sesarrestapi.dao;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * The data access class for the classification database table.
  * 
  */
+@JacksonXmlRootElement(localName="classification")
 public class ClassificationDAO implements Serializable {
 	private static final long serialVersionUID = 1L;
 

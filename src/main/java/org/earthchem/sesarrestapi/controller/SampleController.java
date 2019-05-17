@@ -36,7 +36,9 @@ public class SampleController {
 	private SampleService service;
 	
 	@ApiOperation(value = "Get sample profile by id")
-	@GetMapping(path="/sample/id/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/sample/id/{id}",
+	            headers ={"Accept=application/json,application/xml"},
+			    produces={"application/json", "application/xml"})  
 	@ResponseBody
 	public ResponseEntity<SampleProfileDAO> get(@PathVariable Integer id) {      
 		Sample s = service.get(id);
@@ -49,7 +51,9 @@ public class SampleController {
 	}
 	
 	@ApiOperation(value = "Get sample profile by igsn")
-	@GetMapping(path="/sample/igsn/{igsn}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/sample/igsn/{igsn}", 
+                headers ={"Accept=application/json,application/xml"},
+		        produces={"application/json", "application/xml"})  
 	@ResponseBody
 	public ResponseEntity<SampleProfileDAO> getByIGSN(@PathVariable String igsn) {
 		Sample s = service.getByIGSN(igsn);

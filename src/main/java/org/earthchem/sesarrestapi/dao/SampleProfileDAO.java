@@ -3,10 +3,16 @@ package org.earthchem.sesarrestapi.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * The sample profile class for the sample metadata display page.
  * 
  */
+ @JacksonXmlRootElement(localName="sample")
+ @JsonInclude(JsonInclude.Include.NON_EMPTY)
  public class SampleProfileDAO  implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -142,7 +148,7 @@ import java.util.List;
 
 	private String parentIGSN;
 
-	private List<String> sampleChildrenIGSNs;
+	private List<String> childIGSN;
 
 	private Integer externalParentSampleTypeId;
 
@@ -154,12 +160,12 @@ import java.util.List;
 	
 	private String status;
 
-	private List<String> sampleOtherNames;
+	private List<String> otherName;
 
 	//List of image names
-	private List<SampleDocDAO> sampleDocs;
+	private List<SampleDocDAO> document;
  
-	private List<SamplePublicationUrlDAO> samplePublicationUrls;
+	private List<SamplePublicationUrlDAO> publicationUrl;
 
 	public SampleProfileDAO() {
 	}
@@ -691,13 +697,14 @@ import java.util.List;
 	public void setNavigationType(String navType) {
 		this.navigationType = navType;
 	}
-
-	public List<String> getSampleChildrenIGSNs() {
-		return this.sampleChildrenIGSNs;
+	
+	@JacksonXmlElementWrapper(localName = "children")
+	public List<String> getChildIGSN() {
+		return this.childIGSN;
 	}
 
-	public void setSampleChildrenIGSNs(List<String> s) {
-		this.sampleChildrenIGSNs = s;
+	public void setChildIGSN(List<String> s) {
+		this.childIGSN = s;
 	}
 	
 	public String getSampleType() {
@@ -733,28 +740,31 @@ import java.util.List;
 		this.status = s;
 	}
 
-	public List<String> getSampleOtherNames() {
-		return this.sampleOtherNames;
+	@JacksonXmlElementWrapper(localName = "otherNames")
+	public List<String> getOtherName() {
+		return this.otherName;
 	}
 
-	public void setSampleOtherNames(List<String> sampleOtherNames) {
-		this.sampleOtherNames = sampleOtherNames;
+	public void setOtherName(List<String> sampleOtherName) {
+		this.otherName = sampleOtherName;
 	}
-		
-	public List<SampleDocDAO> getSampleDocs() {
-		return this.sampleDocs;
-	}
-
-	public void setSampleDocs(List<SampleDocDAO> sampleDocs) {
-		this.sampleDocs = sampleDocs;
+	
+	@JacksonXmlElementWrapper(localName = "documents")
+	public List<SampleDocDAO> getDocument() {
+		return this.document;
 	}
 
-	public List<SamplePublicationUrlDAO> getSamplePublicationUrls() {
-		return this.samplePublicationUrls;
+	public void setDocument(List<SampleDocDAO> sampleDoc) {
+		this.document = sampleDoc;
 	}
 
-	public void setSamplePublicationUrls(List<SamplePublicationUrlDAO> samplePublicationUrls) {
-		this.samplePublicationUrls = samplePublicationUrls;
+	@JacksonXmlElementWrapper(localName = "publicationUrls")
+	public List<SamplePublicationUrlDAO> getPublicationUrl() {
+		return this.publicationUrl;
+	}
+
+	public void setPublicationUrl(List<SamplePublicationUrlDAO> samplePublicationUrl) {
+		this.publicationUrl = samplePublicationUrl;
 	}
 
 }

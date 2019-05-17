@@ -1360,7 +1360,7 @@ public class Sample implements Serializable {
 			{
 				l.add(s.getIgsn());
 			}
-			a.setSampleChildrenIGSNs(l);
+			a.setChildIGSN(l);
 		}
 		
 		a.setPlatformDescr(platformDescr);
@@ -1387,7 +1387,7 @@ public class Sample implements Serializable {
 		  {
 			  nl.add(sdn.getName());
 		  }
-		  a.setSampleOtherNames(nl);
+		  a.setOtherName(nl);
 		}
 		
 		if(sampleType3 != null)
@@ -1414,7 +1414,7 @@ public class Sample implements Serializable {
 			{
 				l.add(p.getDAO());
 			}
-			a.setSamplePublicationUrls(l);
+			a.setPublicationUrl(l);
 		}
 		if(sampleDocs != null)
 		{   
@@ -1423,7 +1423,7 @@ public class Sample implements Serializable {
 		    {		    
 			  l.add(p.getDAO());
 		    }
-		     a.setSampleDocs(l);
+		     a.setDocument(l);
         }
 
 		return a;

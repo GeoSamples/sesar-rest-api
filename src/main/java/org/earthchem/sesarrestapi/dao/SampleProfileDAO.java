@@ -150,6 +150,8 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 	private List<String> childIGSN;
 
+	private List<String> siblingIGSN;
+	
 	private Integer externalParentSampleTypeId;
 
 	private String sampleType;
@@ -706,6 +708,16 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 	public void setChildIGSN(List<String> s) {
 		this.childIGSN = s;
 	}
+	
+	@JacksonXmlElementWrapper(localName = "siblings")
+	public List<String> getSiblingIGSN() {
+		return this.siblingIGSN;
+	}
+
+	public void setSiblingIGSN(List<String> s) {
+		this.siblingIGSN = s;
+	}
+	
 	
 	public String getSampleType() {
 		return this.sampleType;

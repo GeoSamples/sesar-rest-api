@@ -1350,7 +1350,21 @@ public class Sample implements Serializable {
 		a.setOriginalArchiveContact(originalArchiveContact);
 
 		if(sample != null)
+		{
 		  a.setParentIGSN(sample.getIgsn());
+		  
+		  //Set up sibling IGSN
+			if(sample.samples != null)
+			{
+				List<String> l = new ArrayList<String>();
+				for(Sample s: sample.samples)
+				{
+					if(s.getIgsn().equalsIgnoreCase(igsn)) continue;
+					l.add(s.getIgsn());
+				}
+				a.setSiblingIGSN(l);
+			}
+		}
 
 		//Set up children IGSN
 		if(samples != null)

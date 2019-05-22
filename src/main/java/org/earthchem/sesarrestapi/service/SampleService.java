@@ -106,4 +106,48 @@ public class SampleService {
 		return rl;
 	}
 	
+	
+	/**
+	 * Get a list of IGSNs from table 'sample' which is owned by the user
+	 * @id: The geopass id
+	 * @return  a list of string of IGSNs.
+	 */
+	public List<String> getIGSNsByGeoPassId(Integer id)
+	{
+		List<String> rl =  repo.getIGSNsByGeoPassId(id) ;
+		return rl;
+	}
+	
+	/**
+	 * Get a list of IGSNs from table 'sample' which is owned by the user
+	 * @name: The geopass user name
+	 * @return  a list of string of IGSNs.
+	 */
+	public List<String> getIGSNsByGeoPassUserName(String name)
+	{
+		List<String> rl =  repo.getIGSNsByGeoPassUsername(name) ;
+		return rl;
+	}
+	
+	/**
+	 * Get total number of IGSN from table 'sample' according to geopass id
+	 * @name: The geopass id
+	 * @return total number of IGSNs.
+	 */
+	public Integer getIGSNCountByGeoPassId(Integer id)
+	{
+		Integer r =  repo.getIGSNCountByGeoPassId(id) ;
+		return r;
+	}
+	
+	/**
+	 * Get total number of IGSN from table 'sample' according to geopass username
+	 * @name: The geopass user name
+	 * @return total number of IGSNs.
+	 */
+	public Integer getIGSNCountByGeoPassUserName(String name)
+	{
+		Integer rl =  repo.getIGSNCountByGeoPassUsername(name) ;
+		return rl;
+	}
 }

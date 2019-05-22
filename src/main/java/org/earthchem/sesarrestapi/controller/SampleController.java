@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -249,5 +250,46 @@ public class SampleController {
         }       
 		return new ResponseEntity<List<String> >(nl, HttpStatus.OK);
 	}
-		
+	
+	
+    @ApiOperation(value = "Get a list IGSNs from SESAR according to the user geopass id")
+    @GetMapping(path="/igsns/geopass", params = "id", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+    @ResponseBody
+    public ResponseEntity<List<String> > getIGSNsById(@RequestParam(required = true) Integer id) {  
+	    List<String> l = service.getIGSNsByGeoPassId(id);
+	    if(l == null || l.isEmpty() ) {
+           return new ResponseEntity<List<String> >(l, HttpStatus.NOT_FOUND);
+        }       
+	    return new ResponseEntity<List<String> >(l, HttpStatus.OK);
+    }
+    
+	
+    @ApiOperation(value = "Get a list IGSNs from SESAR according to the user geopass id")
+    @GetMapping(path="/igsns/geopass", params = "username", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+    @ResponseBody
+    public ResponseEntity<List<String> > getIGSNsByName(@RequestParam(required = true) String username) {  
+	    List<String> l = service.getIGSNsByGeoPassUserName(username);
+	    if(l == null || l.isEmpty() ) {
+           return new ResponseEntity<List<String> >(l, HttpStatus.NOT_FOUND);
+        }       
+	    return new ResponseEntity<List<String> >(l, HttpStatus.OK);
+    }
+    
+    @ApiOperation(value = "Get total number of IGSN from SESAR according to geopass username")
+    @GetMapping(path="/igsns/total/geopass", params = "username", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+    @ResponseBody
+    public ResponseEntity<Integer > getIGSNCountByName(@RequestParam(required = true) String username) {  
+	    Integer l = service.getIGSNCountByGeoPassUserName(username);      
+	    return new ResponseEntity<Integer >(l, HttpStatus.OK);
+    }
+    
+    
+    @ApiOperation(value = "Get total number of IGSN from SESAR according to geopass id")
+    @GetMapping(path="/igsns/total/geopass", params = "id", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+    @ResponseBody
+    public ResponseEntity<Integer > getIGSNCountById(@RequestParam(required = true) Integer id) {  
+	    Integer l = service.getIGSNCountByGeoPassId(id);      
+	    return new ResponseEntity<Integer >(l, HttpStatus.OK);
+    }
+    
 }

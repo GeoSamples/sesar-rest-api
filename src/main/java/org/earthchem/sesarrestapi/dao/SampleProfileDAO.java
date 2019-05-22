@@ -11,7 +11,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
  * The sample profile class for the sample metadata display page.
  * 
  */
- @JacksonXmlRootElement(localName="sample")
+ @JacksonXmlRootElement(localName="sample", namespace="https://app.geosamples.org")
  @JsonInclude(JsonInclude.Include.NON_EMPTY)
  public class SampleProfileDAO  implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -23,12 +23,22 @@ public class GroupSampleService {
 	{ this.repo = r; };
 		
 	/**
-	 * Get a list of Sample from Table 'group_sample' according to group id.
+	 * Get a list of Sample from Table 'group_sample' according to public group id.
 	 * @return a list of Sample object.
 	 */
 	public List<Sample> getSamplesById(Integer id)
 	{
 	    List<Sample> al = repo.getSamplesById(id);
+	    return al;
+	}
+
+	/**
+	 * Get a list of Sample from Table 'group_sample' according to public group name.
+	 * @return a list of Sample object.
+	 */
+	public List<Sample> getSamplesByName(String name)
+	{
+	    List<Sample> al = repo.getSamplesByName(name);
 	    return al;
 	}
 

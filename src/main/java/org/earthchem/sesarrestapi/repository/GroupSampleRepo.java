@@ -11,7 +11,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GroupSampleRepo extends CrudRepository<GroupSample, Integer> {
-	@Query("SELECT e.sample from GroupSample e  where (e.group.id = ?1) ")
+	@Query("SELECT e.sample from GroupSample e  where (e.group.isPrivate = false and e.group.id = ?1) ")
 	public List<Sample> getSamplesById(@Param("id") Integer id);
+	
+	@Query("SELECT e.sample from GroupSample e  where (e.group.isPrivate = false and e.group.name = ?1) ")
+	public List<Sample> getSamplesByName(@Param("name") String name);
 	
 }

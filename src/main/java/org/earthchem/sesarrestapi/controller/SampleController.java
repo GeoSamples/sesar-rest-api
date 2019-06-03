@@ -65,7 +65,27 @@ public class SampleController {
 		SampleProfileDAO sp = s.getDAO();
 		return new ResponseEntity<SampleProfileDAO>(sp, HttpStatus.OK);
 	}
-	
+
+	@ApiOperation(value = "Get sample profile by sample name")
+	@GetMapping(path="/samples",
+                headers ={"Accept=application/json,application/xml"},
+		        produces={"application/json", "application/xml"})
+	@ResponseBody
+	public ResponseEntity<List<SampleProfileDAO>> getByName(@RequestParam (required = true) String name) {
+		List<Sample> s = service.getByName(name);
+		List<SampleProfileDAO> sl = new ArrayList<SampleProfileDAO>();
+		if(s == null )
+		{
+			return new ResponseEntity<List<SampleProfileDAO>>(sl, HttpStatus.NOT_FOUND);
+		}
+		for (Sample item: s)
+		{
+		    SampleProfileDAO sp = item.getDAO();
+		    sl.add(sp);
+	    }
+		return new ResponseEntity<List<SampleProfileDAO>>(sl, HttpStatus.OK);
+	}
+
 	@ApiOperation(value = "Get existing list of platform type from SESAR")
 	@GetMapping(path="/vocabularies/platformtypes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
 	@ResponseBody

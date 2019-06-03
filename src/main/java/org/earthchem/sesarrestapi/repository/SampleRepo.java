@@ -44,4 +44,8 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	  
 	@Query("SELECT count(e.igsn) from Sample e where lower(e.sesarUser1.geopassId) = lower(?1) ")
 	public Integer getIGSNCountByGeoPassUsername(@Param("name") String name);
+
+	@Query("SELECT e from Sample e where lower(e.name) like lower( ?1 )")
+	public  List<Sample> getBySampleName(@Param("name") String name);
+
 }

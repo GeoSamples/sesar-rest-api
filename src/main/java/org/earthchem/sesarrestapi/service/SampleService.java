@@ -27,7 +27,7 @@ public class SampleService {
 	{ this.repo = r; };
 		
 	/**
-	 * Get a navigation type information from Table 'nav_type' according to id.
+	 * Get a Get a sample information from Table 'sample' according sample id.
 	 * @return Sample object.
 	 */
 	public Sample get(Integer id)
@@ -37,13 +37,23 @@ public class SampleService {
 	}
 
 	/**
-	 * Get a navigation type information from Table 'nav_type' according to navigation type name.
+	 * Get a sample information from Table 'sample' according igsn.
 	 * @return Sample object.
 	 */
 	public Sample getByIGSN(String name)
 	{
 	    Optional<Sample> al = repo.getByIGSN(name);
 	    return al.get();
+	}
+
+	/**
+	 * Get a sample information from Table 'sample' according to sample name.
+	 * @return Sample object.
+	 */
+	public List<Sample> getByName(String name)
+	{
+	    List<Sample> al = repo.getBySampleName(name);
+	    return al;
 	}
 		
 	/**

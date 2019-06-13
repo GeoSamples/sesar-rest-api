@@ -1,4 +1,4 @@
-package org.earthchem.sesarrestapi.basic.auth;
+package org.earthchem.rest.basic.auth;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

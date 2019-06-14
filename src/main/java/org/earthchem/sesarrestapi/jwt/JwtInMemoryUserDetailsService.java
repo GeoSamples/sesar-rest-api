@@ -1,9 +1,8 @@
 package org.earthchem.sesarrestapi.jwt;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import org.earthchem.sesarrestapi.jwt.JwtUserDetails;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,8 +15,8 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
   static List<JwtUserDetails> inMemoryUserList = new ArrayList<>();
 
   static {
-    inMemoryUserList.add(new JwtUserDetails(2L, "test",
-            "$2a$10$vODu.MnzRpu/LwIj4fhb4O/3VxyRV4YaanyR7xigQB/g6khpc4v76", "ROLE_USER_2"));
+    inMemoryUserList.add(new JwtUserDetails(1L, "admin",
+            "$2a$10$QM0fNAIPE2WbF2KJpiLx8OOA.boh9XK7KfuA7GsmxbrLLgd4lx3Ze", "ROLE_USER_2"));
   }
 
   @Override

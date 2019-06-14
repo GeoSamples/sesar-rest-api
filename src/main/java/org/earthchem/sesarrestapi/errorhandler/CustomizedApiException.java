@@ -16,7 +16,8 @@ public class CustomizedApiException extends RuntimeException {
         this.message = message;
     }
 
-    public String getMessage() {
+    @Override
+	public String getMessage() {
         return message;
     }
 

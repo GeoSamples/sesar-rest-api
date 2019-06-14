@@ -1,18 +1,25 @@
 package org.earthchem.sesarrestapi.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import org.earthchem.sesarrestapi.dao.SampleDocDAO;
-import org.earthchem.sesarrestapi.dao.SampleProfileDAO;
-import org.earthchem.sesarrestapi.dao.SamplePublicationUrlDAO;
-import org.postgresql.geometric.PGpoint;
-
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+import org.earthchem.sesarrestapi.dao.SampleDocDAO;
+import org.earthchem.sesarrestapi.dao.SampleProfileDAO;
+import org.earthchem.sesarrestapi.dao.SamplePublicationUrlDAO;
+import org.postgresql.geometric.PGpoint;
 
 
 /**
@@ -22,6 +29,7 @@ import java.util.List;
 @Entity
 @NamedQuery(name="Sample.findAll", query="SELECT s FROM Sample s")
 public class Sample implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id

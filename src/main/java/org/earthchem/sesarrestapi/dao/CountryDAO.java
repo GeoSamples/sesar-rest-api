@@ -1,6 +1,7 @@
 package org.earthchem.sesarrestapi.dao;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 

@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -284,7 +285,7 @@ public class SampleController {
     }
     
 	
-    @ApiOperation(value = "Get a list IGSNs from SESAR according to the user geopass id")
+    @ApiOperation(value = "Get a list IGSNs from SESAR according to the user geopass login name")
     @GetMapping(path="/igsns/geopass", params = "username", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
     @ResponseBody
     public ResponseEntity<List<String> > getIGSNsByName(@RequestParam(required = true) String username) {  
@@ -295,6 +296,23 @@ public class SampleController {
 	    return new ResponseEntity<List<String> >(l, HttpStatus.OK);
     }
     
+    @ApiOperation(value = "Get a list IGSNs from SESAR according to geopass id")
+    @GetMapping(path= { "/igsns/usercode/{user_code}/hideprivate/{hide_private}",
+                        "/igsns/usercode/{user_code}"
+                      },
+                produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+               )
+    @ResponseBody
+    public ResponseEntity<List<String> > getIGSNsByUserCode(@PathVariable String user_code,
+                                                            @PathVariable(required = false) Integer hide_private )
+    {
+	    List<String> l = service.getIGSNsByUserCode(user_code,hide_private);
+	    if(l == null || l.isEmpty() ) {
+           return new ResponseEntity<List<String> >(l, HttpStatus.NOT_FOUND);
+        }
+	    return new ResponseEntity<List<String> >(l, HttpStatus.OK);
+    }
+
     @ApiOperation(value = "Get total number of IGSN from SESAR according to geopass username")
     @GetMapping(path="/igsns/total/geopass", params = "username", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
     @ResponseBody

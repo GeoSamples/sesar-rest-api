@@ -36,8 +36,14 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	@Query("SELECT e.igsn from Sample e where e.sesarUser1.ssoAccountId = ?1 order by e.igsn ")
 	public List<String> getIGSNsByGeoPassId(@Param("id") Integer id);
 	  
-	@Query("SELECT e.igsn from Sample e where lower(e.sesarUser1.geopassId) = lower(?1) order by e.igsn ")
+	@Query("SELECT e.igsn from Sample e where lower(e.sesarUser1.geopassId) = lower(?1) and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")
 	public List<String> getIGSNsByGeoPassUsername(@Param("name") String name);
+
+	@Query("SELECT e.igsn from Sample e where lower(e.sesarUserCode.userCode) = lower(?1) and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")
+	public List<String> getAllIGSNsByUserCode(@Param("user_code") String user_code);
+
+	@Query("SELECT e.igsn from Sample e where lower(e.sesarUserCode.userCode) = lower(?1) and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")
+	public List<String> getPublicIGSNsByUserCode(@Param("user_code") String user_code);
 	
 	@Query("SELECT count(e.igsn) from Sample e where e.sesarUser1.ssoAccountId = ?1 ")
 	public Integer getIGSNCountByGeoPassId(@Param("id") Integer id);

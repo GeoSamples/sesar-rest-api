@@ -3,6 +3,7 @@
  */
 package org.earthchem.sesarrestapi.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -139,6 +140,22 @@ public class SampleService {
 		return rl;
 	}
 	
+	/**
+	 * Get a list of IGSNs from table 'sample' according to its user code 
+	 * @param usercode: IGSN user code or prefix
+	 * @param hidePrivate: if it is 1, the returned list will not include IGSNs whose metadata are not public.
+	 * @return  a list of string of IGSNs.
+	 */
+	public List<String> getIGSNsByUserCode(String usercode, Integer hidePrivate)
+	{
+		List<String> rl = new ArrayList<String>();
+		if( hidePrivate != null && hidePrivate.intValue() == 1 )
+		    rl =  repo.getPublicIGSNsByUserCode(usercode) ;
+		else
+			rl =  repo.getAllIGSNsByUserCode(usercode) ;
+		return rl;
+	}
+
 	/**
 	 * Get total number of IGSN from table 'sample' according to geopass id
 	 * @name: The geopass id

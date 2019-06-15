@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.earthchem.sesarrestapi.model.Sample;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -34,18 +35,18 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	public  Optional<Sample> getByIGSN(@Param("igsn") String igsn);
 	  
 	@Query("SELECT e.igsn from Sample e where e.sesarUser1.ssoAccountId = ?1 order by e.igsn ")
-	public List<String> getIGSNsByGeoPassId(@Param("id") Integer id);
+	public List<String> getIGSNsByGeoPassId(@Param("id") Integer id, Pageable pageable);
 	  
 	@Query("SELECT e.igsn from Sample e where lower(e.sesarUser1.geopassId) = lower(?1) and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")
-	public List<String> getIGSNsByGeoPassUsername(@Param("name") String name);
+	public List<String> getIGSNsByGeoPassUsername(@Param("name") String name, Pageable pageable);
 
 	@Query("SELECT e.igsn from Sample e where lower(e.sesarUserCode.userCode) = lower(?1) and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")
-	public List<String> getAllIGSNsByUserCode(@Param("user_code") String user_code);
+	public List<String> getAllIGSNsByUserCode(@Param("user_code") String user_code, Pageable pageable);
 
 	@Query("SELECT e.igsn from Sample e where lower(e.sesarUserCode.userCode) = lower(?1) and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")
-	public List<String> getPublicIGSNsByUserCode(@Param("user_code") String user_code);
-	
-	@Query("SELECT count(e.igsn) from Sample e where e.sesarUser1.ssoAccountId = ?1 ")
+	public List<String> getPublicIGSNsByUserCode(@Param("user_code") String user_code, Pageable pageable);
+
+    @Query("SELECT count(e.igsn) from Sample e where e.sesarUser1.ssoAccountId = ?1 ")
 	public Integer getIGSNCountByGeoPassId(@Param("id") Integer id);
 	  
 	@Query("SELECT count(e.igsn) from Sample e where lower(e.sesarUser1.geopassId) = lower(?1) ")

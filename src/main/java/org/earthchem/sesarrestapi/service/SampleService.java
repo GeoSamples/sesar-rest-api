@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.earthchem.sesarrestapi.model.Sample;
 import org.earthchem.sesarrestapi.repository.SampleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 /**
@@ -123,9 +124,9 @@ public class SampleService {
 	 * @id: The geopass id
 	 * @return  a list of string of IGSNs.
 	 */
-	public List<String> getIGSNsByGeoPassId(Integer id)
+	public List<String> getIGSNsByGeoPassId(Integer id, Integer limit, Integer pagenum)
 	{
-		List<String> rl =  repo.getIGSNsByGeoPassId(id) ;
+		List<String> rl =  repo.getIGSNsByGeoPassId(id,PageRequest.of(pagenum,limit)) ;
 		return rl;
 	}
 	
@@ -134,9 +135,9 @@ public class SampleService {
 	 * @name: The geopass user name
 	 * @return  a list of string of IGSNs.
 	 */
-	public List<String> getIGSNsByGeoPassUserName(String name)
+	public List<String> getIGSNsByGeoPassUserName(String name, Integer limit, Integer pagenum)
 	{
-		List<String> rl =  repo.getIGSNsByGeoPassUsername(name) ;
+		List<String> rl =  repo.getIGSNsByGeoPassUsername(name, PageRequest.of(pagenum,limit)) ;
 		return rl;
 	}
 	
@@ -146,13 +147,15 @@ public class SampleService {
 	 * @param hidePrivate: if it is 1, the returned list will not include IGSNs whose metadata are not public.
 	 * @return  a list of string of IGSNs.
 	 */
-	public List<String> getIGSNsByUserCode(String usercode, Integer hidePrivate)
+	public List<String> getIGSNsByUserCode(String usercode, Integer hidePrivate, Integer limit, Integer pagenum)
 	{
 		List<String> rl = new ArrayList<String>();
+
 		if( hidePrivate != null && hidePrivate.intValue() == 1 )
-		    rl =  repo.getPublicIGSNsByUserCode(usercode) ;
+			rl =  repo.getPublicIGSNsByUserCode(usercode,PageRequest.of(pagenum, limit));
 		else
-			rl =  repo.getAllIGSNsByUserCode(usercode) ;
+			rl =  repo.getAllIGSNsByUserCode(usercode,PageRequest.of(pagenum,limit));
+
 		return rl;
 	}
 

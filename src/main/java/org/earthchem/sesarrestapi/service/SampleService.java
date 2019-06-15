@@ -158,7 +158,23 @@ public class SampleService {
 
 		return rl;
 	}
+	/**
+	 * Get a list of IGSNs from table 'sample' according to cruise or field program name
+	 * @param field_name: cruise or field program name. It is case insensitive.
+	 * @param hidePrivate: if it is 1, the returned list will not include IGSNs whose metadata are not public.
+	 * @return  a list of string of IGSNs.
+	 */
+	public List<String> getIGSNsByCruiseFieldProgram(String field_name, Integer hidePrivate, Integer limit, Integer pagenum)
+	{
+		List<String> rl = new ArrayList<String>();
 
+		if( hidePrivate != null && hidePrivate.intValue() == 1 )
+			rl =  repo.getPublicIGSNsByCruiseFieldProgram(field_name,PageRequest.of(pagenum, limit));
+		else
+			rl =  repo.getAllIGSNsByCruiseFieldProgram(field_name,PageRequest.of(pagenum,limit));
+
+		return rl;
+	}
 	/**
 	 * Get total number of IGSN from table 'sample' according to geopass id
 	 * @name: The geopass id

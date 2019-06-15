@@ -46,13 +46,19 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	@Query("SELECT e.igsn from Sample e where lower(e.sesarUserCode.userCode) = lower(?1) and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")
 	public List<String> getPublicIGSNsByUserCode(@Param("user_code") String user_code, Pageable pageable);
 
+	@Query("SELECT e.igsn from Sample e where lower(e.cruiseFieldPrgrm) like CONCAT('%',lower(?1),'%') and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn")
+	public List<String> getAllIGSNsByCruiseFieldProgram(@Param("name") String name, Pageable pageable);
+
+	@Query("SELECT e.igsn from Sample e where lower(e.cruiseFieldPrgrm) like CONCAT('%',lower(?1),'%') and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")
+	public List<String> getPublicIGSNsByCruiseFieldProgram(@Param("name") String name, Pageable pageable);
+
     @Query("SELECT count(e.igsn) from Sample e where e.sesarUser1.ssoAccountId = ?1 ")
 	public Integer getIGSNCountByGeoPassId(@Param("id") Integer id);
 	  
 	@Query("SELECT count(e.igsn) from Sample e where lower(e.sesarUser1.geopassId) = lower(?1) ")
 	public Integer getIGSNCountByGeoPassUsername(@Param("name") String name);
 
-	@Query("SELECT e from Sample e where lower(e.name) like lower( ?1 )")
+	@Query("SELECT e from Sample e where lower(e.name) like CONCAT('%',lower(?1),'%')")
 	public  List<Sample> getBySampleName(@Param("name") String name);
 
 }

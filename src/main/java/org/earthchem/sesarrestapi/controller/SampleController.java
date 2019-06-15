@@ -315,6 +315,33 @@ public class SampleController {
         }       
 	    return new ResponseEntity<List<String> >(l, HttpStatus.OK);
     }
+
+    @ApiOperation(value = "Get a list IGSNs from SESAR according to cruise or field program name")
+    @GetMapping(path= {"/igsns/field_program",
+                       "/igsns/field_program/hideprivate/{hideprivate}",
+                       "/igsns/limit/{limit}/pagenum/{pagenum}/field_program",
+                       "/igsns/limit/{limit}/pagenum/{pagenum}/field_program",
+                       "/igsns/cruise",
+                       "/igsns/cruise/hideprivate/{hideprivate}",
+                       "/igsns/limit/{limit}/pagenum/{pagenum}/cruise",
+                       "/igsns/limit/{limit}/pagenum/{pagenum}/hideprivate/{hideprivate}/cruise"}, 
+                params = "name", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+    @ResponseBody
+    public ResponseEntity<List<String> > getIGSNsByCruiseFieldProgram(@RequestParam(required = true) String name,
+                                                                      @PathVariable(required = false) Integer hideprivate,
+                                                                      @PathVariable(required = false) Integer limit,
+                                                                      @PathVariable(required = false) Integer pagenum)
+    {
+        if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
+        if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
+        if(limit == null && pagenum == null) {limit = new Integer(100);pagenum = new Integer(0);}; //Default to first page
+
+	    List<String> l = service.getIGSNsByCruiseFieldProgram(name, hideprivate, limit, pagenum);
+	    if(l == null || l.isEmpty() ) {
+           return new ResponseEntity<List<String> >(l, HttpStatus.NOT_FOUND);
+        }
+	    return new ResponseEntity<List<String> >(l, HttpStatus.OK);
+    }
     
     @ApiOperation(value = "Get a list IGSNs from SESAR according to user code. If hideprivate is set to 1, only IGSNs with public metadata will be returned. For large set of IGSNs, you can set limit and page number. Limit is for total numbers to be returned each time. Page number is for which page will be returned and starts with 0.")
     @GetMapping(path= { "/igsns/usercode/{usercode}",

@@ -153,48 +153,6 @@ public class Sample implements Serializable {
 	@Column(name="launch_platform_name")
 	private String launchPlatformName;
 
-	@Column(name="legcy_country")
-	private String legcyCountry;
-
-	@Column(name="legcy_dataeditor_id")
-	private Integer legcyDataeditorId;
-
-	@Column(name="legcy_datecollected")
-	private String legcyDatecollected;
-
-	@Column(name="legcy_endgeodeticdatum")
-	private String legcyEndgeodeticdatum;
-
-	@Column(name="legcy_formcoordsys")
-	private String legcyFormcoordsys;
-
-	@Column(name="legcy_geoobjecttype")
-	private Long legcyGeoobjecttype;
-
-	@Column(name="legcy_id")
-	private Long legcyId;
-
-	@Column(name="legcy_locationname")
-	private String legcyLocationname;
-
-	@Column(name="legcy_mineralclassified")
-	private Integer legcyMineralclassified;
-
-	@Column(name="legcy_parent_id")
-	private Long legcyParentId;
-
-	@Column(name="legcy_rockclassified")
-	private Integer legcyRockclassified;
-
-	@Column(name="legcy_shapetype")
-	private String legcyShapetype;
-
-	@Column(name="legcy_startgeodeticdatum")
-	private String legcyStartgeodeticdatum;
-
-	@Column(name="legcy_verticaldatum")
-	private String legcyVerticaldatum;
-
 	private String locality;
 
 	@Column(name="locality_description")
@@ -693,118 +651,6 @@ public class Sample implements Serializable {
 
 	public void setLaunchPlatformName(String launchPlatformName) {
 		this.launchPlatformName = launchPlatformName;
-	}
-
-	public String getLegcyCountry() {
-		return this.legcyCountry;
-	}
-
-	public void setLegcyCountry(String legcyCountry) {
-		this.legcyCountry = legcyCountry;
-	}
-
-	public Integer getLegcyDataeditorId() {
-		return this.legcyDataeditorId;
-	}
-
-	public void setLegcyDataeditorId(Integer legcyDataeditorId) {
-		this.legcyDataeditorId = legcyDataeditorId;
-	}
-
-	public String getLegcyDatecollected() {
-		return this.legcyDatecollected;
-	}
-
-	public void setLegcyDatecollected(String legcyDatecollected) {
-		this.legcyDatecollected = legcyDatecollected;
-	}
-
-	public String getLegcyEndgeodeticdatum() {
-		return this.legcyEndgeodeticdatum;
-	}
-
-	public void setLegcyEndgeodeticdatum(String legcyEndgeodeticdatum) {
-		this.legcyEndgeodeticdatum = legcyEndgeodeticdatum;
-	}
-
-	public String getLegcyFormcoordsys() {
-		return this.legcyFormcoordsys;
-	}
-
-	public void setLegcyFormcoordsys(String legcyFormcoordsys) {
-		this.legcyFormcoordsys = legcyFormcoordsys;
-	}
-
-	public Long getLegcyGeoobjecttype() {
-		return this.legcyGeoobjecttype;
-	}
-
-	public void setLegcyGeoobjecttype(Long legcyGeoobjecttype) {
-		this.legcyGeoobjecttype = legcyGeoobjecttype;
-	}
-
-	public Long getLegcyId() {
-		return this.legcyId;
-	}
-
-	public void setLegcyId(Long legcyId) {
-		this.legcyId = legcyId;
-	}
-
-	public String getLegcyLocationname() {
-		return this.legcyLocationname;
-	}
-
-	public void setLegcyLocationname(String legcyLocationname) {
-		this.legcyLocationname = legcyLocationname;
-	}
-
-	public Integer getLegcyMineralclassified() {
-		return this.legcyMineralclassified;
-	}
-
-	public void setLegcyMineralclassified(Integer legcyMineralclassified) {
-		this.legcyMineralclassified = legcyMineralclassified;
-	}
-
-	public Long getLegcyParentId() {
-		return this.legcyParentId;
-	}
-
-	public void setLegcyParentId(Long legcyParentId) {
-		this.legcyParentId = legcyParentId;
-	}
-
-	public Integer getLegcyRockclassified() {
-		return this.legcyRockclassified;
-	}
-
-	public void setLegcyRockclassified(Integer legcyRockclassified) {
-		this.legcyRockclassified = legcyRockclassified;
-	}
-
-	public String getLegcyShapetype() {
-		return this.legcyShapetype;
-	}
-
-	public void setLegcyShapetype(String legcyShapetype) {
-		this.legcyShapetype = legcyShapetype;
-	}
-
-	public String getLegcyStartgeodeticdatum() {
-		return this.legcyStartgeodeticdatum;
-	}
-
-	public void setLegcyStartgeodeticdatum(String legcyStartgeodeticdatum) {
-		this.legcyStartgeodeticdatum = legcyStartgeodeticdatum;
-	}
-
-	public String getLegcyVerticaldatum() {
-		return this.legcyVerticaldatum;
-	}
-
-	public void setLegcyVerticaldatum(String legcyVerticaldatum) {
-		this.legcyVerticaldatum = legcyVerticaldatum;
 	}
 
 	public String getLocality() {
@@ -1427,7 +1273,7 @@ public class Sample implements Serializable {
 		a.setSampleUnit(sampleUnit);
 		a.setSize(size);
 		a.setSizeUnit(sizeUnit);
-		a.setVerticalDatum(legcyVerticaldatum);
+		a.setVerticalDatum(verticalDatum);
 		a.setZone(zone);
 
 		if( samplePublicationUrls !=null)

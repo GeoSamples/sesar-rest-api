@@ -35,13 +35,20 @@ public class GroupSampleController {
 	private GroupSampleService service;
 	
 	@ApiOperation(value = "Get a list of sample profile by group id")
-	@GetMapping(path="/samples/group/id/{id}",
+	@GetMapping(path= {"/samples/group/id/{id}",
+                       "/samples/group/id/{id}/limit/{limit}/pagenum/{pagenum}"},
 	            headers ={"Accept=application/json,application/xml"},
 			    produces={"application/json", "application/xml"}
 			    )  
 	@ResponseBody
-	public ResponseEntity<List<SampleProfileDAO>> get(@PathVariable Integer id) {      
-		List<Sample> sl = service.getSamplesById(id);
+	public ResponseEntity<List<SampleProfileDAO>> getById(@PathVariable Integer id,
+                                                      @PathVariable(required = false) Integer limit,
+                                                      @PathVariable(required = false) Integer pagenum) {
+        if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
+        if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
+        if(limit == null && pagenum == null) {limit = new Integer(100);pagenum = new Integer(0);}; //Default to first page
+
+		List<Sample> sl = service.getSamplesById(id,limit, pagenum);
 		if(sl == null || sl.isEmpty())
 		{
 			return new ResponseEntity<List<SampleProfileDAO>>(new ArrayList<SampleProfileDAO>(), HttpStatus.NOT_FOUND);		
@@ -59,12 +66,19 @@ public class GroupSampleController {
 
 	
 	@ApiOperation(value = "Get a list of sample profile by group name")
-	@GetMapping(path="/samples/group",
+	@GetMapping(path= {"/samples/group",
+                       "/samples/limit/{limit}/pagenum/{pagenum}/group"},
 	            headers ={"Accept=application/json,application/xml"},
 			    produces={"application/json", "application/xml"})  
 	@ResponseBody
-	public ResponseEntity<List<SampleProfileDAO>> getSamples(@RequestParam(required = true) String name) {      
-		List<Sample> sl = service.getSamplesByName(name);
+	public ResponseEntity<List<SampleProfileDAO>> getSamplesByName(@RequestParam(required = true) String name,
+                                                             @PathVariable(required = false) Integer limit,
+                                                             @PathVariable(required = false) Integer pagenum) {
+        if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
+        if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
+        if(limit == null && pagenum == null) {limit = new Integer(100);pagenum = new Integer(0);}; //Default to first page
+
+		List<Sample> sl = service.getSamplesByName(name,limit, pagenum);
 		if(sl == null || sl.isEmpty())
 		{
 			return new ResponseEntity<List<SampleProfileDAO>>(new ArrayList<SampleProfileDAO>(), HttpStatus.NOT_FOUND);		
@@ -81,18 +95,23 @@ public class GroupSampleController {
 	}
 
 	@ApiOperation(value = "Get a list of sample profile by group name")
-	@GetMapping(path="/samples/downloadcsv/group")
-    public ResponseEntity<String> downloadCSV(@RequestParam(required = true) String name, HttpServletResponse response) throws IOException {
+	@GetMapping(path= {"/samples/downloadcsv/group",
+                       "/samples/downloadcsv/limit/{limit}/pagenum/{pagenum}/group"})
+    public ResponseEntity<String> downloadCSV(@RequestParam(required = true) String name,
+                                              @PathVariable(required = false) Integer limit,
+                                              @PathVariable(required = false) Integer pagenum,
+                                              HttpServletResponse response) throws IOException {
+        if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
+        if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
+        if(limit == null && pagenum == null) {limit = new Integer(100);pagenum = new Integer(0);}; //Default to first page
  
-		List<Sample> sl = service.getSamplesByName(name);
+		List<Sample> sl = service.getSamplesByName(name,limit, pagenum);
 		if(sl == null || sl.isEmpty())
 		{
 			return new ResponseEntity<String>("Not Found", HttpStatus.NOT_FOUND);		
 		}
 		else
 		{
-		    
-	
             String csvFileName = "ecl_template.csv";
 
             // creates mock data
@@ -117,4 +136,25 @@ public class GroupSampleController {
             return new ResponseEntity<String >(rnt, HttpStatus.OK);
 		}
     }
+	
+	@ApiOperation(value = "Get total number of sample profile by group id")
+	@GetMapping(path= "/samples/total/group/id/{id}",
+			    produces={"application/json", "application/xml"}
+			    )  
+	@ResponseBody
+	public ResponseEntity<String> getTotalSamplesById(@PathVariable Integer id) {
+        Integer t = service.getTotalSamplesById(id);
+		return new ResponseEntity<String>(t.toString(), HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "Get total number of sample profile by group name")
+	@GetMapping(path= "/samples/total/group",
+			    produces={"application/json", "application/xml"}
+			    )  
+	@ResponseBody
+	public ResponseEntity<String> getTotalSamplesByName(@RequestParam(required = true) String name) {
+        Integer t = service.getTotalSamplesByName(name);
+		return new ResponseEntity<String>(t.toString(), HttpStatus.OK);
+	}
+
 }

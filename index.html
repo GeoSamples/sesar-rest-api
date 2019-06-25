@@ -25,5 +25,50 @@
   <li>/v1/samples/limit/{limit}/pagenum/{pagenum}/group Get a list of sample profile by group name</li>
   <li>/v1/samples/total/group Get total number of sample profile by group name</li>
   <li>/v1/samples/total/group/id/{id} Get total number of sample profile by group id</li>
+
+  <h4>LaunchType</h4>
+  <h6>Launch types from SESAR</h6>
+<li> /v1/vocabularies/launchtypes/{id} Get launch type by id</li>
+<li> /v1/vocabularies/launchtypes/all Get a complete list of launch type from SESAR</li>
+<li> /v1/vocabularies/launchtypes/name/{name} Get launch type by name</li>
+
+  <h4>NavType</h4>
+  <h6>Navigation types from SESAR</h6>
+  <li> /v1/vocabularies/navtypes/{id} Get navigation type content by id
+  <li> /v1/vocabularies/navtypes/all Get a complete list of navigation type from SESAR
+  <li> /v1/vocabularies/navtypes/name/{name} Get navigation type content by name
+
+  <h4>Sample</h4>
+  <h6>Sampe Metadata from SESAR</h6>
+<li> /v1/igsns/cruise Get a list IGSNs from SESAR according to cruise or field program name</li>
+<li> /v1/igsns/cruise/hideprivate/{hideprivate} Get a list IGSNs from SESAR according to cruise or field program name</li>
+<li> /v1/igsns/field_program Get a list IGSNs from SESAR according to cruise or field program name</li>
+<li> /v1/igsns/field_program/hideprivate/{hideprivate} Get a list IGSNs from SESAR according to cruise or field program name</li>
+<li> /v1/igsns/geopass Get a list IGSNs from SESAR according to the user geopass id</li>
+<li> /v1/igsns/limit/{limit}/pagenum/{pagenum}/cruise Get a list IGSNs from SESAR according to cruise or field program name</li>
+<li> /v1/igsns/limit/{limit}/pagenum/{pagenum}/field_program Get a list IGSNs from SESAR according to cruise or field program name</li>
+<li> /v1/igsns/limit/{limit}/pagenum/{pagenum}/geopass Get a list IGSNs from SESAR according to the user GeoPass login name</li>
+<li> /v1/igsns/limit/{limit}/pagenum/{pagenum}/hideprivate/{hideprivate}/cruise Get a list IGSNs from SESAR according to cruise or field program name</li>
+<li> /v1/igsns/total/geopass Get total number of IGSN from SESAR according to geopass username</li>
+<li> /v1/igsns/usercode/{usercode} Get a list IGSNs from SESAR according to user code. If hideprivate is set to 1, only IGSNs with public metadata will be returned. For large set of IGSNs, you can set limit and page number. Limit is for total numbers to be returned each time. Page number is for which page will be returned and starts with 0.</li>
+<li> /v1/igsns/usercode/{usercode}/hideprivate/{hideprivate} Get a list IGSNs from SESAR according to user code. If hideprivate is set to 1, only IGSNs with public metadata will be returned. For large set of IGSNs, you can set limit and page number. Limit is for total numbers to be returned each time. Page number is for which page will be returned and starts with 0.</li>
+<li> /v1/igsns/usercode/{usercode}/hideprivate/{hideprivate}/limit/{limit}/pagenum/{pagenum} Get a list IGSNs from SESAR according to user code. If hideprivate is set to 1, only IGSNs with public metadata will be returned. For large set of IGSNs, you can set limit and page number. Limit is for total numbers to be returned each time. Page number is for which page will be returned and starts with 0.</li>
+<li> /v1/igsns/usercode/{usercode}/limit/{limit}/pagenum/{pagenum} Get a list IGSNs from SESAR according to user code. If hideprivate is set to 1, only IGSNs with public metadata will be returned. For large set of IGSNs, you can set limit and page number. Limit is for total numbers to be returned each time. Page number is for which page will be returned and starts with 0.</li>
+<li> /v1/sample/id/{id} Get sample profile by id</li>
+<li> /v1/sample/igsn/{igsn} Get sample profile by igsn</li>
+<li> /v1/samples Get sample profile by sample name</li>
+<li> /v1/vocabularies/collectionmethods Get the existing list of collection methods from SESAR</li>
+<li> /v1/vocabularies/collectors Get the existing list of collector from SESAR</li>
+<li> /v1/vocabularies/cruisefieldprograms Get existing list of field name from SESAR</li>
+<li> /v1/vocabularies/physiogeographicfeatures Get the existing list of physionic features from SESAR</li>
+<li> /v1/vocabularies/platformnames Get existing list of platform name from SESAR</li>
+<li> /v1/vocabularies/platformtypes Get existing list of platform type from SESAR</li>
+
+<h4>SampleType</h4>
+<h6>Sample Types from SESAR</h6>
+<li> /v1/vocabularies/objecttypes/all Get a complete list of top level sample type (object type) in SESAR system</li>
+<li> /v1/vocabularies/sampletypes/{id} Get sample type content by sample type id</li>
+<li> /v1/vocabularies/sampletypes/all Get a complete list of sample types</li>
+<li> /v1/vocabularies/sampletypes/name/{name} Get sample type content by sample type name</li>
 </body>
 </html>

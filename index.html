@@ -2,17 +2,28 @@
 <body>
 <body>
 
-  <h2> Classifications </h2>
+  <h4>Classifications </h4>
+  <h6> Classification from SESAR</h6>
   <li>/v1/vocabularies/classifications/{id} Get classification content by classification id</li>
   <li>/v1/vocabularies/classifications/all Get a complete list of classifications</li>
   <li> /v1/vocabularies/classifications/name/{name} Get Classification content by Classification name</li>
   <li> /v1/vocabularies/materials/all Get a complete list of materials in SESAR system</li>
 
-  <h2>Country</h2>
-  Countries from SESAR
+  <h4>Country</h4>
+  <h6>Countries from SESAR</h6>
   <li>/v1/vocabularies/countries/{id} Get country content by country id</li>
   <li>/v1/vocabularies/countries/all Get a complete list of Countries from SESAR </li>
   <li> /v1/vocabularies/countries/name/{name} Get country content by country name </li>
   
+  <h4>GroupSample </h4>
+  <h6>Samples from a group in SESAR</h6>
+  <li>/v1/samples/downloadcsv/group Get a list of sample profile by group name </li>
+  <li>/v1/samples/downloadcsv/limit/{limit}/pagenum/{pagenum}/group Get a list of sample profile by group name</li>
+  <li>/v1/samples/group Get a list of sample profile by group name</li>
+  <li>/v1/samples/group/id/{id} Get a list of sample profile by group id</li>
+  <li>/v1/samples/group/id/{id}/limit/{limit}/pagenum/{pagenum} Get a list of sample profile by group id </li>
+  <li>/v1/samples/limit/{limit}/pagenum/{pagenum}/group Get a list of sample profile by group name</li>
+  <li>/v1/samples/total/group Get total number of sample profile by group name</li>
+  <li>/v1/samples/total/group/id/{id} Get total number of sample profile by group id</li>
 </body>
 </html>

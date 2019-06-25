@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 //@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/v1")
-@Api(value="Sample", description="Navigation types from SESAR",  tags = { "Sample" })
+@Api(value="Sample", description="Sampe Metadata from SESAR",  tags = { "Sample" })
 public class SampleController {
 
 	@Autowired

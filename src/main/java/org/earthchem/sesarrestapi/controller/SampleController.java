@@ -272,22 +272,19 @@ public class SampleController {
 	}
 	
 	
-    @ApiOperation(value = "Get a list IGSNs from SESAR according to the user geopass id")
-    @GetMapping(path= {"/igsns/geopass",
-                       "/igsns/limit/{limit}/pagenum/{pagenum}/geopass",
-                       "/igsns/limit/{limit}/pagenum/{pagenum}/geopass" },
-                params = "id",
+    @ApiOperation(value = "Get a list IGSNs from SESAR according to the geopass number")
+    @GetMapping(path= {"/igsns/geopassnum/{geopassnum}"},
                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
     @ResponseBody
-    public ResponseEntity<List<String> > getIGSNsById(@RequestParam(required = true) Integer id,
-                                                      @PathVariable(required = false) Integer limit,
-                                                      @PathVariable(required = false) Integer pagenum)
+    public ResponseEntity<List<String> > getIGSNsById(@PathVariable(required = true) Integer geopassnum,
+                                                      @RequestParam(required = false) Integer limit,
+                                                      @RequestParam(required = false) Integer pagenum)
     {
         if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
         if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
         if(limit == null && pagenum == null) {limit = new Integer(100);pagenum = new Integer(0);}; //Default to first page
 
-        List<String> l = service.getIGSNsByGeoPassId(id,limit,pagenum);
+        List<String> l = service.getIGSNsByGeoPassId(geopassnum,limit,pagenum);
 	    if(l == null || l.isEmpty() ) {
            return new ResponseEntity<List<String> >(l, HttpStatus.NOT_FOUND);
         }
@@ -296,14 +293,12 @@ public class SampleController {
     
 	
     @ApiOperation(value = "Get a list IGSNs from SESAR according to the user GeoPass login name")
-    @GetMapping(path= {"/igsns/geopass",
-                       "/igsns/limit/{limit}/pagenum/{pagenum}/geopass",
-                       "/igsns/limit/{limit}/pagenum/{pagenum}/geopass"}, 
-                params = "username", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+    @GetMapping(path= {"/igsns/geopass"}, 
+                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
     @ResponseBody
     public ResponseEntity<List<String> > getIGSNsByName(@RequestParam(required = true) String username,  
-                                                        @PathVariable(required = false) Integer limit,
-                                                        @PathVariable(required = false) Integer pagenum) 
+                                                        @RequestParam(required = false) Integer limit,
+                                                        @RequestParam(required = false) Integer pagenum) 
     {
         if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
         if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
@@ -317,20 +312,13 @@ public class SampleController {
     }
 
     @ApiOperation(value = "Get a list IGSNs from SESAR according to cruise or field program name")
-    @GetMapping(path= {"/igsns/field_program",
-                       "/igsns/field_program/hideprivate/{hideprivate}",
-                       "/igsns/limit/{limit}/pagenum/{pagenum}/field_program",
-                       "/igsns/limit/{limit}/pagenum/{pagenum}/field_program",
-                       "/igsns/cruise",
-                       "/igsns/cruise/hideprivate/{hideprivate}",
-                       "/igsns/limit/{limit}/pagenum/{pagenum}/cruise",
-                       "/igsns/limit/{limit}/pagenum/{pagenum}/hideprivate/{hideprivate}/cruise"}, 
-                params = "name", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+    @GetMapping(path= {"/igsns/field_program"}, 
+                produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
     @ResponseBody
     public ResponseEntity<List<String> > getIGSNsByCruiseFieldProgram(@RequestParam(required = true) String name,
-                                                                      @PathVariable(required = false) Integer hideprivate,
-                                                                      @PathVariable(required = false) Integer limit,
-                                                                      @PathVariable(required = false) Integer pagenum)
+                                                                      @RequestParam(required = false) Integer hideprivate,
+                                                                      @RequestParam(required = false) Integer limit,
+                                                                      @RequestParam(required = false) Integer pagenum)
     {
         if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
         if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
@@ -344,18 +332,14 @@ public class SampleController {
     }
     
     @ApiOperation(value = "Get a list IGSNs from SESAR according to user code. If hideprivate is set to 1, only IGSNs with public metadata will be returned. For large set of IGSNs, you can set limit and page number. Limit is for total numbers to be returned each time. Page number is for which page will be returned and starts with 0.")
-    @GetMapping(path= { "/igsns/usercode/{usercode}",
-                        "/igsns/usercode/{usercode}/limit/{limit}/pagenum/{pagenum}",
-                        "/igsns/usercode/{usercode}/hideprivate/{hideprivate}",
-                        "/igsns/usercode/{usercode}/hideprivate/{hideprivate}/limit/{limit}/pagenum/{pagenum}"
-                      },
+    @GetMapping(path= { "/igsns/usercode/{usercode}"},
                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE
                )
     @ResponseBody
     public ResponseEntity<List<String> > getIGSNsByUserCode(@PathVariable String usercode,
-                                                            @PathVariable(required = false) Integer hideprivate,
-                                                            @PathVariable(required = false) Integer limit,
-                                                            @PathVariable(required = false) Integer pagenum
+                                                            @RequestParam(required = false) Integer hideprivate,
+                                                            @RequestParam(required = false) Integer limit,
+                                                            @RequestParam(required = false) Integer pagenum
                                                             )
     {
         if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
@@ -370,7 +354,7 @@ public class SampleController {
     }
 
     @ApiOperation(value = "Get total number of IGSN from SESAR according to geopass username")
-    @GetMapping(path="/igsns/total/geopass", params = "username", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+    @GetMapping(path="/igsns/total/username", params = "username", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
     @ResponseBody
     public ResponseEntity<Integer > getIGSNCountByName(@RequestParam(required = true) String username) {  
 	    Integer l = service.getIGSNCountByGeoPassUserName(username);      
@@ -378,8 +362,8 @@ public class SampleController {
     }
     
     
-    @ApiOperation(value = "Get total number of IGSN from SESAR according to geopass id")
-    @GetMapping(path="/igsns/total/geopass", params = "id", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+    @ApiOperation(value = "Get total number of IGSN from SESAR according to geopass number")
+    @GetMapping(path="/igsns/total/geopassnum", params = "id", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
     @ResponseBody
     public ResponseEntity<Integer > getIGSNCountById(@RequestParam(required = true) Integer id) {  
 	    Integer l = service.getIGSNCountByGeoPassId(id);      

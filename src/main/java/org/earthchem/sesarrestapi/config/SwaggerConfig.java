@@ -6,7 +6,6 @@ import static springfox.documentation.builders.PathSelectors.regex;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -21,7 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig extends WebMvcConfigurationSupport {
 	@Bean
-    public Docket eclApi() {
+    public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()                 
                 .apis(RequestHandlerSelectors.basePackage("org.earthchem.sesarrestapi.controller"))
@@ -41,23 +40,17 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 	              .contact(new Contact("SESAR", "https://www.geosamples.org", "info@geosamples.org"))
 	              .build();
 	}
-	 
-  @Override
-    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html")
+	
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+        registry
+                .addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
- 
-        registry.addResourceHandler("/webjars/**")
+
+        registry
+                .addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
-  
-  @Override
-  public void addViewControllers(ViewControllerRegistry registry) {
-      registry.addRedirectViewController("/documentation/v2/api-docs", "/v2/api-docs");
-      registry.addRedirectViewController("/documentation/configuration/ui", "/configuration/ui");
-      registry.addRedirectViewController("/documentation/configuration/security", "/configuration/security");
-      registry.addRedirectViewController("/documentation/swagger-resources", "/swagger-resources");
-      registry.addRedirectViewController("/documentation", "/swagger-ui.html");
-  }
 
 }

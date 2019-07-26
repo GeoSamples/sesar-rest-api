@@ -36,7 +36,10 @@ public class GroupSampleController {
 	
 	@ApiOperation(value = "Get a list of sample profile by group id")
 	@GetMapping(path= {"/samples/group/id/{id}",
-                       "/samples/group/id/{id}/limit/{limit}/pagenum/{pagenum}"},
+                       "/samples/group/id/{id}/limit/{limit}/pagenum/{pagenum}",
+                       "/samples/group/id/{id}/limit/{limit}",
+                       "/samples/group/id/{id}/pagenum/{pagenum}"
+                       },
 	            headers ={"Accept=application/json,application/xml"},
 			    produces={"application/json", "application/xml"}
 			    )  
@@ -48,7 +51,7 @@ public class GroupSampleController {
         if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
         if(limit == null && pagenum == null) {limit = new Integer(100);pagenum = new Integer(0);}; //Default to first page
 
-		List<Sample> sl = service.getSamplesById(id,limit, pagenum);
+		List<Sample> sl = service.getPublicSamplesById(id,limit, pagenum);
 		if(sl == null || sl.isEmpty())
 		{
 			return new ResponseEntity<List<SampleProfileDAO>>(new ArrayList<SampleProfileDAO>(), HttpStatus.NOT_FOUND);		
@@ -66,14 +69,16 @@ public class GroupSampleController {
 
 	
 	@ApiOperation(value = "Get a list of sample profile by group name")
-	@GetMapping(path= {"/samples/group",
-                       "/samples/limit/{limit}/pagenum/{pagenum}/group"},
+	@GetMapping(path= {"/samples/group"},
 	            headers ={"Accept=application/json,application/xml"},
 			    produces={"application/json", "application/xml"})  
 	@ResponseBody
-	public ResponseEntity<List<SampleProfileDAO>> getSamplesByName(@RequestParam(required = true) String name,
-                                                             @PathVariable(required = false) Integer limit,
-                                                             @PathVariable(required = false) Integer pagenum) {
+	public ResponseEntity<List<SampleProfileDAO>> getSamplesByName(
+			                                                 @RequestParam(required = true) String name,
+                                                             @RequestParam(required = false) Integer limit,
+                                                             @RequestParam(required = false) Integer pagenum
+                                                             
+                                                             ) {
         if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
         if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
         if(limit == null && pagenum == null) {limit = new Integer(100);pagenum = new Integer(0);}; //Default to first page
@@ -94,56 +99,53 @@ public class GroupSampleController {
 		}
 	}
 
-	@ApiOperation(value = "Get a list of sample profile by group name")
-	@GetMapping(path= {"/samples/downloadcsv/group",
-                       "/samples/downloadcsv/limit/{limit}/pagenum/{pagenum}/group"})
-    public ResponseEntity<String> downloadCSV(@RequestParam(required = true) String name,
-                                              @PathVariable(required = false) Integer limit,
-                                              @PathVariable(required = false) Integer pagenum,
+	@ApiOperation(value = "Get a list of public sample profile by group name")
+	@GetMapping(path= {"/samples/downloadcsv/group"})
+    public void downloadCSV(@RequestParam(required = true) String name,
+                                              @RequestParam(required = false) Integer limit,
+                                              @RequestParam(required = false) Integer pagenum,
                                               HttpServletResponse response) throws IOException {
+		response.setContentType("text/csv");
         if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
         if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
         if(limit == null && pagenum == null) {limit = new Integer(100);pagenum = new Integer(0);}; //Default to first page
- 
+        String csvFileName = "data_template.csv";
+     
+        String headerKey = "Content-Disposition";
+        String headerValue = String.format("attachment; filename=\"%s\"", csvFileName);
+        response.setHeader(headerKey, headerValue);
+
+       // uses the Super CSV API to generate CSV data from the model data
+       ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+
+       String[] header = { "name", "igsn", "latitude", "longitude","latitudeEnd","longitudeEnd",
+               "elevation", "elevationUnit", "sampleType", "sampleSubType","material","navigationType",
+               "ageMin","ageMax","ageUnit","primaryLocationType","primaryLocationName","depthMin","depthMax","depthScale"};
 		List<Sample> sl = service.getSamplesByName(name,limit, pagenum);
+		
 		if(sl == null || sl.isEmpty())
 		{
-			return new ResponseEntity<String>("Not Found", HttpStatus.NOT_FOUND);		
+			csvWriter.writeHeader(header);
 		}
 		else
 		{
-            String csvFileName = "ecl_template.csv";
-
-            // creates mock data
-             String headerKey = "Content-Disposition";
-             String headerValue = String.format("attachment; filename=\"%s\"",
-                     csvFileName);
-             response.setHeader(headerKey, headerValue);
- 
-            // uses the Super CSV API to generate CSV data from the model data
-            ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
- 
-            String[] header = { "name", "igsn", "latitude", "longitude","latitudeEnd","longitudeEnd",
-                    "elevation", "elevationUnit", "sampleType", "sampleSubType","material","navigationType",
-                    "ageMin","ageMax","ageUnit","primaryLocationType","primaryLocationName","depthMin","depthMax","depthScale"};
- 
+			csvWriter.writeHeader(header);
 	        for( Sample s: sl)
 	        {
 	    	    csvWriter.write(s.getDAO(),header);
 	        }
-	        String rnt=csvWriter.toString();
-            csvWriter.close();
-            return new ResponseEntity<String >(rnt, HttpStatus.OK);
+	        //String rnt=csvWriter.toString();            
 		}
+		csvWriter.close();
     }
 	
-	@ApiOperation(value = "Get total number of sample profile by group id")
+	@ApiOperation(value = "Get total number of public sample profile by group id")
 	@GetMapping(path= "/samples/total/group/id/{id}",
 			    produces={"application/json", "application/xml"}
 			    )  
 	@ResponseBody
 	public ResponseEntity<String> getTotalSamplesById(@PathVariable Integer id) {
-        Integer t = service.getTotalSamplesById(id);
+        Integer t = service.getTotalPublicSamplesById(id);
 		return new ResponseEntity<String>(t.toString(), HttpStatus.OK);
 	}
 

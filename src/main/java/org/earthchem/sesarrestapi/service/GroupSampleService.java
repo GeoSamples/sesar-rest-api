@@ -30,9 +30,9 @@ public class GroupSampleService {
 	 * @param pagenum: the page number. Default to 0.
 	 * @return a list of Sample object.
 	 */
-	public List<Sample> getSamplesById(Integer id, Integer limit, Integer pagenum)
+	public List<Sample> getPublicSamplesById(Integer id, Integer limit, Integer pagenum)
 	{
-	    List<Sample> al = repo.getSamplesById(id,PageRequest.of(pagenum, limit));
+	    List<Sample> al = repo.getPublicSamplesById(id,PageRequest.of(pagenum, limit));
 	    return al;
 	}
 
@@ -41,9 +41,9 @@ public class GroupSampleService {
 	 * @param id: group id
 	 * @return an Integer 
 	 */
-	public Integer getTotalSamplesById(Integer id)
+	public Integer getTotalPublicSamplesById(Integer id)
 	{
-	    return repo.getTotalSamplesById(id);
+	    return repo.getTotalPublicSamplesById(id);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class GroupSampleService {
 	 */
 	public List<Sample> getSamplesByName(String name, Integer limit, Integer pagenum)
 	{
-	    List<Sample> al = repo.getSamplesByName(name,PageRequest.of(pagenum, limit));
+	    List<Sample> al = repo.getPublicSamplesByName(name,PageRequest.of(pagenum, limit));
 	    return al;
 	}
 
@@ -66,6 +66,6 @@ public class GroupSampleService {
 	 */
 	public Integer getTotalSamplesByName(String name)
 	{
-	    return repo.getTotalSamplesByName(name);
+	    return repo.getTotalPublicSamplesByName(name);
 	}
 }

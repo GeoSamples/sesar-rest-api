@@ -1,10 +1,7 @@
 package org.earthchem.sesarrestapi.dao;
-
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Id;
-
 
 public class CountryDAO implements Serializable {
 			private static final long serialVersionUID = 1L;

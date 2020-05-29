@@ -1,7 +1,5 @@
 package org.earthchem.sesarrestapi.dao;
-
 import java.io.Serializable;
-
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 @JacksonXmlRootElement(localName="navigation_type")

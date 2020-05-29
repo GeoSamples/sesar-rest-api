@@ -1,11 +1,9 @@
 package org.earthchem.sesarrestapi.dao;
-
 import java.io.Serializable;
 
 /**
- * The presentation class for the sample_type database table.
- * 
- */
+ * The presentation class for the sample_type database table. 
+*/
 public class SampleTypeDAO  implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -1,12 +1,10 @@
 package org.earthchem.sesarrestapi.dao;
-
 import java.io.Serializable;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 /**
- * The data access class for the launch_type database table.
- * 
+ * The data access class for the launch_type database table. 
  */
 @JacksonXmlRootElement(localName="launch_type")
 public class LaunchTypeDAO implements Serializable {

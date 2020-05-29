@@ -1,5 +1,4 @@
 package org.earthchem.sesarrestapi.dao;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 /**
  * The sample profile class for the sample metadata display page.
- * 
  */
  @JacksonXmlRootElement(localName="sample", namespace="https://app.geosamples.org")
  @JsonInclude(JsonInclude.Include.NON_EMPTY)

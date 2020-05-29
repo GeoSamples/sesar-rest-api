@@ -28,7 +28,7 @@ public class NavTypeController {
 	private NavTypeService service;
 	
 	@ApiOperation(value = "Get navigation type content by id")
-	@GetMapping(path="/navtypes/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/navtypes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<NavTypeDAO> get(@PathVariable Integer id) {
 		   NavType obj = service.get(id);
@@ -42,7 +42,7 @@ public class NavTypeController {
 	}
 	
 	@ApiOperation(value = "Get navigation type content by name")
-	@GetMapping(path="/navtypes/name/{name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/navtypes/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public NavTypeDAO getByName(@PathVariable String name) {
 		   NavType obj = service.getByName(name);
@@ -50,7 +50,7 @@ public class NavTypeController {
 	}
 	
 	@ApiOperation(value = "Get a complete list of navigation type from SESAR")
-	@GetMapping(path="/navtypes/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/navtypes/all", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<HashMap<String, String> > getAll() {
 		   HashMap<String, String> obj = service.getAll();

@@ -28,7 +28,7 @@ public class CountryController {
 	private CountryService service;
 	
 	@ApiOperation(value = "Get country content by country id")
-	@GetMapping(path="/countries/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/countries/{id}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<CountryDAO> get(@PathVariable Integer id) {
 		   Country obj = service.get(id);
@@ -42,7 +42,7 @@ public class CountryController {
 	}
 	
 	@ApiOperation(value = "Get country content by country name")
-	@GetMapping(path="/countries/name/{name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/countries/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public CountryDAO getByName(@PathVariable String name) {
 		   Country obj = service.getByName(name);
@@ -50,7 +50,7 @@ public class CountryController {
 	}
 	
 	@ApiOperation(value = "Get a complete list of Countries from SESAR")
-	@GetMapping(path="/countries/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/countries/all", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<HashMap<String, String> > getAll() {
 		   HashMap<String, String> obj = service.getAll();

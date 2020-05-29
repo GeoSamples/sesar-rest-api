@@ -29,7 +29,7 @@ public class ClassificationController {
 	private ClassificationService service;
 	
 	@ApiOperation(value = "Get classification content by classification id")
-	@GetMapping(path="/classifications/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/classifications/{id}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<ClassificationDAO> get(@PathVariable Integer id) {
 		   Classification obj = service.get(id);
@@ -43,7 +43,7 @@ public class ClassificationController {
 	}
 	
 	@ApiOperation(value = "Get Classification content by Classification name")
-	@GetMapping(path="/classifications/name/{name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/classifications/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ClassificationDAO getByName(@PathVariable String name) {
 		   Classification obj = service.getByName(name);
@@ -51,7 +51,7 @@ public class ClassificationController {
 	}
 	
 	@ApiOperation(value = "Get a complete list of classifications")
-	@GetMapping(path="/classifications/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/classifications/all", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<HashMap<String, ArrayList<String> > > getAll() {
 		   HashMap<String, ArrayList<String> > obj = service.getAll();

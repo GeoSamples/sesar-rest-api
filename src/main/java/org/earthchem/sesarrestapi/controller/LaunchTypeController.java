@@ -28,7 +28,7 @@ public class LaunchTypeController {
 	private LaunchTypeService service;
 	
 	@ApiOperation(value = "Get launch type by id")
-	@GetMapping(path="/launchtypes/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/launchtypes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<LaunchTypeDAO> get(@PathVariable Integer id) {
 		   LaunchType obj = service.get(id);
@@ -42,7 +42,7 @@ public class LaunchTypeController {
 	}
 	
 	@ApiOperation(value = "Get launch type by name")
-	@GetMapping(path="/launchtypes/name/{name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/launchtypes/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public LaunchTypeDAO getByName(@PathVariable String name) {
 		   LaunchType obj = service.getByName(name);
@@ -50,7 +50,7 @@ public class LaunchTypeController {
 	}
 	
 	@ApiOperation(value = "Get a complete list of launch type from SESAR")
-	@GetMapping(path="/launchtypes/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/launchtypes/all", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<HashMap<String, String> > getAll() {
 		   HashMap<String, String> obj = service.getAll();

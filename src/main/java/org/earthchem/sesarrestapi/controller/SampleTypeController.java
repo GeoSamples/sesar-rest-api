@@ -29,7 +29,7 @@ public class SampleTypeController {
 	private SampleTypeService service;
 	
 	@ApiOperation(value = "Get sample type content by sample type id")
-	@GetMapping(path="/sampletypes/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/sampletypes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<SampleTypeDAO> get(@PathVariable Integer id) {
 		   SampleType obj = service.get(id);
@@ -43,7 +43,7 @@ public class SampleTypeController {
 	}
 	
 	@ApiOperation(value = "Get sample type content by sample type name")
-	@GetMapping(path="/sampletypes/name/{name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/sampletypes/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public SampleTypeDAO getByName(@PathVariable String name) {
 		   SampleType obj = service.getByName(name);
@@ -51,7 +51,7 @@ public class SampleTypeController {
 	}
 	
 	@ApiOperation(value = "Get a complete list of sample types")
-	@GetMapping(path="/sampletypes/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/sampletypes/all", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<HashMap<String, ArrayList<String> > > getAll() {
 		   HashMap<String, ArrayList<String> > obj = service.getAll();
@@ -66,7 +66,7 @@ public class SampleTypeController {
 	
 	
 	@ApiOperation(value = "Get a complete list of top level sample type (object type) in SESAR system")
-	@GetMapping(path="/objecttypes/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/objecttypes/all", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<HashMap<String, ArrayList<String> > > getAllMaterials() {
 		   HashMap<String, ArrayList<String> > obj = service.getAllMaterials();

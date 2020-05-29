@@ -34,7 +34,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 	      return new ApiInfoBuilder()
 	              .title("SESAR REST API")
 	              .description("SESAR REST API for IGSN Registration")
-	              .version("1.0.0")
+	              .version("0.0.4")
 	              .license("Apache License Version 2.0")
 	              .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
 	              .contact(new Contact("SESAR", "https://www.geosamples.org", "info@geosamples.org"))

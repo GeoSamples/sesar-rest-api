@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.earthchem.sesarrestapi.dao.LaunchTypeDAO;
@@ -25,6 +28,8 @@ public class LaunchType implements Serializable {
 
 	@Id
 	@Column(name="launch_type_id")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="launchtype_seq")	
+	@SequenceGenerator(name = "launchtype_seq", sequenceName = "launch_type_launch_type_id_seq",allocationSize=1)
 	private Integer launchTypeId;
 
 	private String description;

@@ -5,10 +5,13 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -24,6 +27,8 @@ public class SampleUploadHistory implements Serializable {
 
 	@Id
 	@Column(name="sample_upload_history_id")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sesar_upload_history_seq")	
+	@SequenceGenerator(name = "sesar_upload_history_seq", sequenceName = "sample_upload_history_sample_upload_history_id_seq",allocationSize=1)
 	private Integer sampleUploadHistoryId;
 
 	@Column(name="upload_from")

@@ -2,29 +2,37 @@ package org.earthchem.sesarrestapi.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 
+import org.earthchem.sesarrestapi.dao.Author;
+import org.earthchem.sesarrestapi.dao.Identifier;
 import org.earthchem.sesarrestapi.dao.SampleDocDAO;
+import org.earthchem.sesarrestapi.dao.SampleJSONLDDAO;
 import org.earthchem.sesarrestapi.dao.SampleProfileDAO;
 import org.earthchem.sesarrestapi.dao.SamplePublicationUrlDAO;
 import org.postgresql.geometric.PGpoint;
 
 
 /**
- * The persistent class for the sample database table.
- * 
+ * The persistent class for the sample database table. 
  */
 @Entity
 @NamedQuery(name="Sample.findAll", query="SELECT s FROM Sample s")
@@ -34,6 +42,8 @@ public class Sample implements Serializable {
 
 	@Id
 	@Column(name="sample_id")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sample_seq")
+	@SequenceGenerator(name = "sample_seq", sequenceName = "sample_sample_id_seq",allocationSize=1)
 	private Integer sampleId;
 
 	@Column(name="age_max")
@@ -1295,5 +1305,125 @@ public class Sample implements Serializable {
         }
 
 		return a;
+	}
+	
+	public SampleJSONLDDAO getJSONLDDAO()
+	{
+		SampleJSONLDDAO obj = new SampleJSONLDDAO();
+	
+		HashMap<String, String> m= new HashMap<String, String>();
+		m.put("@vocab", "http://schema.org");
+		m.put("igsn-json", "https://schema.igsn.org/sample/v1");		
+		obj.setContext(m);
+		obj.setType("Sample");
+		obj.setName(name);
+		obj.setIGSN(igsn);
+		
+		if(sesarUserCode != null)
+		   obj.setUserCode(sesarUserCode.getUserCode());
+		
+		obj.setSameAs("https://data.geosamples.org/sample/igsn/"+igsn);
+		
+		//Author Block
+		ArrayList<Author> cs = new ArrayList<Author>(); //     
+    	HashMap<String, Object> owner = new HashMap<String, Object>(); 
+    	owner.put("@type", "Role");
+        owner.put("roleName", "Sample Owner");
+        cs.add(new Author("Person",sesarUser1.getFname()+" "+sesarUser1.getLname(), sesarUser1.getFname(),sesarUser1.getLname()));
+        owner.put("author", cs);        
+    	HashMap<String, Object> registrant = new HashMap<String, Object>(); 
+    	registrant.put("@type", "Role");
+        registrant.put("roleName", "Sample Registrant");
+        cs.add(new Author("Person",sesarUser2.getFname()+" "+sesarUser2.getLname(), sesarUser2.getFname(),sesarUser2.getLname()));
+        registrant.put("author", cs); 
+        ArrayList<Object> author = new ArrayList<Object>();
+        author.add(owner);
+        author.add(registrant); 
+        obj.setContributor( author ); 
+        
+        if(description != null)
+		  obj.setDescription(description);
+		
+        if(classification1 != null)
+		  obj.setClassificationType(classification1.getName());
+        
+        if(sampleType3 != null)
+		obj.setSampleType(sampleType3.getName());
+		
+		HashMap<String, Object> spc= new HashMap<String, Object>();
+		spc.put("@type", "Place");
+		ArrayList<HashMap<String, String>> geos = new ArrayList<HashMap<String, String>>();
+		NumberFormat formatter = new DecimalFormat("#0.0000");
+		if(latitudeEnd != null && longitudeEnd !=null)
+		{
+			HashMap<String, String> me = new HashMap<String, String>();
+			me.put("@type", "GeoSpace");
+			
+			String lat = formatter.format(latitude);
+			String lon = formatter.format(longitude);
+			String lat2 = formatter.format(latitudeEnd);
+			String lon2 = formatter.format(longitudeEnd);
+			me.put("Line", lat+" "+lon+","+lat2+" "+lon2);
+			geos.add(me);
+		}
+		else if(latitude != null && longitude !=null)
+		{
+			HashMap<String, String> me = new HashMap<String, String>();
+			me.put("@type", "GeoCoordinates");
+			
+			String lat = formatter.format(latitude);
+			String lon = formatter.format(longitude);
+			me.put("latitude", lat);
+			me.put("longitude", lon);
+			geos.add(me);
+		}
+		if(geos.size() !=0 )
+		{
+		  spc.put("geo", geos);
+		  obj.setSpatialCoverage(spc);
+		}
+		
+		obj.setUrl("http://igsn.org/"+igsn);
+		
+		ArrayList<Identifier> exids = new ArrayList<Identifier>();
+		for(SamplePublicationUrl exid: samplePublicationUrls)
+		{
+			String idtype = exid.getUrlType();
+			String idvalue= exid.getDescription();
+			String url = exid.getUrl();
+			Identifier idf = new Identifier(idtype, url+idvalue, idvalue);
+			exids.add(idf);
+		}
+		if(exids.size() !=0 )
+		{
+		  HashMap<String, Object> exidhm = new HashMap<String, Object>();
+		  exidhm.put("@type", "CreativeWork");
+		  exidhm.put("identifier", exids);		
+		  obj.setIdentifier(exidhm); //Add Enternal identifier
+		}
+		
+		String pattern = "yyyy-MM-dd";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		obj.setDateCreated(simpleDateFormat.format(registrationDate));
+		obj.setDatePublished(simpleDateFormat.format(publishDate));
+
+		HashMap<String, Object> publisher = new HashMap<String, Object>();
+		publisher.put("@id","https://www.geosamples.org");
+		publisher.put("@type", "Organization");
+		publisher.put("name", "EarthChem");
+		publisher.put("url", "https://www.geosamples.org");
+		HashMap<String, String> contactP = new HashMap<String, String>();
+		contactP.put("@type", "ContactPoint");
+		contactP.put("name", "Information Desk");
+		contactP.put("email", "info@geosamples.org");
+		contactP.put("url", "https://www.geosamples.org/contact/");
+		contactP.put("contactType", "Customer Service");
+		publisher.put("contactPoint", contactP);
+		
+		obj.setPublisher(publisher);
+
+		obj.setId("http://igsn.org/sample/igsn/"+igsn);
+			
+		return obj;
 	}
 }

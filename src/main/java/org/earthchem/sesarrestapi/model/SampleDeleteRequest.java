@@ -5,8 +5,11 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -21,6 +24,8 @@ public class SampleDeleteRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sesar_delete_seq")	
+	@SequenceGenerator(name = "sesar_delete_seq", sequenceName = "sample_delete_request_id_seq",allocationSize=1)
 	private Long id;
 
 	@Column(name="deactivated_by")

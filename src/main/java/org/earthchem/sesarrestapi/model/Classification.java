@@ -5,11 +5,14 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import org.earthchem.sesarrestapi.dao.ClassificationDAO;
 
@@ -25,6 +28,8 @@ public class Classification implements Serializable {
 
 	@Id
 	@Column(name="classification_id")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="classification_seq")
+	@SequenceGenerator(name = "classification_seq", sequenceName = "classification_classification_id_seq",allocationSize=1)
 	private Integer classificationId;
 
 	private String description;

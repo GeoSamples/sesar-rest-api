@@ -4,10 +4,13 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.earthchem.sesarrestapi.dao.SamplePublicationUrlDAO;
@@ -25,6 +28,8 @@ public class SamplePublicationUrl implements Serializable {
 
 	@Id
 	@Column(name="sample_publication_url_id")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sesar_publication_url_seq")	
+	@SequenceGenerator(name = "sesar_publication_url_seq", sequenceName = "sample_publication_url_sample_publication_url_id_seq",allocationSize=1)
 	private Integer samplePublicationUrlId;
 
 	private String description;

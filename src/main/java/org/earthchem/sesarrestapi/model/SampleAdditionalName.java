@@ -4,10 +4,13 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -23,6 +26,8 @@ public class SampleAdditionalName implements Serializable {
 
 	@Id
 	@Column(name="sample_additional_name_id")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sample_additional_name_seq")	
+	@SequenceGenerator(name = "sample_additional_name_seq", sequenceName = "sample_additional_name_sample_additional_name_id_seq",allocationSize=1)
 	private Integer sampleAdditionalNameId;
 
 	private String name;

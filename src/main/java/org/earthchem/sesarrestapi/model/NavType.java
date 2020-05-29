@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.earthchem.sesarrestapi.dao.NavTypeDAO;
@@ -25,6 +28,8 @@ public class NavType implements Serializable {
 
 	@Id
 	@Column(name="nav_type_id")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="navtype_seq")	
+	@SequenceGenerator(name = "navtype_seq", sequenceName = "nav_type_nav_type_id_seq",allocationSize=1)
 	private Integer navTypeId;
 
 	private String description;

@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import org.earthchem.sesarrestapi.dao.CountryDAO;
 
@@ -23,7 +26,9 @@ public class Country implements Serializable {
 
 	@Id
 	@Column(name="country_id")
-	private Integer countryId;
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="country_seq")
+	@SequenceGenerator(name = "country_seq", sequenceName = "country_country_id_seq",allocationSize=1)
+    private Integer countryId;
 
 	@Column(name="is_active")
 	private Integer isActive;

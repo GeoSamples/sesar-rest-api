@@ -2,16 +2,22 @@ package org.earthchem.sesarrestapi.model;
 
 import java.io.Serializable;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.earthchem.sesarrestapi.dao.SampleDocDAO;
+
+import ch.qos.logback.core.joran.action.TimestampAction;
 
 
 /**
@@ -26,6 +32,8 @@ public class SampleDoc implements Serializable {
 
 	@Id
 	@Column(name="sample_doc_id")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sesar_doc_seq")	
+	@SequenceGenerator(name = "sesar_doc_seq", sequenceName = "sample_doc_sample_doc_id_seq",allocationSize=1)
 	private Integer sampleDocId;
 
 	@Column(name="file_name")
@@ -38,7 +46,7 @@ public class SampleDoc implements Serializable {
 	private Integer primaryImage;
 
 	@Column(name="uploaded_date")
-	private Time uploadedDate;
+	private Timestamp uploadedDate;
 
 	//bi-directional many-to-one association to Sample
 	@ManyToOne
@@ -50,6 +58,12 @@ public class SampleDoc implements Serializable {
 	@JoinColumn(name="uploaded_by")
 	private SesarUser sesarUser;
 
+	@Column(name="file_size")
+	private Long fileSize;
+	
+	@Column(name="file_type")
+	private String fileType;
+	
 	public SampleDoc() {
 	}
 
@@ -85,11 +99,11 @@ public class SampleDoc implements Serializable {
 		this.primaryImage = primaryImage;
 	}
 
-	public Time getUploadedDate() {
+	public Timestamp getUploadedDate() {
 		return this.uploadedDate;
 	}
 
-	public void setUploadedDate(Time uploadedDate) {
+	public void setUploadedDate(Timestamp uploadedDate) {
 		this.uploadedDate = uploadedDate;
 	}
 
@@ -130,5 +144,22 @@ public class SampleDoc implements Serializable {
 		a.setUrlToFile("https://app.geosamples.org"+str);		
 		a.setPrimaryImage(primaryImage);
 		return a;
+	}
+	
+
+	public Long getFileSize() {
+		return this.fileSize;
+	}
+
+	public void setFileSize(Long s) {
+		this.fileSize = s;
+	}
+
+	public String getFileType() {
+		return this.fileType;
+	}
+
+	public void setFileType(String s) {
+		this.fileType = s;
 	}
 }

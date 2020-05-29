@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.earthchem.sesarrestapi.dao.SampleJSONLDDAO;
 import org.earthchem.sesarrestapi.dao.SampleProfileDAO;
 import org.earthchem.sesarrestapi.model.Sample;
 import org.earthchem.sesarrestapi.service.SampleService;
@@ -26,6 +27,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 //@CrossOrigin(origins = "http://localhost:8080")
@@ -87,7 +90,7 @@ public class SampleController {
 	}
 
 	@ApiOperation(value = "Get existing list of platform type from SESAR")
-	@GetMapping(path="/vocabularies/platformtypes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/vocabularies/platformtypes", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<List<String> > getPlatformTypes() {  
 		List<String> l = service.getPlatformTypes();
@@ -120,7 +123,7 @@ public class SampleController {
 	}
 	
 	@ApiOperation(value = "Get the existing list of physionic features from SESAR")
-	@GetMapping(path="/vocabularies/physiogeographicfeatures", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/vocabularies/physiogeographicfeatures", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<List<String> > getPhysiographicFeatures() { 
 		List<String> l = service.getPrimaryLocationTypes();
@@ -150,7 +153,7 @@ public class SampleController {
 	}
 	
 	@ApiOperation(value = "Get the existing list of collection  methods from SESAR")
-	@GetMapping(path="/vocabularies/collectionmethods", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/vocabularies/collectionmethods", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<List<String> > getCollectionMethods() { 
 		
@@ -181,7 +184,7 @@ public class SampleController {
 	}	
 	
 	@ApiOperation(value = "Get the existing list of collector from SESAR")
-	@GetMapping(path="/vocabularies/collectors", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/vocabularies/collectors", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<List<String> > getCollectors() { 
 		
@@ -212,7 +215,7 @@ public class SampleController {
 	}
 	
 	@ApiOperation(value = "Get existing list of platform name from SESAR")
-	@GetMapping(path="/vocabularies/platformnames", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/vocabularies/platformnames", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<List<String> > getPlatformNames() {  
 		List<String> l = service.getPlatformNames();
@@ -242,7 +245,7 @@ public class SampleController {
 	}
 		
 	@ApiOperation(value = "Get existing list of field name from SESAR")
-	@GetMapping(path="/vocabularies/cruisefieldprograms", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+	@GetMapping(path="/vocabularies/cruisefieldprograms", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<List<String> > getFieldNames() {  
 		List<String> l = service.getCruiseFieldPrgrm();
@@ -274,7 +277,7 @@ public class SampleController {
 	
     @ApiOperation(value = "Get a list IGSNs from SESAR according to the geopass number")
     @GetMapping(path= {"/igsns/geopassnum/{geopassnum}"},
-                produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+                produces = MediaType.APPLICATION_JSON_VALUE)  
     @ResponseBody
     public ResponseEntity<List<String> > getIGSNsById(@PathVariable(required = true) Integer geopassnum,
                                                       @RequestParam(required = false) Integer limit,
@@ -294,7 +297,7 @@ public class SampleController {
 	
     @ApiOperation(value = "Get a list IGSNs from SESAR according to the user GeoPass login name")
     @GetMapping(path= {"/igsns/geopass"}, 
-                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+                 produces = MediaType.APPLICATION_JSON_VALUE)  
     @ResponseBody
     public ResponseEntity<List<String> > getIGSNsByName(@RequestParam(required = true) String username,  
                                                         @RequestParam(required = false) Integer limit,
@@ -313,7 +316,7 @@ public class SampleController {
 
     @ApiOperation(value = "Get a list IGSNs from SESAR according to cruise or field program name")
     @GetMapping(path= {"/igsns/field_program"}, 
-                produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+                produces = MediaType.APPLICATION_JSON_VALUE)  
     @ResponseBody
     public ResponseEntity<List<String> > getIGSNsByCruiseFieldProgram(@RequestParam(required = true) String name,
                                                                       @RequestParam(required = false) Integer hideprivate,
@@ -333,7 +336,7 @@ public class SampleController {
     
     @ApiOperation(value = "Get a list IGSNs from SESAR according to user code. If hideprivate is set to 1, only IGSNs with public metadata will be returned. For large set of IGSNs, you can set limit and page number. Limit is for total numbers to be returned each time. Page number is for which page will be returned and starts with 0.")
     @GetMapping(path= { "/igsns/usercode/{usercode}"},
-                produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+                produces = MediaType.APPLICATION_JSON_VALUE
                )
     @ResponseBody
     public ResponseEntity<List<String> > getIGSNsByUserCode(@PathVariable String usercode,
@@ -354,7 +357,7 @@ public class SampleController {
     }
 
     @ApiOperation(value = "Get total number of IGSN from SESAR according to geopass username")
-    @GetMapping(path="/igsns/total/username", params = "username", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+    @GetMapping(path="/igsns/total/username", params = "username", produces = MediaType.APPLICATION_JSON_VALUE)  
     @ResponseBody
     public ResponseEntity<Integer > getIGSNCountByName(@RequestParam(required = true) String username) {  
 	    Integer l = service.getIGSNCountByGeoPassUserName(username);      
@@ -363,10 +366,35 @@ public class SampleController {
     
     
     @ApiOperation(value = "Get total number of IGSN from SESAR according to geopass number")
-    @GetMapping(path="/igsns/total/geopassnum", params = "id", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)  
+    @GetMapping(path="/igsns/total/geopassnum", params = "id", produces = MediaType.APPLICATION_JSON_VALUE)  
     @ResponseBody
     public ResponseEntity<Integer > getIGSNCountById(@RequestParam(required = true) Integer id) {  
 	    Integer l = service.getIGSNCountByGeoPassId(id);      
 	    return new ResponseEntity<Integer >(l, HttpStatus.OK);
     }
+    
+	
+	
+	@ApiOperation(value = "Get Sample JSON-LD content by igsn.")
+	@ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrive the content."),
+            @ApiResponse(code = 401, message = "You are not authorized to access the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
+	@GetMapping(path="/sample/json-ld/igsn/{igsn}", produces = MediaType.APPLICATION_JSON_VALUE)  
+	@ResponseBody
+	public ResponseEntity<SampleJSONLDDAO> getJSONLDByIGSN(@PathVariable String igsn) {
+		   Sample sobj = service.getByIGSN(igsn);
+		   if(sobj==null)
+		   {
+			   return new ResponseEntity<SampleJSONLDDAO>(new SampleJSONLDDAO(), HttpStatus.NOT_FOUND);
+		   }
+		   else
+		   {
+		     SampleJSONLDDAO obj = sobj.getJSONLDDAO();		   
+		     return new ResponseEntity<SampleJSONLDDAO>(obj, HttpStatus.OK);
+		   }
+	}
 }

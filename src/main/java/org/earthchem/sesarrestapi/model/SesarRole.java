@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -23,6 +26,9 @@ public class SesarRole implements Serializable {
 
 	@Id
 	@Column(name="sesar_role_id")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sesar_role_seq")	
+	@SequenceGenerator(name = "sesar_role_seq", sequenceName = "sesar_role_sesar_role_id_seq",allocationSize=1)
+
 	private Integer sesarRoleId;
 
 	@Column(name="sesar_role_description")

@@ -1,28 +1,18 @@
 /**
- * 
+ * Class SampleService
  */
 package org.earthchem.sesarrestapi.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-
-import org.earthchem.sesarrestapi.dao.SampleJSONLDDAO;
 import org.earthchem.sesarrestapi.model.Sample;
 import org.earthchem.sesarrestapi.repository.SampleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 /**
  * @author song
@@ -205,5 +195,86 @@ public class SampleService {
 	{
 		Integer rl =  repo.getIGSNCountByGeoPassUsername(name) ;
 		return rl;
+	}
+
+	
+	/**
+	 * Get total number of publised IGSN.
+	 * @return total number of IGSN published.
+	 */
+	public Integer getAllPublishedIGSNTotalNumber()
+	{
+		return repo.getAllPublishedIGSNTotalNumber();
+	}
+	
+	/**
+	 * Get total number of publised parent IGSN.
+	 * @return total number of IGSN published.
+	 */
+	public Integer getAllPublishedParentIGSNTotalNumber()
+	{
+		return repo.getAllPublishedParentIGSNTotalNumber();
+	}
+	
+
+	/**
+	 * Get published IGSNs with sample type
+	 * @return IGSNs with sample types.
+	 */
+	public HashMap<String, ArrayList<String>> getAllPublishedIGSNs(Integer limit,Integer pagenum)
+	{
+		List<Object[]> igsn_types = repo.getAllPublishedIGSNs(PageRequest.of(pagenum,limit));		
+		HashMap<String, ArrayList<String>> l = new HashMap<String, ArrayList<String>>();
+		String currKey="";
+		for (Object[] entry : igsn_types)
+		{
+			currKey = (String) entry[0];
+		    if(l.containsKey(currKey)) //Exists Key
+		    {
+		    	l.get(currKey).add((String) entry[1]);
+		    }
+		    else
+		    {
+		    	ArrayList<String> a = new ArrayList<String>();
+		    	a.add((String) entry[1]);
+		    	l.put(currKey, a);
+		    }		    	
+		}
+	    return l;
+	}
+	
+	/**
+	 * Get published top level parent IGSNs with sample type
+	 * @return IGSNs with sample types.
+	 */
+	public HashMap<String, ArrayList<String>> getAllPublishedParentIGSNs(Integer limit,Integer pagenum)
+	{
+		List<Object[]> igsn_types = repo.getAllPublishedParentIGSNs(PageRequest.of(pagenum,limit));		
+		HashMap<String, ArrayList<String>> l = new HashMap<String, ArrayList<String>>();
+		String currKey="";
+		for (Object[] entry : igsn_types)
+		{
+			currKey = (String) entry[0];
+		    if(l.containsKey(currKey)) //Exists Key
+		    {
+		    	l.get(currKey).add((String) entry[1]);
+		    }
+		    else
+		    {
+		    	ArrayList<String> a = new ArrayList<String>();
+		    	a.add((String) entry[1]);
+		    	l.put(currKey, a);
+		    }		    	
+		}
+	    return l;
+	}
+	
+	/**
+	 * Get IGSN according sample name and user code
+	 * @return IGSN
+	 */
+	public List<String> getIGSNBySampleNameUserCode(String name, String usercode)
+	{
+		return repo.getIGSNBySampleNameUserCode(name, usercode);
 	}
 }

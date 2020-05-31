@@ -26,7 +26,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -340,6 +342,7 @@ public class SampleController {
                )
     @ResponseBody
     public ResponseEntity<List<String> > getIGSNsByUserCode(@PathVariable String usercode,
+    		                                                @RequestParam(required = false)  @ApiParam(value = "Sample Name") String name,
                                                             @RequestParam(required = false) Integer hideprivate,
                                                             @RequestParam(required = false) Integer limit,
                                                             @RequestParam(required = false) Integer pagenum
@@ -348,8 +351,16 @@ public class SampleController {
         if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
         if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
         if(limit == null && pagenum == null) {limit = new Integer(100);pagenum = new Integer(0);}; //Default to first page
+        List<String> l = null;
 
-	    List<String> l = service.getIGSNsByUserCode(usercode,hideprivate,limit, pagenum);
+        if(name != null )
+        {
+        	l = service.getIGSNBySampleNameUserCode(name, usercode);
+        }
+        else
+        {
+	        l = service.getIGSNsByUserCode(usercode,hideprivate,limit, pagenum);
+        }
 	    if(l == null || l.isEmpty() ) {
            return new ResponseEntity<List<String> >(l, HttpStatus.NOT_FOUND);
         }
@@ -364,16 +375,54 @@ public class SampleController {
 	    return new ResponseEntity<Integer >(l, HttpStatus.OK);
     }
     
+    @ApiOperation(value = "Get published IGSNs with sample type. It is paginated.")
+    @GetMapping(path="/igsns/published", produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<HashMap<String, ArrayList<String>> > getAllPublishedIGSNs(@RequestParam(required = true) @ApiParam(value = "total number of IGSN to be returned") Integer limit,
+    		                                                                        @RequestParam(required = true) @ApiParam(value = "page number, E.G. 121th page")  Integer pagenum
+    		                                                                       ) 
+    {  
+    	HashMap<String, ArrayList<String>> l = service.getAllPublishedIGSNs(limit,pagenum);      
+	    return new ResponseEntity<HashMap<String, ArrayList<String>> >(l, HttpStatus.OK);
+    }
     
+    @ApiOperation(value = "Get published parent IGSNs with sample type. It is paginated.")
+    @GetMapping(path="/igsns/published/parents", produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<HashMap<String, ArrayList<String>> > getAllPublishedParentIGSNs(@RequestParam(required = true) @ApiParam(value = "total number of IGSN to be returned") Integer limit,
+    		                                                                        @RequestParam(required = true) @ApiParam(value = "page number, E.G. 121th page")  Integer pagenum
+    		                                                                       ) 
+    {  
+    	HashMap<String, ArrayList<String>> l = service.getAllPublishedParentIGSNs(limit,pagenum);      
+	    return new ResponseEntity<HashMap<String, ArrayList<String>> >(l, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Get published IGSN total number")
+    @GetMapping(path="/igsns/publishedtotal", produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<Integer> getAllPublishedIGSNTotalNumber() 
+    {  
+    	Integer l = service.getAllPublishedIGSNTotalNumber();      
+	    return new ResponseEntity<Integer>(l, HttpStatus.OK);
+    }
+  
+
+    @ApiOperation(value = "Get published parent IGSN total number")
+    @GetMapping(path="/igsns/publishedtotal/parents", produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<Integer> getAllPublishedParentIGSNTotalNumber() 
+    {  
+    	Integer l = service.getAllPublishedParentIGSNTotalNumber();      
+	    return new ResponseEntity<Integer>(l, HttpStatus.OK);
+    }
+  
     @ApiOperation(value = "Get total number of IGSN from SESAR according to geopass number")
     @GetMapping(path="/igsns/total/geopassnum", params = "id", produces = MediaType.APPLICATION_JSON_VALUE)  
     @ResponseBody
     public ResponseEntity<Integer > getIGSNCountById(@RequestParam(required = true) Integer id) {  
 	    Integer l = service.getIGSNCountByGeoPassId(id);      
 	    return new ResponseEntity<Integer >(l, HttpStatus.OK);
-    }
-    
-	
+    }	
 	
 	@ApiOperation(value = "Get Sample JSON-LD content by igsn.")
 	@ApiResponses(value = {

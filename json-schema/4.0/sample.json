@@ -1,0 +1,910 @@
+{
+  "title": "/Users/song/Documents/sesar/4.0/sample.xsd",
+  "$schema": "http://json-schema.org/schema#",
+  "id": "http://app.geosamples.org",
+  "type": "object",
+  "properties": {
+    "samples": {
+      "xs:sequence": {
+        "xs:element": {
+          "@minOccurs": "1",
+          "@maxOccurs": "unbounded",
+          "xs:complexType": {
+            "xs:all": {
+              "xs:element": [
+                {
+                  "@ref": "user_code"
+                },
+                {
+                  "@ref": "sample_type"
+                },
+                {
+                  "@ref": "sample_subtype",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "name"
+                },
+                {
+                  "@ref": "material"
+                },
+                {
+                  "@ref": "igsn",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "parent_igsn",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "is_private",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "publish_date",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "classification",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "classification_comment",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "field_name",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "description",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "age_min",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "age_max",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "age_unit",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "geological_age",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "geological_unit",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "collection_method",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "collection_method_descr",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "size",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "size_unit",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "sample_comment",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "purpose",
+                  "@minOccurs": "0",
+                  "@maxOccurs": "1"
+                },
+                {
+                  "@ref": "latitude",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "longitude",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "latitude_end",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "longitude_end",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "elevation",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "elevation_end",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "elevation_unit",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "vertical_datum",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "northing",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "easting",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "zone",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "navigation_type",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "primary_location_type",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "primary_location_name",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "location_description",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "locality",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "locality_description",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "country",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "province",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "county",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "city",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "cruise_field_prgrm",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "platform_type",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "platform_name",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "platform_descr",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "launch_platform_name",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "launch_id",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "launch_type_name",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "collector",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "collector_detail",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "collection_start_date",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "collection_end_date",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "collection_date_precision",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "current_archive",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "current_archive_contact",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "original_archive",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "original_archive_contact",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "depth_min",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "depth_max",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@ref": "depth_scale",
+                  "@minOccurs": "0"
+                },
+                {
+                  "@minOccurs": "0",
+                  "@maxOccurs": "1",
+                  "xs:complexType": {
+                    "xs:sequence": {
+                      "xs:element": {
+                        "@ref": "sample_other_name",
+                        "@minOccurs": "1",
+                        "@maxOccurs": "unbounded"
+                      }
+                    }
+                  }
+                },
+                {
+                  "@minOccurs": "0",
+                  "@maxOccurs": "1",
+                  "xs:complexType": {
+                    "xs:sequence": {
+                      "xs:element": {
+                        "@minOccurs": "1",
+                        "@maxOccurs": "unbounded",
+                        "xs:complexType": {
+                          "xs:all": {
+                            "xs:element": [
+                              {
+                                "@ref": "url",
+                                "@minOccurs": "1",
+                                "@maxOccurs": "1"
+                              },
+                              {
+                                "@ref": "description",
+                                "@minOccurs": "0",
+                                "@maxOccurs": "1"
+                              },
+                              {
+                                "@ref": "url_type",
+                                "@minOccurs": "0",
+                                "@maxOccurs": "1"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "properties": {
+        "sample": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "user_code": {
+                "$ref": "#/definitions/user_code"
+              },
+              "sample_type": {
+                "$ref": "#/definitions/sample_type"
+              },
+              "sample_subtype": {
+                "$ref": "#/definitions/sample_subtype"
+              },
+              "name": {
+                "$ref": "#/definitions/name"
+              },
+              "material": {
+                "$ref": "#/definitions/material"
+              },
+              "igsn": {
+                "$ref": "#/definitions/igsn"
+              },
+              "parent_igsn": {
+                "$ref": "#/definitions/parent_igsn"
+              },
+              "is_private": {
+                "$ref": "#/definitions/is_private"
+              },
+              "publish_date": {
+                "$ref": "#/definitions/publish_date"
+              },
+              "classification": {
+                "$ref": "#/definitions/classification"
+              },
+              "classification_comment": {
+                "$ref": "#/definitions/classification_comment"
+              },
+              "field_name": {
+                "$ref": "#/definitions/field_name"
+              },
+              "description": {
+                "$ref": "#/definitions/description"
+              },
+              "age_min": {
+                "$ref": "#/definitions/age_min"
+              },
+              "age_max": {
+                "$ref": "#/definitions/age_max"
+              },
+              "age_unit": {
+                "$ref": "#/definitions/age_unit"
+              },
+              "geological_age": {
+                "$ref": "#/definitions/geological_age"
+              },
+              "geological_unit": {
+                "$ref": "#/definitions/geological_unit"
+              },
+              "collection_method": {
+                "$ref": "#/definitions/collection_method"
+              },
+              "collection_method_descr": {
+                "$ref": "#/definitions/collection_method_descr"
+              },
+              "size": {
+                "$ref": "#/definitions/size"
+              },
+              "size_unit": {
+                "$ref": "#/definitions/size_unit"
+              },
+              "sample_comment": {
+                "$ref": "#/definitions/sample_comment"
+              },
+              "purpose": {
+                "$ref": "#/definitions/purpose"
+              },
+              "latitude": {
+                "$ref": "#/definitions/latitude"
+              },
+              "longitude": {
+                "$ref": "#/definitions/longitude"
+              },
+              "latitude_end": {
+                "$ref": "#/definitions/latitude_end"
+              },
+              "longitude_end": {
+                "$ref": "#/definitions/longitude_end"
+              },
+              "elevation": {
+                "$ref": "#/definitions/elevation"
+              },
+              "elevation_end": {
+                "$ref": "#/definitions/elevation_end"
+              },
+              "elevation_unit": {
+                "$ref": "#/definitions/elevation_unit"
+              },
+              "vertical_datum": {
+                "$ref": "#/definitions/vertical_datum"
+              },
+              "northing": {
+                "$ref": "#/definitions/northing"
+              },
+              "easting": {
+                "$ref": "#/definitions/easting"
+              },
+              "zone": {
+                "$ref": "#/definitions/zone"
+              },
+              "navigation_type": {
+                "$ref": "#/definitions/navigation_type"
+              },
+              "primary_location_type": {
+                "$ref": "#/definitions/primary_location_type"
+              },
+              "primary_location_name": {
+                "$ref": "#/definitions/primary_location_name"
+              },
+              "location_description": {
+                "$ref": "#/definitions/location_description"
+              },
+              "locality": {
+                "$ref": "#/definitions/locality"
+              },
+              "locality_description": {
+                "$ref": "#/definitions/locality_description"
+              },
+              "country": {
+                "$ref": "#/definitions/country"
+              },
+              "province": {
+                "$ref": "#/definitions/province"
+              },
+              "county": {
+                "$ref": "#/definitions/county"
+              },
+              "city": {
+                "$ref": "#/definitions/city"
+              },
+              "cruise_field_prgrm": {
+                "$ref": "#/definitions/cruise_field_prgrm"
+              },
+              "platform_type": {
+                "$ref": "#/definitions/platform_type"
+              },
+              "platform_name": {
+                "$ref": "#/definitions/platform_name"
+              },
+              "platform_descr": {
+                "$ref": "#/definitions/platform_descr"
+              },
+              "launch_platform_name": {
+                "$ref": "#/definitions/launch_platform_name"
+              },
+              "launch_id": {
+                "$ref": "#/definitions/launch_id"
+              },
+              "launch_type_name": {
+                "$ref": "#/definitions/launch_type_name"
+              },
+              "collector": {
+                "$ref": "#/definitions/collector"
+              },
+              "collector_detail": {
+                "$ref": "#/definitions/collector_detail"
+              },
+              "collection_start_date": {
+                "$ref": "#/definitions/collection_start_date"
+              },
+              "collection_end_date": {
+                "$ref": "#/definitions/collection_end_date"
+              },
+              "collection_date_precision": {
+                "$ref": "#/definitions/collection_date_precision"
+              },
+              "current_archive": {
+                "$ref": "#/definitions/current_archive"
+              },
+              "current_archive_contact": {
+                "$ref": "#/definitions/current_archive_contact"
+              },
+              "original_archive": {
+                "$ref": "#/definitions/original_archive"
+              },
+              "original_archive_contact": {
+                "$ref": "#/definitions/original_archive_contact"
+              },
+              "depth_min": {
+                "$ref": "#/definitions/depth_min"
+              },
+              "depth_max": {
+                "$ref": "#/definitions/depth_max"
+              },
+              "depth_scale": {
+                "$ref": "#/definitions/depth_scale"
+              },
+              "sample_other_names": {
+                "type": "object",
+                "properties": {
+                  "sample_other_name": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/definitions/sample_other_name"
+                    }
+                  }
+                },
+                "required": [
+                  "sample_other_name"
+                ],
+                "additionalProperties": false
+              },
+              "external_urls": {
+                "type": "object",
+                "properties": {
+                  "external_url": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "$ref": "#/definitions/url"
+                        },
+                        "description": {
+                          "$ref": "#/definitions/description"
+                        },
+                        "url_type": {
+                          "$ref": "#/definitions/url_type"
+                        },
+                        "external_url": {
+                          "type": "array",
+                          "minItems": 1,
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "$ref": "#/definitions/url"
+                              },
+                              "description": {
+                                "$ref": "#/definitions/description"
+                              },
+                              "url_type": {
+                                "$ref": "#/definitions/url_type"
+                              }
+                            },
+                            "required": [
+                              "url"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "url",
+                        "external_url"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "external_url"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "user_code",
+              "sample_type",
+              "name",
+              "material"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "sample"
+      ],
+      "additionalProperties": false,
+      "type": "object"
+    }
+  },
+  "required": [
+    "samples"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "sample_type": {
+      "type": "string",
+      "pattern": "((B|b)(E|e)(A|a)(D|d))|((C|c)(H|h)(E|e)(M|m)(I|i)(C|c)(A|a)(L|l)( | )(F|f)(R|r)(A|a)(C|c)(T|t)(I|i)(O|o)(N|n))|((C|c)(O|o)(R|r)(E|e))|((C|c)(O|o)(R|r)(E|e)( | )(H|h)(A|a)(L|l)(F|f)( | )(R|r)(O|o)(U|u)(N|n)(D|d))|((C|c)(O|o)(R|r)(E|e)( | )(P|p)(I|i)(E|e)(C|c)(E|e))|((C|c)(O|o)(R|r)(E|e)( | )(Q|q)(U|u)(A|a)(R|r)(T|t)(E|e)(R|r)( | )(R|r)(O|o)(U|u)(N|n)(D|d))|((C|c)(O|o)(R|r)(E|e)( | )(S|s)(E|e)(C|c)(T|t)(I|i)(O|o)(N|n))|((C|c)(O|o)(R|r)(E|e)( | )(S|s)(E|e)(C|c)(T|t)(I|i)(O|o)(N|n)( | )(H|h)(A|a)(L|l)(F|f))|((C|c)(O|o)(R|r)(E|e)( | )(S|s)(U|u)(B|b)(-|-)(P|p)(I|i)(E|e)(C|c)(E|e))|((C|c)(O|o)(R|r)(E|e)( | )(W|w)(H|h)(O|o)(L|l)(E|e)( | )(R|r)(O|o)(U|u)(N|n)(D|d))|((C|c)(T|t)(D|d))|((C|c)(U|u)(B|b)(E|e))|((C|c)(U|u)(L|l)(T|t)(U|u)(R|r)(E|e))|((C|c)(U|u)(T|t)(T|t)(I|i)(N|n)(G|g)(S|s))|((C|c)(Y|y)(L|l)(I|i)(N|n)(D|d)(E|e)(R|r))|((D|d)(R|r)(E|e)(D|d)(G|g)(E|e))|((G|g)(A|a)(S|s))|((G|g)(R|r)(A|a)(B|b))|((H|h)(O|o)(L|l)(E|e))|((I|i)(N|n)(D|d)(I|i)(V|v)(I|i)(D|d)(U|u)(A|a)(L|l)( | )(S|s)(A|a)(M|m)(P|p)(L|l)(E|e))|((L|l)(I|i)(Q|q)(U|u)(I|i)(D|d))|((M|m)(E|e)(C|c)(H|h)(A|a)(N|n)(I|i)(C|c)(A|a)(L|l)( | )(F|f)(R|r)(A|a)(C|c)(T|t)(I|i)(O|o)(N|n))|((O|o)(R|r)(I|i)(E|e)(N|n)(T|t)(E|e)(D|d)( | )(C|c)(O|o)(R|r)(E|e))|((P|p)(O|o)(W|w)(D|d)(E|e)(R|r))|((R|r)(O|o)(C|c)(K|k)( | )(P|p)(O|o)(W|w)(D|d)(E|e)(R|r))|((S|s)(I|i)(T|t)(E|e))|((S|s)(L|l)(A|a)(B|b))|((S|s)(M|m)(E|e)(A|a)(R|r))|((S|s)(P|p)(E|e)(C|c)(I|i)(M|m)(E|e)(N|n))|((S|s)(Q|q)(U|u)(E|e)(E|e)(Z|z)(E|e)( | )(C|c)(A|a)(K|k)(E|e))|((T|t)(E|e)(R|r)(R|r)(E|e)(S|s)(T|t)(R|r)(I|i)(A|a)(L|l)( | )(S|s)(E|e)(C|c)(T|t)(I|i)(O|o)(N|n))|((T|t)(H|h)(I|i)(N|n)( | )(S|s)(E|e)(C|c)(T|t)(I|i)(O|o)(N|n))|((T|t)(O|o)(O|o)(T|t)(H|h)(P|p)(I|i)(C|c)(K|k))|((T|t)(R|r)(A|a)(W|w)(L|l))|((U|u)(-|-)(C|c)(H|h)(A|a)(N|n)(N|n)(E|e)(L|l))|((W|w)(E|e)(D|d)(G|g)(E|e))|((O|o)(T|t)(H|h)(E|e)(R|r))"
+    },
+    "sample_subtype": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "user_code": {
+      "type": "string",
+      "pattern": "([A-Z0-9]{3}|[A-Z0-9]{5})"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "material": {
+      "type": "string",
+      "pattern": "((B|b)(I|i)(O|o)(L|l)(O|o)(G|g)(Y|y))|((G|g)(A|a)(S|s))|((I|i)(C|c)(E|e))|((L|l)(I|i)(Q|q)(U|u)(I|i)(D|d)(>|>)(A|a)(Q|q)(U|u)(E|e)(O|o)(U|u)(S|s))|((L|l)(I|i)(Q|q)(U|u)(I|i)(D|d)(>|>)(O|o)(R|r)(G|g)(A|a)(N|n)(I|i)(C|c))|((M|m)(I|i)(N|n)(E|e)(R|r)(A|a)(L|l))|((N|n)(O|o)(T|t)(A|a)(P|p)(P|p)(L|l)(I|i)(C|c)(A|a)(B|b)(L|l)(E|e))|((O|o)(T|t)(H|h)(E|e)(R|r))|((P|p)(A|a)(R|r)(T|t)(I|i)(C|c)(U|u)(L|l)(A|a)(T|t)(E|e))|((R|r)(O|o)(C|c)(K|k))|((S|s)(E|e)(D|d)(I|i)(M|m)(E|e)(N|n)(T|t))|((S|s)(O|o)(I|i)(L|l))|((S|s)(Y|y)(N|n)(T|t)(H|h)(E|e)(T|t)(I|i)(C|c))"
+    },
+    "igsn": {
+      "type": "string",
+      "pattern": "[A-Za-z0-9\\.\\-]{9,32}"
+    },
+    "parent_igsn": {
+      "type": "string",
+      "pattern": "[A-Za-z0-9\\.\\-]{9,32}"
+    },
+    "is_private": {
+      "enum": [
+        "0",
+        "1"
+      ]
+    },
+    "publish_date": {
+      "type": "string",
+      "pattern": "([0-9]{4}-[0-9]{2}-[0-9]{2})|([0-9]{2}\\\\/[0-9]{2}\\\\/[0-9]{4})"
+    },
+    "classification_comment": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 200
+    },
+    "field_name": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "description": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 2000
+    },
+    "age_min": {
+      "type": "number"
+    },
+    "age_max": {
+      "type": "number"
+    },
+    "age_unit": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "geological_age": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 500
+    },
+    "geological_unit": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 500
+    },
+    "collection_method": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "collection_method_descr": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 1000
+    },
+    "size": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "size_unit": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "sample_comment": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 2000
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "latitude_end": {
+      "type": "number"
+    },
+    "longitude_end": {
+      "type": "number"
+    },
+    "elevation": {
+      "type": "number"
+    },
+    "elevation_end": {
+      "type": "number"
+    },
+    "primary_location_type": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "primary_location_name": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "location_description": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 2000
+    },
+    "locality": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "locality_description": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 2000
+    },
+    "country": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "province": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "county": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "city": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "cruise_field_prgrm": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "platform_type": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "platform_name": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 2000
+    },
+    "platform_descr": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 2000
+    },
+    "collector": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "collector_detail": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 2000
+    },
+    "collection_start_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "collection_end_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "collection_date_precision": {
+      "type": "string",
+      "pattern": "((Y|y)(E|e)(A|a)(R|r))|((M|m)(O|o)(N|n)(T|t)(H|h))|((D|d)(A|a)(Y|y))|((T|t)(I|i)(M|m)(E|e))"
+    },
+    "current_archive": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 300
+    },
+    "current_archive_contact": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 1000
+    },
+    "original_archive": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 300
+    },
+    "original_archive_contact": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 1000
+    },
+    "depth_min": {
+      "type": "number"
+    },
+    "depth_max": {
+      "type": "number"
+    },
+    "depth_scale": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "navigation_type": {
+      "type": "string",
+      "pattern": "((A|a)(C|c)(O|o)(U|u)(S|s)(T|t)(I|i)(C|c)(_|_)(R|r)(A|a)(N|n)(G|g)(I|i)(N|n)(G|g)(/|/)(G|g)(P|p)(S|s))|((D|d)(G|g)(P|p)(S|s))|((D|d)(V|v)(L|l))|((D|d)(V|v)(L|l)(/|/)(L|l)(B|b)(L|l))|((D|d)(V|v)(L|l)(/|/)(L|l)(B|b)(L|l)(/|/)(I|i)(N|n)(S|s))|((D|d)(V|v)(L|l)(/|/)(L|l)(B|b)(L|l)(:|:)(R|r)(E|e)(N|n)(A|a)(V|v))|((D|d)(V|v)(L|l)(/|/)(L|l)(B|b)(L|l)(:|:)(R|r)(E|e)(N|n)(A|a)(V|v)(:|:)(C|c)(O|o)(N|n)(F|f)(I|i)(R|r)(M|m)(E|e)(D|d))|((D|d)(V|v)(L|l)(/|/)(U|u)(S|s)(B|b)(L|l))|((D|d)(V|v)(L|l)(/|/)(U|u)(S|s)(B|b)(L|l)(:|:)(R|r)(E|e)(N|n)(A|a)(V|v))|((D|d)(V|v)(L|l)(:|:)(R|r)(E|e)(N|n)(A|a)(V|v))|((D|d)(V|v)(L|l)(:|:)(R|r)(E|e)(N|n)(A|a)(V|v)(:|:)(C|c)(O|o)(N|n)(F|f)(I|i)(R|r)(M|m)(E|e)(D|d))|((G|g)(L|l)(O|o)(N|n)(A|a)(S|s)(S|s))|((G|g)(P|p)(S|s))|((G|g)(P|p)(S|s)(/|/)(W|w)(I|i)(R|r)(E|e)(O|o)(U|u)(T|t))|((G|g)(P|p)(S|s)(:|:)(A|a)(S|s)(S|s)(U|u)(M|m)(E|e)(D|d))|((L|l)(A|a)(Y|y)(B|b)(A|a)(C|c)(K|k))|((L|l)(A|a)(Y|y)(B|b)(A|a)(C|c)(K|k)(/|/)(L|l)(B|b)(L|l))|((L|l)(B|b)(L|l))|((L|l)(O|o)(R|r)(A|a)(N|n))|((L|l)(O|o)(C|c)(A|a)(L|l)(E|e))|((N|n)(O|o)(T|t)( | )(A|a)(P|p)(P|p)(L|l)(I|i)(C|c)(A|a)(B|b)(L|l)(E|e))|((R|r)(T|t)(K|k)( | )(G|g)(P|p)(S|s))"
+    },
+    "launch_platform_name": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 100
+    },
+    "launch_id": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 100
+    },
+    "launch_type_name": {
+      "type": "string",
+      "pattern": "((A|a)(U|u)(V|v))|((H|h)(O|o)(V|v))|((R|r)(O|o)(V|v))|((S|s)(L|l)(E|e)(D|d))|((N|n)(O|o)(T|t)( | )(A|a)(P|p)(P|p)(L|l)(I|i)(C|c)(A|a)(B|b)(L|l)(E|e))"
+    },
+    "sample_other_name": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 100
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "minLength": 0,
+      "maxLength": 255
+    },
+    "url_description": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 500
+    },
+    "url_type": {
+      "type": "string",
+      "pattern": "((R|r)(E|e)(G|g)(U|u)(L|l)(A|a)(R|r)( | )(U|u)(R|r)(L|l))|((D|d)(O|o)(I|i))"
+    },
+    "northing": {
+      "type": "number"
+    },
+    "easting": {
+      "type": "number"
+    },
+    "zone": {
+      "type": "string",
+      "pattern": "([0-9]{1})([A-Z]{1})|([0-5]{1})([0-9]{1})([A-Z]{1})|(60)([A-Z]{1})"
+    },
+    "vertical_datum": {
+      "type": "string",
+      "pattern": "((N|n)(A|a)(V|v)(D|d)(8|8)(8|8))|((M|m)(S|s)(L|l))"
+    },
+    "elevation_unit": {
+      "type": "string",
+      "pattern": "[Ff][Ee][Ee][Tt]|[Mm][Ee][Tt][Ee][Rr][Ss]|[Kk][Ii][Ll][Oo][Mm][Ee][Tt][Ee][Rr][Ss]|[Mm][Ii][Ll][Ee][Ss]"
+    }
+  }
+}

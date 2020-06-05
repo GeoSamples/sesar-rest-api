@@ -3,6 +3,8 @@
  */
 package org.earthchem.sesarrestapi.service;
 
+import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +14,7 @@ import org.earthchem.sesarrestapi.model.Sample;
 import org.earthchem.sesarrestapi.repository.SampleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
 
 /**
@@ -269,12 +272,45 @@ public class SampleService {
 	    return l;
 	}
 	
+	
+	/**
+	 * Get published top level parent IGSNs with last update date.
+	 * @return IGSNs with last update date.
+	 */
+	public HashMap<String, ArrayList<String>> getAllPublishedIGSNWithLastUpdate(Integer limit,Integer pagenum)
+	{
+		List<Object[]> igsn_types = repo.getAllPublishedIGSNWithLastUpdate(PageRequest.of(pagenum,limit));		
+		HashMap<String, ArrayList<String>> l = new HashMap<String, ArrayList<String>>();
+		String currKey="";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		for (Object[] entry : igsn_types)
+		{
+			currKey = (String) entry[0];
+		    if(l.containsKey(currKey)) //Exists Key
+		    {
+		    	Timestamp t = (Timestamp) entry[1];
+		    	l.get(currKey).add( formatter.format( t.toLocalDateTime() ));
+		    }
+		    else
+		    {
+		    	ArrayList<String> a = new ArrayList<String>();
+		    	Timestamp t = (Timestamp) entry[1];
+                a.add( formatter.format( t.toLocalDateTime() ));
+		    	l.put(currKey, a);
+		    }		    	
+		}
+	    return l;
+	}
+	
 	/**
 	 * Get IGSN according sample name and user code
 	 * @return IGSN
 	 */
-	public List<String> getIGSNBySampleNameUserCode(String name, String usercode)
+	public List<String> getIGSNBySampleNameUserCode(String name, String usercode, Integer hideprivate) 
 	{
-		return repo.getIGSNBySampleNameUserCode(name, usercode);
+		if( hideprivate != null && hideprivate.intValue() == 1 )
+		   return repo.getPublicIGSNBySampleNameUserCode(name, usercode);
+		else
+		   return repo.getIGSNBySampleNameUserCode(name, usercode); //Get All IGSNs regardless public or private
 	}
 }

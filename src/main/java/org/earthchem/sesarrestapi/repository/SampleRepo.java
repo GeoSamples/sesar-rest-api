@@ -63,7 +63,10 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	public  List<Sample> getBySampleName(@Param("name") String name);
 
 	@Query("SELECT e.sampleType3.name, e.igsn from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) order by e.sampleType3.name")
-	public  List<Object[]> getAllPublishedIGSNs(Pageable pageable);
+	public  List<Object[]> getAllPublishedIGSNs(Pageable pageable);	
+
+	@Query("SELECT e.igsn,e.lastUpdateDate from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) order by e.sampleType3.name")
+	public  List<Object[]> getAllPublishedIGSNWithLastUpdate(Pageable pageable);
 	
 	@Query("SELECT count(e.igsn) from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) ")
 	public Integer getAllPublishedIGSNTotalNumber();	
@@ -76,5 +79,8 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	
 	@Query("SELECT e.igsn from Sample e where  e.name = ?1 and lower(e.sesarUserCode.userCode) = lower(?2) ")
 	public List<String> getIGSNBySampleNameUserCode(@Param("name") String name, @Param("user_code") String user_code);
+	
+	@Query("SELECT e.igsn from Sample e where  e.name = ?1 and lower(e.sesarUserCode.userCode) = lower(?2) and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) ")
+	public List<String> getPublicIGSNBySampleNameUserCode(@Param("name") String name, @Param("user_code") String user_code);
 	
 }

@@ -1,0 +1,113 @@
+{
+    "@context": "https://raw.githubusercontent.com/IGSN/igsn-json/master/schema.igsn.org/json/registration/v0.1/context.jsonld",
+    "@id": "https://data.geosamples.org/samples/igsn/DSR000008",
+    "igsn": "DSR000008",
+    "registrant": {
+        "name": "IEDA",
+        "identifiers": {
+            "kind": "uri",
+            "id": "https://www.geosamples.org"
+        }
+    },
+    "description": {
+        "sampleName": "RC0019028P",
+        "sampleType": "Core",
+        "collectionStartDate": "1976-03-06",
+        "contributors": [
+            {
+                "contributor": [
+                    {
+                        "@type": "Person",
+                        "name": "corelab repository",
+                        "givenName": "corelab",
+                        "familyName": "repository"
+                    }
+                ],
+                "@type": "Role",
+                "roleName": "Sample Owner"
+            },
+            {
+                "contributor": [
+                    {
+                        "@type": "Person",
+                        "name": "corelab repository",
+                        "givenName": "corelab",
+                        "familyName": "repository"
+                    }
+                ],
+                "@type": "Role",
+                "roleName": "Sample Registrant"
+            },
+            {
+                "contributor": [
+                    {
+                        "@type": "Person",
+                        "name": "Lamont-Doherty Earth Observatory"
+                    }
+                ],
+                "@type": "Role",
+                "roleName": "Sample Archive Contact"
+            }
+        ],
+        "geoLocation": {
+            "geo": [
+                {
+                    "@type": "GeoCoordinates",
+                    "latitude": "23.6830",
+                    "longitude": "-60.0500"
+                }
+            ],
+            "@type": "Place"
+        },
+        "collectionMethod": "Coring>PistonCorer",
+        "supplementMetadata": {
+            "sampleId": 54804,
+            "cruiseFieldPrgrm": "RC1907",
+            "currentArchive": "Lamont-Doherty Earth Observatory (LDEO)",
+            "currentArchiveContact": "Lamont-Doherty Earth Observatory",
+            "elevation": -5931.0,
+            "elevationUnit": "meters",
+            "externalSampleId": "RC0019028P",
+            "platformType": "Ship",
+            "size": "1190",
+            "childIGSN": [],
+            "otherName": [],
+            "document": [],
+            "publicationUrl": [
+                {
+                    "description": "Link to IMLGS, Index to Marine & Lacustrine Geological Samples",
+                    "url": "http://www.ngdc.noaa.gov/geosamples/showsample.jsp?igsn=DSR000008",
+                    "urlType": "regular URL"
+                }
+            ]
+        },
+        "log": [
+            {
+                "type": "registered",
+                "timestamp": "2007-09-12 12:00:00"
+            },
+            {
+                "type": "published",
+                "timestamp": "2010-12-10 07:10:00"
+            },
+            {
+                "type": "lastUpdated",
+                "timestamp": "2007-09-12 12:00:00"
+            }
+        ],
+        "publisher": {
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "name": "Information Desk",
+                "contactType": "Customer Service",
+                "email": "info@geosamples.org",
+                "url": "https://www.geosamples.org/contact/"
+            },
+            "@type": "Organization",
+            "name": "EarthChem",
+            "@id": "https://www.geosamples.org",
+            "url": "https://www.geosamples.org"
+        },
+        "igsnPrefix": "DSR"
+    }
+}

@@ -2,10 +2,12 @@ package org.earthchem.sesarrestapi.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.earthchem.sesarrestapi.dao.SampleIGSNJSONLDDAO;
 import org.earthchem.sesarrestapi.dao.SampleJSONLDDAO;
 import org.earthchem.sesarrestapi.dao.SampleProfileDAO;
 import org.earthchem.sesarrestapi.model.Sample;
@@ -355,7 +357,7 @@ public class SampleController {
 
         if(name != null )
         {
-        	l = service.getIGSNBySampleNameUserCode(name, usercode);
+        	l = service.getIGSNBySampleNameUserCode(name, usercode, hideprivate);
         }
         else
         {
@@ -386,8 +388,8 @@ public class SampleController {
 	    return new ResponseEntity<HashMap<String, ArrayList<String>> >(l, HttpStatus.OK);
     }
     
-    @ApiOperation(value = "Get published parent IGSNs with sample type. It is paginated.")
-    @GetMapping(path="/igsns/published/parents", produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ApiOperation(value = "Get published top level IGSNs with sample type. It is paginated.")
+    @GetMapping(path="/rootigsns/sampletype", produces = MediaType.APPLICATION_JSON_VALUE)  
     @ResponseBody
     public ResponseEntity<HashMap<String, ArrayList<String>> > getAllPublishedParentIGSNs(@RequestParam(required = true) @ApiParam(value = "total number of IGSN to be returned") Integer limit,
     		                                                                        @RequestParam(required = true) @ApiParam(value = "page number, E.G. 121th page")  Integer pagenum
@@ -396,7 +398,18 @@ public class SampleController {
     	HashMap<String, ArrayList<String>> l = service.getAllPublishedParentIGSNs(limit,pagenum);      
 	    return new ResponseEntity<HashMap<String, ArrayList<String>> >(l, HttpStatus.OK);
     }
-
+   
+    @ApiOperation(value = "Get published top level IGSNs with last update date. It is paginated.")
+    @GetMapping(path="/rootigsns/lastupdatedate", produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<HashMap<String, ArrayList<String>> > getAllPublishedIGSNWithLastUpdate(@RequestParam(required = true) @ApiParam(value = "total number of IGSN to be returned") Integer limit,
+    		                                                                        @RequestParam(required = true) @ApiParam(value = "page number, E.G. 121th page")  Integer pagenum
+    		                                                                       ) 
+    {  
+    	HashMap<String, ArrayList<String>> l = service.getAllPublishedIGSNWithLastUpdate(limit,pagenum);      
+	    return new ResponseEntity<HashMap<String, ArrayList<String>> >(l, HttpStatus.OK);
+    }
+    
     @ApiOperation(value = "Get published IGSN total number")
     @GetMapping(path="/igsns/publishedtotal", produces = MediaType.APPLICATION_JSON_VALUE)  
     @ResponseBody
@@ -407,8 +420,8 @@ public class SampleController {
     }
   
 
-    @ApiOperation(value = "Get published parent IGSN total number")
-    @GetMapping(path="/igsns/publishedtotal/parents", produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ApiOperation(value = "Get published top level IGSN total number")
+    @GetMapping(path="/rootigsns/publishedtotal", produces = MediaType.APPLICATION_JSON_VALUE)  
     @ResponseBody
     public ResponseEntity<Integer> getAllPublishedParentIGSNTotalNumber() 
     {  
@@ -446,4 +459,29 @@ public class SampleController {
 		     return new ResponseEntity<SampleJSONLDDAO>(obj, HttpStatus.OK);
 		   }
 	}
+	
+	
+	@ApiOperation(value = "Get Sample IGSN-ev JSON-LD content by igsn.")
+	@ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrive the content."),
+            @ApiResponse(code = 401, message = "You are not authorized to access the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
+	@GetMapping(path="/sample/igsn-ev-json-ld/igsn/{igsn}", produces = MediaType.APPLICATION_JSON_VALUE)  
+	@ResponseBody
+	public ResponseEntity<SampleIGSNJSONLDDAO> getIGSNEVJSONLDByIGSN(@PathVariable String igsn) {
+		   Sample sobj = service.getByIGSN(igsn);
+		   if(sobj==null)
+		   {
+			   return new ResponseEntity<SampleIGSNJSONLDDAO>(new SampleIGSNJSONLDDAO(), HttpStatus.NOT_FOUND);
+		   }
+		   else
+		   {
+		     SampleIGSNJSONLDDAO obj = sobj.getIGSNJSONLDDAO();		   
+		     return new ResponseEntity<SampleIGSNJSONLDDAO>(obj, HttpStatus.OK);
+		   }
+	}
+	
 }

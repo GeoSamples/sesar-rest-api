@@ -4,9 +4,12 @@
 package org.earthchem.sesarrestapi.service;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -313,4 +316,45 @@ public class SampleService {
 		else
 		   return repo.getIGSNBySampleNameUserCode(name, usercode); //Get All IGSNs regardless public or private
 	}
+	/**
+	 * Get IGSN count between start_date and end_date. If hideprivate is 1, unpublished IGSNs are excluded.
+	 * @return IGSN count from registration date begins with 'start_date' and ends with 'end_date' for the different institutions.
+	 */
+	public LinkedHashMap<String, String> getIGSNCountByInstitude(String start_date, String end_date, Integer hideprivate) 
+	{
+		LinkedHashMap<String, String> b = new LinkedHashMap<String, String>();
+		try {
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		    Date startDate = dateFormat.parse(start_date);
+		    Timestamp start = new java.sql.Timestamp(startDate.getTime());
+		    Date endDate = dateFormat.parse(end_date);
+		    Timestamp end = new java.sql.Timestamp(endDate.getTime());
+
+		    if( hideprivate != null && hideprivate.intValue() == 1 )
+		    {
+                List<Object[]> a = repo.getPublicIGSNCountByInstitude(start, end);
+                for(Object[] oneb : a)
+                {
+                     String s= (String) oneb[0];
+                     String c = oneb[1].toString();
+                     b.put(s, c);
+                }
+		    }
+		    else
+		    {
+                 List<Object[]> aa = repo.getAllIGSNCountByInstitude(start, end); //Get All IGSNs regardless public or private
+                 for(Object[] oneb : aa)
+                 {
+                     String s= (String) oneb[0];
+                     String c = oneb[1].toString();
+                     b.put(s, c);
+                 }
+		    }
+		    return b;
+	    } catch(Exception e) {
+			b.put("error:"+e.getMessage(), "-1");
+			return b;
+	    }
+	}
+
 }

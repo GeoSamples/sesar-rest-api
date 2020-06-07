@@ -1,5 +1,6 @@
 package org.earthchem.sesarrestapi.repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -81,6 +82,12 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	public List<String> getIGSNBySampleNameUserCode(@Param("name") String name, @Param("user_code") String user_code);
 	
 	@Query("SELECT e.igsn from Sample e where  e.name = ?1 and lower(e.sesarUserCode.userCode) = lower(?2) and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) ")
-	public List<String> getPublicIGSNBySampleNameUserCode(@Param("name") String name, @Param("user_code") String user_code);
+	public List<String> getPublicIGSNBySampleNameUserCode(@Param("name") String name, @Param("user_code") String user_code);	
+	
+	@Query("SELECT e.sesarUser1.institution, count(e) from Sample e where e.registrationDate >?1 and e.registrationDate <?2 and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) and e.sesarUser1.institution is not null group by e.sesarUser1.institution order by count(e) desc")
+	public List<Object[]> getPublicIGSNCountByInstitude(@Param("start_date") Timestamp start_date, @Param("end_date") Timestamp end_date);
+	
+	@Query("SELECT e.sesarUser1.institution, count(e) from Sample e where e.registrationDate >?1 and e.registrationDate <?2 and ( e.archiveDate is null or e.archiveDate >= now() ) and e.sesarUser1.institution is not null group by e.sesarUser1.institution order by count(e) desc")
+	public List<Object[]> getAllIGSNCountByInstitude(@Param("start_date") Timestamp start_date, @Param("end_date") Timestamp end_date);
 	
 }

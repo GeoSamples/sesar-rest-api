@@ -96,4 +96,9 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	@Query("SELECT date_trunc('month',e.registrationDate), count(distinct e.sesarUser1.sesarUserId) from Sample e where e.archiveDate is null or e.archiveDate <= now() group by date_trunc('month',e.registrationDate) order by date_trunc('month',e.registrationDate) desc")
 	public List<Object[]> getActiveUserCountByMonth();
 	
+	@Query("SELECT e.sampleType3.name, count(e.igsn) from Sample e where e.registrationDate <?1 and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) group by e.sampleType3.name order by count(e.igsn) desc")
+	public List<Object[]> getPublishedIGSNCountBySampleType(@Param("end_date") Timestamp end_date);
+	
+	@Query("SELECT e.sampleType3.name, count(e.igsn) from Sample e where e.registrationDate <?1 and ( e.archiveDate is null or e.archiveDate >= now()) group by e.sampleType3.name order by count(e.igsn) desc")
+	public List<Object[]> getIGSNCountBySampleType(@Param("end_date") Timestamp end_date);
 }

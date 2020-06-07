@@ -357,4 +357,42 @@ public class SampleService {
 	    }
 	}
 
+	/**
+	 * Get IGSN count up to end date. If hideprivate is 1, unpublished IGSNs are excluded.
+	 * @return IGSN count from inception to 'end_date' for the different sample types.
+	 */
+	public LinkedHashMap<String, String> getIGSNCountBySampleType(String end_date, Integer hideprivate) 
+	{
+		LinkedHashMap<String, String> b = new LinkedHashMap<String, String>();
+		try {
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		    Date endDate = dateFormat.parse(end_date);
+		    Timestamp end = new java.sql.Timestamp(endDate.getTime());
+
+		    if( hideprivate != null && hideprivate.intValue() == 1 )
+		    {
+                List<Object[]> a = repo.getPublishedIGSNCountBySampleType(end);
+                for(Object[] oneb : a)
+                {
+                     String s= (String) oneb[0];
+                     String c = oneb[1].toString();
+                     b.put(s, c);
+                }
+		    }
+		    else
+		    {
+                 List<Object[]> aa = repo.getIGSNCountBySampleType(end); //Get All IGSNs regardless public or private
+                 for(Object[] oneb : aa)
+                 {
+                     String s= (String) oneb[0];
+                     String c = oneb[1].toString();
+                     b.put(s, c);
+                 }
+		    }
+		    return b;
+	    } catch(Exception e) {
+			b.put("error:"+e.getMessage(), "-1");
+			return b;
+	    }
+	}
 }

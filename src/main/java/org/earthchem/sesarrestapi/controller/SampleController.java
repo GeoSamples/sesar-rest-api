@@ -3,7 +3,9 @@ package org.earthchem.sesarrestapi.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -485,15 +487,43 @@ public class SampleController {
 		   }
 	}
 	
-
     @ApiOperation(value = "Get registered IGSN count by institution between start date and end date. If the end date is omitted, current date will be the end date. If hideprivate is 1, unpublish IGSNs will not be counted.")
-    @GetMapping(path= {"/igsns/count"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path= {"/igsns/count/institution"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<LinkedHashMap<String, String> > getIGSNCountByInstitude(@RequestParam(required = true)  @ApiParam(value = "Registration date: start date. E.G. YYYY-MM-DD") String start_date,
                                                                       @RequestParam(required = true) @ApiParam(value = "Registration date: end date. E.G. YYYY-MM-DD") String end_date,
                                                                       @RequestParam(required = false) @ApiParam(value = "If 1, sample with unpublished metadata will be excluded.") Integer hideprivate)
     {
         LinkedHashMap<String,String> a = service.getIGSNCountByInstitude(start_date, end_date, hideprivate);
+        if(a == null)  return new ResponseEntity<LinkedHashMap<String,String> >(new LinkedHashMap<String,String>(), 
+		                                                                 HttpStatus.NOT_FOUND);
+        if(a.size() == 0 )
+        {
+            return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.NOT_FOUND);
+        }
+        else if(a.size() == 1 )
+        {
+            if(a.get("error") == null)
+                return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.BAD_REQUEST);
+            //System.err.println(a.toString());
+        }
+        return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.OK);
+    }
+	
+    @ApiOperation(value = "Get registered IGSN count by sample type from inception up to end date. If the end date is omitted, current date will be the end date. If hideprivate is 1, unpublish IGSNs will not be counted.")
+    @GetMapping(path= {"/igsns/count/sampletype"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<LinkedHashMap<String, String> > getIGSNCountBySampleType(@RequestParam(required = false) @ApiParam(value = "Registration date: end date. E.G. YYYY-MM-DD") String end_date,
+                                                                                   @RequestParam(required = false) @ApiParam(value = "If 1, sample with unpublished metadata will be excluded.") Integer hideprivate)
+    {
+    	String edate=null;
+    	if(end_date == null)
+    	{
+    		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		    edate = dateFormat.format(new Date());	
+    	}
+    	else edate = end_date;
+        LinkedHashMap<String,String> a = service.getIGSNCountBySampleType(edate, hideprivate);
         if(a == null)  return new ResponseEntity<LinkedHashMap<String,String> >(new LinkedHashMap<String,String>(), 
 		                                                                 HttpStatus.NOT_FOUND);
         if(a.size() == 0 )

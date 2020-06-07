@@ -13,4 +13,7 @@ public interface SesarUserRepo extends CrudRepository<SesarUser, Integer> {
 	@Query("SELECT date_trunc('month',e.registrationDate), count(e) from SesarUser e where e.deactivationDate is null group by date_trunc('month',e.registrationDate) order by date_trunc('month',e.registrationDate) desc")
 	public List<Object[]> getNewUserCountByMonth();
 
-	}
+	@Query("SELECT date_trunc('year',e.registrationDate), count(e) from SesarUser e where e.deactivationDate is null group by date_trunc('year',e.registrationDate) order by date_trunc('year',e.registrationDate) desc")
+	public List<Object[]> getNewUserCountByYear();
+
+}

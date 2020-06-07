@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 //@CrossOrigin(origins = "http://localhost:8080")
-@RequestMapping("/v1/users")
+@RequestMapping("/v1")
 @Api(value="SesarUser", description="Sesar Users from SESAR",  tags = { "Users" })
 public class SesarUserController {
 	
@@ -38,7 +38,7 @@ public class SesarUserController {
 	}
 	
     @ApiOperation(value = "Get new user count by month since SESAR inception.")
-    @GetMapping(path= {"/count"}, produces = MediaType.APPLICATION_JSON_VALUE)  
+    @GetMapping(path= {"/newusers/count/month"}, produces = MediaType.APPLICATION_JSON_VALUE)  
     @ResponseBody
     public ResponseEntity<LinkedHashMap<String, String> > getNewUserCountByMonth()
     {
@@ -55,6 +55,70 @@ public class SesarUserController {
    		        return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.BAD_REQUEST);
     		//System.err.println(a.toString());
    	    }
+        return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.OK);
+    }
+    
+	
+    @ApiOperation(value = "Get new user count by year since SESAR inception.")
+    @GetMapping(path= {"/newusers/count/year"}, produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<LinkedHashMap<String, String> > getNewUserCountByYear()
+    {
+    	LinkedHashMap<String,String> a = service.getNewUserCountByYear();
+    	if(a == null)  return new ResponseEntity<LinkedHashMap<String,String> >(new LinkedHashMap<String,String>(), 
+    			                                                                 HttpStatus.NOT_FOUND);
+    	if(a.size() == 0 )
+    	{
+    		 return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.NOT_FOUND);
+    	}
+    	else if(a.size() == 1 )
+    	{
+    		if(a.get("error") == null)
+   		        return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.BAD_REQUEST);
+    		//System.err.println(a.toString());
+   	    }
+        return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.OK);
+    }
+    	
+    @ApiOperation(value = "Get active user count by year since SESAR inception.")
+    @GetMapping(path= {"/activeusers/count/year"}, produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<LinkedHashMap<String, String> > getActiveUserCountByYear()
+    {
+    	LinkedHashMap<String,String> a = service.getActiveUserCountByYear();
+    	if(a == null)  return new ResponseEntity<LinkedHashMap<String,String> >(new LinkedHashMap<String,String>(), 
+    			                                                                 HttpStatus.NOT_FOUND);
+    	if(a.size() == 0 )
+    	{
+    		 return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.NOT_FOUND);
+    	}
+    	else if(a.size() == 1 )
+    	{
+    		if(a.get("error") == null)
+   		        return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.BAD_REQUEST);
+    		//System.err.println(a.toString());
+   	    }
+        return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.OK);
+    }
+	
+    @ApiOperation(value = "Get active user count by month since SESAR inception.")
+    @GetMapping(path= {"/activeusers/count/month"}, produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<LinkedHashMap<String, String> > getActiveUserCountByMonth()
+    {
+	    LinkedHashMap<String,String> a = service.getActiveUserCountByMonth();
+	    if(a == null)  return new ResponseEntity<LinkedHashMap<String,String> >(new LinkedHashMap<String,String>(), 
+			                                                                 HttpStatus.NOT_FOUND);
+	    if(a.size() == 0 )
+	    {
+           return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.NOT_FOUND);
+	    }
+	    else if(a.size() == 1 )
+	    {
+		    if(a.get("error") == null)
+		        return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.BAD_REQUEST);
+		//System.err.println(a.toString());
+	    }
         return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.OK);
     }
 }

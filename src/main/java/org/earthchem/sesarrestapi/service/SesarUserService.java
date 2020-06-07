@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.earthchem.sesarrestapi.repository.SampleRepo;
 import org.earthchem.sesarrestapi.repository.SesarUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class SesarUserService {
 	@Autowired
 	SesarUserRepo repo;
 
+	@Autowired
+	SampleRepo repo2;
+	
 	public SesarUserService() {};
 	
 	public void setSesarUserRepo( SesarUserRepo r)
@@ -33,6 +37,81 @@ public class SesarUserService {
 		try {
 		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
 		    List<Object[]> aa = repo.getNewUserCountByMonth();
+		    for(Object[] oneb : aa)
+		    {
+		        Timestamp s= (Timestamp) oneb[0];
+		    	String st = dateFormat.format(s);
+		    	String c = oneb[1].toString();
+		    	b.put(st, c);
+		    } 
+		    return b;
+	    } catch(Exception e) {
+			b.put("error:"+e.getMessage(), "-1");
+			return b;
+	    }
+		
+	}
+	/**
+	 * Get new user count by year since SESAR inception.
+	 * @return new user count by year and month.
+	 */
+	public LinkedHashMap<String, String> getNewUserCountByYear() {
+	LinkedHashMap<String, String> b = new LinkedHashMap<String, String>();
+		
+		try {
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+		    List<Object[]> aa = repo.getNewUserCountByYear();
+		    for(Object[] oneb : aa)
+		    {
+		        Timestamp s= (Timestamp) oneb[0];
+		    	String st = dateFormat.format(s);
+		    	String c = oneb[1].toString();
+		    	b.put(st, c);
+		    } 
+		    return b;
+	    } catch(Exception e) {
+			b.put("error:"+e.getMessage(), "-1");
+			return b;
+	    }
+		
+	}
+	
+	/**
+	 * Get active user count by year since SESAR inception.
+	 * @return new user count by year and month.
+	 */
+	public LinkedHashMap<String, String> getActiveUserCountByYear() {
+	LinkedHashMap<String, String> b = new LinkedHashMap<String, String>();
+		
+		try {
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+		    List<Object[]> aa = repo2.getActiveUserCountByYear();
+		    for(Object[] oneb : aa)
+		    {
+		        Timestamp s= (Timestamp) oneb[0];
+		    	String st = dateFormat.format(s);
+		    	String c = oneb[1].toString();
+		    	b.put(st, c);
+		    } 
+		    return b;
+	    } catch(Exception e) {
+			b.put("error:"+e.getMessage(), "-1");
+			return b;
+	    }
+		
+	}
+	
+	
+	/**
+	 * Get active user count by month since SESAR inception.
+	 * @return new user count by month and month.
+	 */
+	public LinkedHashMap<String, String> getActiveUserCountByMonth() {
+	LinkedHashMap<String, String> b = new LinkedHashMap<String, String>();
+		
+		try {
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+		    List<Object[]> aa = repo2.getActiveUserCountByMonth();
 		    for(Object[] oneb : aa)
 		    {
 		        Timestamp s= (Timestamp) oneb[0];

@@ -2,10 +2,15 @@ package org.earthchem.sesarrestapi.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.earthchem.sesarrestapi.dao.SampleIGSNJSONLDDAO;
 import org.earthchem.sesarrestapi.dao.SampleJSONLDDAO;
 import org.earthchem.sesarrestapi.dao.SampleProfileDAO;
 import org.earthchem.sesarrestapi.model.Sample;
@@ -26,7 +31,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -340,6 +347,7 @@ public class SampleController {
                )
     @ResponseBody
     public ResponseEntity<List<String> > getIGSNsByUserCode(@PathVariable String usercode,
+    		                                                @RequestParam(required = false)  @ApiParam(value = "Sample Name") String name,
                                                             @RequestParam(required = false) Integer hideprivate,
                                                             @RequestParam(required = false) Integer limit,
                                                             @RequestParam(required = false) Integer pagenum
@@ -348,8 +356,16 @@ public class SampleController {
         if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
         if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
         if(limit == null && pagenum == null) {limit = new Integer(100);pagenum = new Integer(0);}; //Default to first page
+        List<String> l = null;
 
-	    List<String> l = service.getIGSNsByUserCode(usercode,hideprivate,limit, pagenum);
+        if(name != null )
+        {
+        	l = service.getIGSNBySampleNameUserCode(name, usercode, hideprivate);
+        }
+        else
+        {
+	        l = service.getIGSNsByUserCode(usercode,hideprivate,limit, pagenum);
+        }
 	    if(l == null || l.isEmpty() ) {
            return new ResponseEntity<List<String> >(l, HttpStatus.NOT_FOUND);
         }
@@ -364,16 +380,65 @@ public class SampleController {
 	    return new ResponseEntity<Integer >(l, HttpStatus.OK);
     }
     
+    @ApiOperation(value = "Get published IGSNs with sample type. It is paginated.")
+    @GetMapping(path="/igsns/published", produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<HashMap<String, ArrayList<String>> > getAllPublishedIGSNs(@RequestParam(required = true) @ApiParam(value = "total number of IGSN to be returned") Integer limit,
+    		                                                                        @RequestParam(required = true) @ApiParam(value = "page number, E.G. 121th page")  Integer pagenum
+    		                                                                       ) 
+    {  
+    	HashMap<String, ArrayList<String>> l = service.getAllPublishedIGSNs(limit,pagenum);      
+	    return new ResponseEntity<HashMap<String, ArrayList<String>> >(l, HttpStatus.OK);
+    }
     
+    @ApiOperation(value = "Get published top level IGSNs with sample type. It is paginated.")
+    @GetMapping(path="/rootigsns/sampletype", produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<HashMap<String, ArrayList<String>> > getAllPublishedParentIGSNs(@RequestParam(required = true) @ApiParam(value = "total number of IGSN to be returned") Integer limit,
+    		                                                                        @RequestParam(required = true) @ApiParam(value = "page number, E.G. 121th page")  Integer pagenum
+    		                                                                       ) 
+    {  
+    	HashMap<String, ArrayList<String>> l = service.getAllPublishedParentIGSNs(limit,pagenum);      
+	    return new ResponseEntity<HashMap<String, ArrayList<String>> >(l, HttpStatus.OK);
+    }
+   
+    @ApiOperation(value = "Get published top level IGSNs with last update date. It is paginated.")
+    @GetMapping(path="/rootigsns/lastupdatedate", produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<HashMap<String, ArrayList<String>> > getAllPublishedIGSNWithLastUpdate(@RequestParam(required = true) @ApiParam(value = "total number of IGSN to be returned") Integer limit,
+    		                                                                        @RequestParam(required = true) @ApiParam(value = "page number, E.G. 121th page")  Integer pagenum
+    		                                                                       ) 
+    {  
+    	HashMap<String, ArrayList<String>> l = service.getAllPublishedIGSNWithLastUpdate(limit,pagenum);      
+	    return new ResponseEntity<HashMap<String, ArrayList<String>> >(l, HttpStatus.OK);
+    }
+    
+    @ApiOperation(value = "Get published IGSN total number")
+    @GetMapping(path="/igsns/publishedtotal", produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<Integer> getAllPublishedIGSNTotalNumber() 
+    {  
+    	Integer l = service.getAllPublishedIGSNTotalNumber();      
+	    return new ResponseEntity<Integer>(l, HttpStatus.OK);
+    }
+  
+
+    @ApiOperation(value = "Get published top level IGSN total number")
+    @GetMapping(path="/rootigsns/publishedtotal", produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<Integer> getAllPublishedParentIGSNTotalNumber() 
+    {  
+    	Integer l = service.getAllPublishedParentIGSNTotalNumber();      
+	    return new ResponseEntity<Integer>(l, HttpStatus.OK);
+    }
+  
     @ApiOperation(value = "Get total number of IGSN from SESAR according to geopass number")
     @GetMapping(path="/igsns/total/geopassnum", params = "id", produces = MediaType.APPLICATION_JSON_VALUE)  
     @ResponseBody
     public ResponseEntity<Integer > getIGSNCountById(@RequestParam(required = true) Integer id) {  
 	    Integer l = service.getIGSNCountByGeoPassId(id);      
 	    return new ResponseEntity<Integer >(l, HttpStatus.OK);
-    }
-    
-	
+    }	
 	
 	@ApiOperation(value = "Get Sample JSON-LD content by igsn.")
 	@ApiResponses(value = {
@@ -397,4 +462,80 @@ public class SampleController {
 		     return new ResponseEntity<SampleJSONLDDAO>(obj, HttpStatus.OK);
 		   }
 	}
+	
+	
+	@ApiOperation(value = "Get Sample IGSN-ev JSON-LD content by igsn.")
+	@ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrive the content."),
+            @ApiResponse(code = 401, message = "You are not authorized to access the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
+	@GetMapping(path="/sample/igsn-ev-json-ld/igsn/{igsn}", produces = MediaType.APPLICATION_JSON_VALUE)  
+	@ResponseBody
+	public ResponseEntity<SampleIGSNJSONLDDAO> getIGSNEVJSONLDByIGSN(@PathVariable String igsn) {
+		   Sample sobj = service.getByIGSN(igsn);
+		   if(sobj==null)
+		   {
+			   return new ResponseEntity<SampleIGSNJSONLDDAO>(new SampleIGSNJSONLDDAO(), HttpStatus.NOT_FOUND);
+		   }
+		   else
+		   {
+		     SampleIGSNJSONLDDAO obj = sobj.getIGSNJSONLDDAO();		   
+		     return new ResponseEntity<SampleIGSNJSONLDDAO>(obj, HttpStatus.OK);
+		   }
+	}
+	
+    @ApiOperation(value = "Get registered IGSN count by institution between start date and end date. If the end date is omitted, current date will be the end date. If hideprivate is 1, unpublish IGSNs will not be counted.")
+    @GetMapping(path= {"/igsns/count/institution"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<LinkedHashMap<String, String> > getIGSNCountByInstitude(@RequestParam(required = true)  @ApiParam(value = "Registration date: start date. E.G. YYYY-MM-DD") String start_date,
+                                                                      @RequestParam(required = true) @ApiParam(value = "Registration date: end date. E.G. YYYY-MM-DD") String end_date,
+                                                                      @RequestParam(required = false) @ApiParam(value = "If 1, sample with unpublished metadata will be excluded.") Integer hideprivate)
+    {
+        LinkedHashMap<String,String> a = service.getIGSNCountByInstitude(start_date, end_date, hideprivate);
+        if(a == null)  return new ResponseEntity<LinkedHashMap<String,String> >(new LinkedHashMap<String,String>(), 
+		                                                                 HttpStatus.NOT_FOUND);
+        if(a.size() == 0 )
+        {
+            return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.NOT_FOUND);
+        }
+        else if(a.size() == 1 )
+        {
+            if(a.get("error") == null)
+                return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.BAD_REQUEST);
+            //System.err.println(a.toString());
+        }
+        return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.OK);
+    }
+	
+    @ApiOperation(value = "Get registered IGSN count by sample type from inception up to end date. If the end date is omitted, current date will be the end date. If hideprivate is 1, unpublish IGSNs will not be counted.")
+    @GetMapping(path= {"/igsns/count/sampletype"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<LinkedHashMap<String, String> > getIGSNCountBySampleType(@RequestParam(required = false) @ApiParam(value = "Registration date: end date. E.G. YYYY-MM-DD") String end_date,
+                                                                                   @RequestParam(required = false) @ApiParam(value = "If 1, sample with unpublished metadata will be excluded.") Integer hideprivate)
+    {
+    	String edate=null;
+    	if(end_date == null)
+    	{
+    		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		    edate = dateFormat.format(new Date());	
+    	}
+    	else edate = end_date;
+        LinkedHashMap<String,String> a = service.getIGSNCountBySampleType(edate, hideprivate);
+        if(a == null)  return new ResponseEntity<LinkedHashMap<String,String> >(new LinkedHashMap<String,String>(), 
+		                                                                 HttpStatus.NOT_FOUND);
+        if(a.size() == 0 )
+        {
+            return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.NOT_FOUND);
+        }
+        else if(a.size() == 1 )
+        {
+            if(a.get("error") == null)
+                return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.BAD_REQUEST);
+            //System.err.println(a.toString());
+        }
+        return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.OK);
+    }
 }

@@ -1,28 +1,24 @@
 /**
- * 
+ * Class SampleService
  */
 package org.earthchem.sesarrestapi.service;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-
-import org.earthchem.sesarrestapi.dao.SampleJSONLDDAO;
 import org.earthchem.sesarrestapi.model.Sample;
 import org.earthchem.sesarrestapi.repository.SampleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 /**
  * @author song
@@ -205,5 +201,198 @@ public class SampleService {
 	{
 		Integer rl =  repo.getIGSNCountByGeoPassUsername(name) ;
 		return rl;
+	}
+
+	
+	/**
+	 * Get total number of publised IGSN.
+	 * @return total number of IGSN published.
+	 */
+	public Integer getAllPublishedIGSNTotalNumber()
+	{
+		return repo.getAllPublishedIGSNTotalNumber();
+	}
+	
+	/**
+	 * Get total number of publised parent IGSN.
+	 * @return total number of IGSN published.
+	 */
+	public Integer getAllPublishedParentIGSNTotalNumber()
+	{
+		return repo.getAllPublishedParentIGSNTotalNumber();
+	}
+	
+
+	/**
+	 * Get published IGSNs with sample type
+	 * @return IGSNs with sample types.
+	 */
+	public HashMap<String, ArrayList<String>> getAllPublishedIGSNs(Integer limit,Integer pagenum)
+	{
+		List<Object[]> igsn_types = repo.getAllPublishedIGSNs(PageRequest.of(pagenum,limit));		
+		HashMap<String, ArrayList<String>> l = new HashMap<String, ArrayList<String>>();
+		String currKey="";
+		for (Object[] entry : igsn_types)
+		{
+			currKey = (String) entry[0];
+		    if(l.containsKey(currKey)) //Exists Key
+		    {
+		    	l.get(currKey).add((String) entry[1]);
+		    }
+		    else
+		    {
+		    	ArrayList<String> a = new ArrayList<String>();
+		    	a.add((String) entry[1]);
+		    	l.put(currKey, a);
+		    }		    	
+		}
+	    return l;
+	}
+	
+	/**
+	 * Get published top level parent IGSNs with sample type
+	 * @return IGSNs with sample types.
+	 */
+	public HashMap<String, ArrayList<String>> getAllPublishedParentIGSNs(Integer limit,Integer pagenum)
+	{
+		List<Object[]> igsn_types = repo.getAllPublishedParentIGSNs(PageRequest.of(pagenum,limit));		
+		HashMap<String, ArrayList<String>> l = new HashMap<String, ArrayList<String>>();
+		String currKey="";
+		for (Object[] entry : igsn_types)
+		{
+			currKey = (String) entry[0];
+		    if(l.containsKey(currKey)) //Exists Key
+		    {
+		    	l.get(currKey).add((String) entry[1]);
+		    }
+		    else
+		    {
+		    	ArrayList<String> a = new ArrayList<String>();
+		    	a.add((String) entry[1]);
+		    	l.put(currKey, a);
+		    }		    	
+		}
+	    return l;
+	}
+	
+	
+	/**
+	 * Get published top level parent IGSNs with last update date.
+	 * @return IGSNs with last update date.
+	 */
+	public HashMap<String, ArrayList<String>> getAllPublishedIGSNWithLastUpdate(Integer limit,Integer pagenum)
+	{
+		List<Object[]> igsn_types = repo.getAllPublishedIGSNWithLastUpdate(PageRequest.of(pagenum,limit));		
+		HashMap<String, ArrayList<String>> l = new HashMap<String, ArrayList<String>>();
+		String currKey="";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		for (Object[] entry : igsn_types)
+		{
+			currKey = (String) entry[0];
+		    if(l.containsKey(currKey)) //Exists Key
+		    {
+		    	Timestamp t = (Timestamp) entry[1];
+		    	l.get(currKey).add( formatter.format( t.toLocalDateTime() ));
+		    }
+		    else
+		    {
+		    	ArrayList<String> a = new ArrayList<String>();
+		    	Timestamp t = (Timestamp) entry[1];
+                a.add( formatter.format( t.toLocalDateTime() ));
+		    	l.put(currKey, a);
+		    }		    	
+		}
+	    return l;
+	}
+	
+	/**
+	 * Get IGSN according sample name and user code
+	 * @return IGSN
+	 */
+	public List<String> getIGSNBySampleNameUserCode(String name, String usercode, Integer hideprivate) 
+	{
+		if( hideprivate != null && hideprivate.intValue() == 1 )
+		   return repo.getPublicIGSNBySampleNameUserCode(name, usercode);
+		else
+		   return repo.getIGSNBySampleNameUserCode(name, usercode); //Get All IGSNs regardless public or private
+	}
+	/**
+	 * Get IGSN count between start_date and end_date. If hideprivate is 1, unpublished IGSNs are excluded.
+	 * @return IGSN count from registration date begins with 'start_date' and ends with 'end_date' for the different institutions.
+	 */
+	public LinkedHashMap<String, String> getIGSNCountByInstitude(String start_date, String end_date, Integer hideprivate) 
+	{
+		LinkedHashMap<String, String> b = new LinkedHashMap<String, String>();
+		try {
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		    Date startDate = dateFormat.parse(start_date);
+		    Timestamp start = new java.sql.Timestamp(startDate.getTime());
+		    Date endDate = dateFormat.parse(end_date);
+		    Timestamp end = new java.sql.Timestamp(endDate.getTime());
+
+		    if( hideprivate != null && hideprivate.intValue() == 1 )
+		    {
+                List<Object[]> a = repo.getPublicIGSNCountByInstitude(start, end);
+                for(Object[] oneb : a)
+                {
+                     String s= (String) oneb[0];
+                     String c = oneb[1].toString();
+                     b.put(s, c);
+                }
+		    }
+		    else
+		    {
+                 List<Object[]> aa = repo.getAllIGSNCountByInstitude(start, end); //Get All IGSNs regardless public or private
+                 for(Object[] oneb : aa)
+                 {
+                     String s= (String) oneb[0];
+                     String c = oneb[1].toString();
+                     b.put(s, c);
+                 }
+		    }
+		    return b;
+	    } catch(Exception e) {
+			b.put("error:"+e.getMessage(), "-1");
+			return b;
+	    }
+	}
+
+	/**
+	 * Get IGSN count up to end date. If hideprivate is 1, unpublished IGSNs are excluded.
+	 * @return IGSN count from inception to 'end_date' for the different sample types.
+	 */
+	public LinkedHashMap<String, String> getIGSNCountBySampleType(String end_date, Integer hideprivate) 
+	{
+		LinkedHashMap<String, String> b = new LinkedHashMap<String, String>();
+		try {
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		    Date endDate = dateFormat.parse(end_date);
+		    Timestamp end = new java.sql.Timestamp(endDate.getTime());
+
+		    if( hideprivate != null && hideprivate.intValue() == 1 )
+		    {
+                List<Object[]> a = repo.getPublishedIGSNCountBySampleType(end);
+                for(Object[] oneb : a)
+                {
+                     String s= (String) oneb[0];
+                     String c = oneb[1].toString();
+                     b.put(s, c);
+                }
+		    }
+		    else
+		    {
+                 List<Object[]> aa = repo.getIGSNCountBySampleType(end); //Get All IGSNs regardless public or private
+                 for(Object[] oneb : aa)
+                 {
+                     String s= (String) oneb[0];
+                     String c = oneb[1].toString();
+                     b.put(s, c);
+                 }
+		    }
+		    return b;
+	    } catch(Exception e) {
+			b.put("error:"+e.getMessage(), "-1");
+			return b;
+	    }
 	}
 }

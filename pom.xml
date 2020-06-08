@@ -17,7 +17,12 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<!-- Level 2 REST API
 		<docker.image.prefix>earthchemrepo</docker.image.prefix>
+		-->
+		<!--  Level 1 REST API -->
+		<docker.image.prefix>earthchemdockerhub</docker.image.prefix>
+		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<dockerfile-maven-version>1.3.2</dockerfile-maven-version>

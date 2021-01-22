@@ -1671,7 +1671,7 @@ public class Sample implements Serializable {
 		SampleJSONLDDAO obj = new SampleJSONLDDAO();
 	
 		HashMap<String, String> m= new HashMap<String, String>();
-		m.put("@vocab", "http://schema.org");
+		m.put("@vocab", "https://schema.org/");
 		m.put("igsn-json", "https://schema.igsn.org/sample/v1");		
 		obj.setContext(m);
 		obj.setType("Sample");	

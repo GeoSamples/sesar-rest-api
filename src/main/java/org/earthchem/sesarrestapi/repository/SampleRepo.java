@@ -90,10 +90,10 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	@Query("SELECT e.sesarUser1.institution, count(e) from Sample e where e.registrationDate >?1 and e.registrationDate <?2 and ( e.archiveDate is null or e.archiveDate >= now() ) and e.sesarUser1.institution is not null group by e.sesarUser1.institution order by count(e) desc")
 	public List<Object[]> getAllIGSNCountByInstitude(@Param("start_date") Timestamp start_date, @Param("end_date") Timestamp end_date);
 
-	@Query("SELECT date_trunc('year',e.registrationDate), count(distinct e.sesarUser1.sesarUserId) from Sample e where e.archiveDate is null or e.archiveDate <= now() group by date_trunc('year',e.registrationDate) order by date_trunc('year',e.registrationDate) desc")
+	@Query("SELECT date_trunc('year',e.registrationDate), count(distinct e.sesarUser1.sesarUserId) from Sample e where e.archiveDate is null or e.archiveDate >= now() group by date_trunc('year',e.registrationDate) order by date_trunc('year',e.registrationDate) desc")
 	public List<Object[]> getActiveUserCountByYear();	
 
-	@Query("SELECT date_trunc('month',e.registrationDate), count(distinct e.sesarUser1.sesarUserId) from Sample e where e.archiveDate is null or e.archiveDate <= now() group by date_trunc('month',e.registrationDate) order by date_trunc('month',e.registrationDate) desc")
+	@Query("SELECT date_trunc('month',e.registrationDate), count(distinct e.sesarUser1.sesarUserId) from Sample e where e.archiveDate is null or e.archiveDate >= now() group by date_trunc('month',e.registrationDate) order by date_trunc('month',e.registrationDate) desc")
 	public List<Object[]> getActiveUserCountByMonth();
 	
 	@Query("SELECT e.sampleType3.name, count(e.igsn) from Sample e where e.registrationDate <?1 and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) group by e.sampleType3.name order by count(e.igsn) desc")

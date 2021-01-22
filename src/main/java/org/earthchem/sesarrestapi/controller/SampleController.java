@@ -487,11 +487,11 @@ public class SampleController {
 		   }
 	}
 	
-    @ApiOperation(value = "Get registered IGSN count by institution between start date and end date. If the end date is omitted, current date will be the end date. If hideprivate is 1, unpublish IGSNs will not be counted.")
+    @ApiOperation(value = "Get registered IGSN count by institution between start date and end date. If the end date is omitted, current date will be the end date. If hideprivate is 1, unpublished IGSNs will not be counted.")
     @GetMapping(path= {"/igsns/count/institution"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<LinkedHashMap<String, String> > getIGSNCountByInstitude(@RequestParam(required = true)  @ApiParam(value = "Registration date: start date. E.G. YYYY-MM-DD") String start_date,
-                                                                      @RequestParam(required = true) @ApiParam(value = "Registration date: end date. E.G. YYYY-MM-DD") String end_date,
+    public ResponseEntity<LinkedHashMap<String, String> > getIGSNCountByInstitude(@ApiParam(value = "Registration date in a format of YYYY-MM-DD", required=true) @RequestParam(required = true) String start_date,
+                                                                      @RequestParam(required = true) @ApiParam(value = "Registration date in a format of YYYY-MM-DD",required=true) String end_date,
                                                                       @RequestParam(required = false) @ApiParam(value = "If 1, sample with unpublished metadata will be excluded.") Integer hideprivate)
     {
         LinkedHashMap<String,String> a = service.getIGSNCountByInstitude(start_date, end_date, hideprivate);
@@ -510,7 +510,7 @@ public class SampleController {
         return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.OK);
     }
 	
-    @ApiOperation(value = "Get registered IGSN count by sample type from inception up to end date. If the end date is omitted, current date will be the end date. If hideprivate is 1, unpublish IGSNs will not be counted.")
+    @ApiOperation(value = "Get registered IGSN count by sample type from inception up to end date. If the end date is omitted, current date will be the end date. If hideprivate is 1, unpublished IGSNs will not be counted.")
     @GetMapping(path= {"/igsns/count/sampletype"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<LinkedHashMap<String, String> > getIGSNCountBySampleType(@RequestParam(required = false) @ApiParam(value = "Registration date: end date. E.G. YYYY-MM-DD") String end_date,

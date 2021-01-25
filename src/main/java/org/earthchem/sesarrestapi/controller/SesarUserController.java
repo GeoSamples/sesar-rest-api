@@ -121,4 +121,25 @@ public class SesarUserController {
 	    }
         return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.OK);
     }
+    
+    @ApiOperation(value = "Get registered user count by country since SESAR inception.")
+    @GetMapping(path= {"/newusers/count/country"}, produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
+    public ResponseEntity<LinkedHashMap<String, String> > getRegisteredUserCountByCountry()
+    {
+	    LinkedHashMap<String,String> a = service.getRegisteredUserCountByCountry();
+	    if(a == null)  return new ResponseEntity<LinkedHashMap<String,String> >(new LinkedHashMap<String,String>(), 
+			                                                                 HttpStatus.NOT_FOUND);
+	    if(a.size() == 0 )
+	    {
+           return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.NOT_FOUND);
+	    }
+	    else if(a.size() == 1 )
+	    {
+		    if(a.get("error") == null)
+		        return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.BAD_REQUEST);
+		//System.err.println(a.toString());
+	    }
+        return new ResponseEntity<LinkedHashMap<String,String> >(a, HttpStatus.OK);
+    }
 }

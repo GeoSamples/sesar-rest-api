@@ -84,10 +84,10 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	@Query("SELECT e.igsn from Sample e where  e.name = ?1 and lower(e.sesarUserCode.userCode) = lower(?2) and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) ")
 	public List<String> getPublicIGSNBySampleNameUserCode(@Param("name") String name, @Param("user_code") String user_code);	
 	
-	@Query("SELECT e.sesarUser1.institution, count(e) from Sample e where e.registrationDate >?1 and e.registrationDate <?2 and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) and e.sesarUser1.institution is not null group by e.sesarUser1.institution order by count(e) desc")
+	@Query("SELECT e.sesarUser1.institution, count(e), e.sesarUser1.country.name from Sample e where e.registrationDate >?1 and e.registrationDate <?2 and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) and e.sesarUser1.institution is not null group by e.sesarUser1.institution, e.sesarUser1.country.name order by count(e) desc")
 	public List<Object[]> getPublicIGSNCountByInstitude(@Param("start_date") Timestamp start_date, @Param("end_date") Timestamp end_date);
 	
-	@Query("SELECT e.sesarUser1.institution, count(e) from Sample e where e.registrationDate >?1 and e.registrationDate <?2 and ( e.archiveDate is null or e.archiveDate >= now() ) and e.sesarUser1.institution is not null group by e.sesarUser1.institution order by count(e) desc")
+	@Query("SELECT e.sesarUser1.institution, count(e), e.sesarUser1.country.name  from Sample e where e.registrationDate >?1 and e.registrationDate <?2 and ( e.archiveDate is null or e.archiveDate >= now() ) and e.sesarUser1.institution is not null group by e.sesarUser1.institution, e.sesarUser1.country.name order by count(e) desc")
 	public List<Object[]> getAllIGSNCountByInstitude(@Param("start_date") Timestamp start_date, @Param("end_date") Timestamp end_date);
 
 	@Query("SELECT date_trunc('year',e.registrationDate), count(distinct e.sesarUser1.sesarUserId) from Sample e where e.archiveDate is null or e.archiveDate >= now() group by date_trunc('year',e.registrationDate) order by date_trunc('year',e.registrationDate) desc")

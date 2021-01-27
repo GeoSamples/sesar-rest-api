@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import org.earthchem.sesarrestapi.model.Sample;
 import org.earthchem.sesarrestapi.repository.SampleRepo;
@@ -337,7 +336,13 @@ public class SampleService {
                 {
                      String s= (String) oneb[0];
                      String c = oneb[1].toString();
-                     b.put(s, c);
+                     if( oneb.length > 2)
+                     {
+                       String d = (String) oneb[2];
+                       b.put(s+","+d, c);
+                     }
+                     else
+                    	 b.put(s, c);
                 }
 		    }
 		    else
@@ -347,7 +352,13 @@ public class SampleService {
                  {
                      String s= (String) oneb[0];
                      String c = oneb[1].toString();
-                     b.put(s, c);
+                     if( oneb.length > 2)
+                     {
+                       String d = (String) oneb[2];
+                       b.put(s+","+d, c);
+                     }
+                     else
+                    	 b.put(s, c);
                  }
 		    }
 		    return b;

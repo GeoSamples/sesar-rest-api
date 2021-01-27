@@ -24,6 +24,7 @@ import org.supercsv.prefs.CsvPreference;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 //@CrossOrigin(origins = "http://localhost:8080")
@@ -45,12 +46,17 @@ public class GroupSampleController {
 			    )  
 	@ResponseBody
 	public ResponseEntity<List<SampleProfileDAO>> getById(@PathVariable Integer id,
-                                                      @PathVariable(required = false) Integer limit,
-                                                      @PathVariable(required = false) Integer pagenum) {
+                                                      @PathVariable(required = false) @ApiParam(value = "Maximum is 10,000") Integer limit,
+                                                      @PathVariable(required = false) @ApiParam(value = "start number is 0.") Integer pagenum) {
         if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
         if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
         if(limit == null && pagenum == null) {limit = new Integer(100);pagenum = new Integer(0);}; //Default to first page
 
+
+        if(limit.intValue() > 10000)
+        {   return new ResponseEntity<List<SampleProfileDAO>>(new ArrayList<SampleProfileDAO>(), HttpStatus.BAD_REQUEST);
+        }
+        
 		List<Sample> sl = service.getPublicSamplesById(id,limit, pagenum);
 		if(sl == null || sl.isEmpty())
 		{
@@ -75,14 +81,17 @@ public class GroupSampleController {
 	@ResponseBody
 	public ResponseEntity<List<SampleProfileDAO>> getSamplesByName(
 			                                                 @RequestParam(required = true) String name,
-                                                             @RequestParam(required = false) Integer limit,
-                                                             @RequestParam(required = false) Integer pagenum
+                                                             @RequestParam(required = false) @ApiParam(value = "Maximum is 10,000") Integer limit,
+                                                             @RequestParam(required = false) @ApiParam(value = "start number is 0.") Integer pagenum
                                                              
                                                              ) {
         if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
         if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
         if(limit == null && pagenum == null) {limit = new Integer(100);pagenum = new Integer(0);}; //Default to first page
 
+        if(limit.intValue() > 10000)
+        {   return new ResponseEntity<List<SampleProfileDAO>>(new ArrayList<SampleProfileDAO>(), HttpStatus.BAD_REQUEST);
+        }
 		List<Sample> sl = service.getSamplesByName(name,limit, pagenum);
 		if(sl == null || sl.isEmpty())
 		{
@@ -102,15 +111,16 @@ public class GroupSampleController {
 	@ApiOperation(value = "Get a list of public sample profile by group name")
 	@GetMapping(path= {"/samples/downloadcsv/group"})
     public void downloadCSV(@RequestParam(required = true) String name,
-                                              @RequestParam(required = false) Integer limit,
-                                              @RequestParam(required = false) Integer pagenum,
+                                              @RequestParam(required = false) @ApiParam(value = "Maximum is 10,000") Integer limit,
+                                              @RequestParam(required = false) @ApiParam(value = "start number is 0.") Integer pagenum,
                                               HttpServletResponse response) throws IOException {
 		response.setContentType("text/csv");
         if(limit != null && pagenum == null) pagenum = new Integer(0); //Default to first page
         if(limit == null && pagenum != null) limit = new Integer(100); //Default to first page
         if(limit == null && pagenum == null) {limit = new Integer(100);pagenum = new Integer(0);}; //Default to first page
         String csvFileName = "data_template.csv";
-     
+
+
         String headerKey = "Content-Disposition";
         String headerValue = String.format("attachment; filename=\"%s\"", csvFileName);
         response.setHeader(headerKey, headerValue);
@@ -130,9 +140,14 @@ public class GroupSampleController {
 		else
 		{
 			csvWriter.writeHeader(header);
-	        for( Sample s: sl)
+	        if(limit.intValue() > 10000)
+	        {   csvWriter.write("error,exceed the maximum 10,000", header); }
+	        else 
 	        {
-	    	    csvWriter.write(s.getDAO(),header);
+	            for( Sample s: sl)
+	            {
+	    	        csvWriter.write(s.getDAO(),header);
+	            }
 	        }
 	        //String rnt=csvWriter.toString();            
 		}

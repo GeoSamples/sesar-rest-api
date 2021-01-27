@@ -53,7 +53,7 @@ public class SesarUserService {
 	}
 	/**
 	 * Get new user count by year since SESAR inception.
-	 * @return new user count by year and month.
+	 * @return new user count by year.
 	 */
 	public LinkedHashMap<String, String> getNewUserCountByYear() {
 	LinkedHashMap<String, String> b = new LinkedHashMap<String, String>();
@@ -78,7 +78,7 @@ public class SesarUserService {
 	
 	/**
 	 * Get active user count by year since SESAR inception.
-	 * @return new user count by year and month.
+	 * @return active user count by year.
 	 */
 	public LinkedHashMap<String, String> getActiveUserCountByYear() {
 	LinkedHashMap<String, String> b = new LinkedHashMap<String, String>();
@@ -104,7 +104,7 @@ public class SesarUserService {
 	
 	/**
 	 * Get active user count by month since SESAR inception.
-	 * @return new user count by month and month.
+	 * @return active user count by year and month.
 	 */
 	public LinkedHashMap<String, String> getActiveUserCountByMonth() {
 	LinkedHashMap<String, String> b = new LinkedHashMap<String, String>();
@@ -126,4 +126,28 @@ public class SesarUserService {
 	    }
 		
 	}
+	
+	/**
+	 * Get registered user count by country since SESAR inception.
+	 * @return registered user count by country.
+	 */
+	public LinkedHashMap<String, String> getRegisteredUserCountByCountry() {
+	LinkedHashMap<String, String> b = new LinkedHashMap<String, String>();
+		
+		try {
+		    List<Object[]> aa = repo.getUserCountByCountry();
+		    for(Object[] oneb : aa)
+		    {
+		        String s= (String) oneb[0];
+		    	String c = oneb[1].toString();
+		    	b.put(s, c);
+		    } 
+		    return b;
+	    } catch(Exception e) {
+			b.put("error:"+e.getMessage(), "-1");
+			return b;
+	    }
+		
+	}
+	
 }

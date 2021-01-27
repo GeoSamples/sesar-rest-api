@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>org.earthchem</groupId>
 	<artifactId>sesar-rest-api</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<packaging>war</packaging>
 	<name>sesar-rest-api</name>
 	<description>SESAR REST API</description>
@@ -21,7 +21,7 @@
 		<docker.image.prefix>earthchemrepo</docker.image.prefix>
 		-->
 		<!--  Level 1 REST API -->
-		<docker.image.prefix>earthchemdockerhub</docker.image.prefix>
+		<docker.image.prefix>earthchemdocker</docker.image.prefix>
 		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -144,7 +144,7 @@
                </execution>
              </executions>
              <configuration>
-               <repository>${docker.image.prefix}/${project.artifactId}</repository>
+               <repository>${docker.image.prefix}/${project.name}</repository>
                  <tag>${project.version}</tag>
                  <buildArgs>
                    <JAR_FILE>${project.artifactId}.${project.version}.war</JAR_FILE>

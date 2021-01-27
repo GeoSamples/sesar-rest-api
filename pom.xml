@@ -12,7 +12,7 @@
 	<artifactId>sesar-rest-api</artifactId>
 	<version>0.0.5</version>
 	<packaging>war</packaging>
-	<name>sesar-rest-api-test</name>
+	<name>sesar-rest-api</name>
 	<description>SESAR REST API</description>
 
 	<properties>

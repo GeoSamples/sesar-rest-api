@@ -12,11 +12,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
+
 import org.earthchem.sesarrestapi.model.Sample;
 import org.earthchem.sesarrestapi.repository.SampleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
 
 /**
@@ -279,6 +279,35 @@ public class SampleService {
 	 * Get published top level parent IGSNs with last update date.
 	 * @return IGSNs with last update date.
 	 */
+	public HashMap<String, ArrayList<String>> getAllPublishedRootIGSNWithLastUpdate(Integer limit,Integer pagenum)
+	{
+		List<Object[]> igsn_types = repo.getAllPublishedRootIGSNWithLastUpdate(PageRequest.of(pagenum,limit));		
+		HashMap<String, ArrayList<String>> l = new HashMap<String, ArrayList<String>>();
+		String currKey="";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		for (Object[] entry : igsn_types)
+		{
+			currKey = (String) entry[0];
+		    if(l.containsKey(currKey)) //Exists Key
+		    {
+		    	Timestamp t = (Timestamp) entry[1];
+		    	l.get(currKey).add( formatter.format( t.toLocalDateTime() ));
+		    }
+		    else
+		    {
+		    	ArrayList<String> a = new ArrayList<String>();
+		    	Timestamp t = (Timestamp) entry[1];
+                a.add( formatter.format( t.toLocalDateTime() ));
+		    	l.put(currKey, a);
+		    }		    	
+		}
+	    return l;
+	}	
+	
+	/**
+	 * Get published IGSNs with last update date.
+	 * @return IGSNs with last update date.
+	 */
 	public HashMap<String, ArrayList<String>> getAllPublishedIGSNWithLastUpdate(Integer limit,Integer pagenum)
 	{
 		List<Object[]> igsn_types = repo.getAllPublishedIGSNWithLastUpdate(PageRequest.of(pagenum,limit));		
@@ -303,6 +332,7 @@ public class SampleService {
 		}
 	    return l;
 	}
+	
 	
 	/**
 	 * Get IGSN according sample name and user code

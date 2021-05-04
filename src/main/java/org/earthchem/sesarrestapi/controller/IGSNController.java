@@ -184,6 +184,23 @@ public class IGSNController {
     @ApiOperation(value = "Get published top level IGSNs with last update date. It is paginated.")
     @GetMapping(path="/rootigsns/lastupdatedate", produces = MediaType.APPLICATION_JSON_VALUE)  
     @ResponseBody
+    public ResponseEntity<HashMap<String, ArrayList<String>> > getAllPublishedRootIGSNWithLastUpdate(@RequestParam(required = true) @ApiParam(value = "Number of IGSNs each page, maximum is 50000.") Integer limit,
+    		                                                                        @RequestParam(required = true) @ApiParam(value = "Start with 0.")  Integer pagenum
+    		                                                                       ) 
+    {  
+        if(limit.intValue() > 50000)
+        {   HashMap<String, ArrayList<String>> l = new HashMap<String, ArrayList<String>>();
+            ArrayList<String> a = new ArrayList<String>();
+            l.put("Error:Exceed the maximum 50000 of limit", a);
+        	return new ResponseEntity<HashMap<String, ArrayList<String>>>(l, HttpStatus.BAD_REQUEST);
+        }
+    	HashMap<String, ArrayList<String>> l = service.getAllPublishedRootIGSNWithLastUpdate(limit,pagenum);      
+	    return new ResponseEntity<HashMap<String, ArrayList<String>> >(l, HttpStatus.OK);
+    }
+    
+    @ApiOperation(value = "Get published IGSNs with last update date. It is paginated.")
+    @GetMapping(path="/igsns/lastupdatedate", produces = MediaType.APPLICATION_JSON_VALUE)  
+    @ResponseBody
     public ResponseEntity<HashMap<String, ArrayList<String>> > getAllPublishedIGSNWithLastUpdate(@RequestParam(required = true) @ApiParam(value = "Number of IGSNs each page, maximum is 50000.") Integer limit,
     		                                                                        @RequestParam(required = true) @ApiParam(value = "Start with 0.")  Integer pagenum
     		                                                                       ) 

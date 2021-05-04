@@ -2,7 +2,6 @@ package org.earthchem.sesarrestapi.repository;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.earthchem.sesarrestapi.model.Sample;
@@ -63,16 +62,19 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	@Query("SELECT e from Sample e where lower(e.name) like CONCAT('%',lower(?1),'%')")
 	public  List<Sample> getBySampleName(@Param("name") String name);
 
-	@Query("SELECT e.sampleType3.name, e.igsn from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) order by e.sampleType3.name")
+	@Query("SELECT e.sampleType3.name, e.igsn from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) order by e.igsn")
 	public  List<Object[]> getAllPublishedIGSNs(Pageable pageable);	
 
-	@Query("SELECT e.igsn,e.lastUpdateDate from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) order by e.sampleType3.name")
+	@Query("SELECT e.igsn,e.lastUpdateDate from Sample e where e.sample is not null and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) order by e.igsn")
+	public  List<Object[]> getAllPublishedRootIGSNWithLastUpdate(Pageable pageable);
+
+	@Query("SELECT e.igsn,e.lastUpdateDate from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) order by e.igsn")
 	public  List<Object[]> getAllPublishedIGSNWithLastUpdate(Pageable pageable);
 	
 	@Query("SELECT count(e.igsn) from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) ")
 	public Integer getAllPublishedIGSNTotalNumber();	
 
-	@Query("SELECT e.sampleType3.name, e.igsn from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) and e.sample is null order by e.sampleType3.name")
+	@Query("SELECT e.sampleType3.name, e.igsn from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) and e.sample is null order by e.igsn")
 	public  List<Object[]> getAllPublishedParentIGSNs(Pageable pageable);
 	
 	@Query("SELECT count(e.igsn) from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) and e.sample is null ")

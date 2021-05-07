@@ -1,9 +1,11 @@
 version: '3'
 services:
   sesar:
-    image: earthchemdocker/sesar-rest-api:0.0.6
-    container_name: sesar-rest-api-0.0.6
+    image: earthchemdocker/sesar-rest-api:0.0.7
+    container_name: sesar-rest-api-0.0.7
     ports:
      - "8080:8080"
     volumes:
      - $PWD:/tmp
+    environment:
+     - JAVA_OPTS=-Xmx4g -Xms4g -XX:MaxPermSize=1024m 

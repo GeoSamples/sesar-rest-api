@@ -1,6 +1,6 @@
 {
     "@context": "https://raw.githubusercontent.com/IGSN/igsn-json/master/schema.igsn.org/json/registration/v0.1/context.jsonld",
-    "@id": "https://data.geosamples.org/samples/igsn/DSR000008",
+    "@id": "https://data.geosamples.org/sample/igsn/DSR000008",
     "igsn": "DSR000008",
     "registrant": {
         "name": "IEDA",

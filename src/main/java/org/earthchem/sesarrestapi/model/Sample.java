@@ -1317,7 +1317,7 @@ public class Sample implements Serializable {
 	{
 		SampleIGSNJSONLDDAO obj = new SampleIGSNJSONLDDAO();
 		obj.setIgsn(igsn);
-		obj.setId("https://data.geosamples.org/samples/igsn/"+igsn);
+		obj.setId("https://data.geosamples.org/sample/igsn/"+igsn);
 
 		LinkedHashMap<String,Object> t = new LinkedHashMap<String,Object>();
 		/*

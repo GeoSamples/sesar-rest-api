@@ -35,22 +35,22 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	@Query("SELECT e from Sample e where e.igsn = ?1 ")
 	public  Optional<Sample> getByIGSN(@Param("igsn") String igsn);
 	  
-	@Query("SELECT e.igsn from Sample e where e.sesarUser1.ssoAccountId = ?1 and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")
+	@Query("SELECT e.igsn from Sample e where e.sesarUser1.ssoAccountId = ?1 and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.sampleId ")
 	public List<String> getIGSNsByGeoPassId(@Param("id") Integer id, Pageable pageable);
 	  
-	@Query("SELECT e.igsn from Sample e where lower(e.sesarUser1.geopassId) = lower(?1) and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")
+	@Query("SELECT e.igsn from Sample e where lower(e.sesarUser1.geopassId) = lower(?1) and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.sampleId ")
 	public List<String> getIGSNsByGeoPassUsername(@Param("name") String name, Pageable pageable);
 
-	@Query("SELECT e.igsn from Sample e where lower(e.sesarUserCode.userCode) = lower(?1) and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")
+	@Query("SELECT e.igsn from Sample e where lower(e.sesarUserCode.userCode) = lower(?1) and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.sampleId ")
 	public List<String> getAllIGSNsByUserCode(@Param("user_code") String user_code, Pageable pageable);
 
-	@Query("SELECT e.igsn from Sample e where lower(e.sesarUserCode.userCode) = lower(?1) and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")
+	@Query("SELECT e.igsn from Sample e where lower(e.sesarUserCode.userCode) = lower(?1) and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.sampleId ")
 	public List<String> getPublicIGSNsByUserCode(@Param("user_code") String user_code, Pageable pageable);
 
-	@Query("SELECT e.igsn from Sample e where lower(e.cruiseFieldPrgrm) like CONCAT('%',lower(?1),'%') and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn")
+	@Query("SELECT e.igsn from Sample e where lower(e.cruiseFieldPrgrm) like CONCAT('%',lower(?1),'%') and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.sampleId")
 	public List<String> getAllIGSNsByCruiseFieldProgram(@Param("name") String name, Pageable pageable);
 
-	@Query("SELECT e.igsn from Sample e where lower(e.cruiseFieldPrgrm) like CONCAT('%',lower(?1),'%') and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")
+	@Query("SELECT e.igsn from Sample e where lower(e.cruiseFieldPrgrm) like CONCAT('%',lower(?1),'%') and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.sampleId ")
 	public List<String> getPublicIGSNsByCruiseFieldProgram(@Param("name") String name, Pageable pageable);
 
     @Query("SELECT count(e.igsn) from Sample e where e.sesarUser1.ssoAccountId = ?1 ")
@@ -62,19 +62,19 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	@Query("SELECT e from Sample e where lower(e.name) like CONCAT('%',lower(?1),'%')")
 	public  List<Sample> getBySampleName(@Param("name") String name);
 
-	@Query("SELECT e.sampleType3.name, e.igsn from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) order by e.igsn")
+	@Query("SELECT e.sampleType3.name, e.igsn from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) order by e.sampleId")
 	public  List<Object[]> getAllPublishedIGSNs(Pageable pageable);	
 
-	@Query("SELECT e.igsn,e.lastUpdateDate from Sample e where e.sample is not null and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) order by e.igsn")
+	@Query("SELECT e.igsn,e.lastUpdateDate from Sample e where e.sample is not null and e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) order by e.sampleId")
 	public  List<Object[]> getAllPublishedRootIGSNWithLastUpdate(Pageable pageable);
 
-	@Query("SELECT e.igsn,e.lastUpdateDate from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) order by e.igsn")
+	@Query("SELECT e.igsn,e.lastUpdateDate from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) order by e.sampleId")
 	public  List<Object[]> getAllPublishedIGSNWithLastUpdate(Pageable pageable);
 	
 	@Query("SELECT count(e.igsn) from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) ")
 	public Integer getAllPublishedIGSNTotalNumber();	
 
-	@Query("SELECT e.sampleType3.name, e.igsn from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) and e.sample is null order by e.igsn")
+	@Query("SELECT e.sampleType3.name, e.igsn from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now()) and e.sample is null order by e.sampleId")
 	public  List<Object[]> getAllPublishedParentIGSNs(Pageable pageable);
 	
 	@Query("SELECT count(e.igsn) from Sample e where e.publishDate < now() and ( e.archiveDate is null or e.archiveDate >= now() ) and e.sample is null ")

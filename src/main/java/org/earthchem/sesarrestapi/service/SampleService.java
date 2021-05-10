@@ -18,6 +18,7 @@ import org.earthchem.sesarrestapi.repository.SampleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 
 /**
  * @author song
@@ -49,7 +50,7 @@ public class SampleService {
 	 */
 	public Sample getByIGSN(String name)
 	{
-	    Optional<Sample> al = repo.getByIGSN(name);
+	    Optional<Sample> al = repo.getByIGSN(name.toUpperCase());
 	    return al.get();
 	}
 

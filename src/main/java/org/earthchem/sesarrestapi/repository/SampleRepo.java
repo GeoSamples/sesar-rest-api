@@ -32,7 +32,7 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	@Query("SELECT distinct e.collector from Sample e where (e.archiveDate is null or e.archiveDate >= now()) and e.collector is not null order by e.collector")
 	public List<String> getCollectors();
 
-	@Query("SELECT e from Sample e where lower(e.igsn) = lower( ?1 )")
+	@Query("SELECT e from Sample e where e.igsn = ?1 ")
 	public  Optional<Sample> getByIGSN(@Param("igsn") String igsn);
 	  
 	@Query("SELECT e.igsn from Sample e where e.sesarUser1.ssoAccountId = ?1 and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.igsn ")

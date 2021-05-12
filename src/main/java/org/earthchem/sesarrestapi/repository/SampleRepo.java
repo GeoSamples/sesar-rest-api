@@ -41,10 +41,10 @@ public interface SampleRepo extends CrudRepository<Sample, Integer> {
 	@Query("SELECT e.igsn from Sample e where lower(e.sesarUser1.geopassId) = lower(?1) and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.sampleId ")
 	public List<String> getIGSNsByGeoPassUsername(@Param("name") String name, Pageable pageable);
 
-	@Query("SELECT e.igsn from Sample e where lower(e.sesarUserCode.userCode) = lower(?1) and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.sampleId ")
+	@Query("SELECT e.igsn from Sample e where e.sesarUserCode.userCode = ?1 and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.sampleId ")
 	public List<String> getAllIGSNsByUserCode(@Param("user_code") String user_code, Pageable pageable);
 
-	@Query("SELECT e.igsn from Sample e where lower(e.sesarUserCode.userCode) = lower(?1) and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.sampleId ")
+	@Query("SELECT e.igsn from Sample e where e.sesarUserCode.userCode = ?1 and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.sampleId ")
 	public List<String> getPublicIGSNsByUserCode(@Param("user_code") String user_code, Pageable pageable);
 
 	@Query("SELECT e.igsn from Sample e where lower(e.cruiseFieldPrgrm) like CONCAT('%',lower(?1),'%') and ( e.archiveDate is null or e.archiveDate >= now() ) order by e.sampleId")

@@ -158,9 +158,9 @@ public class SampleService {
 		List<String> rl = new ArrayList<String>();
 
 		if( hidePrivate != null && hidePrivate.intValue() == 1 )
-			rl =  repo.getPublicIGSNsByUserCode(usercode,PageRequest.of(pagenum, limit));
+			rl =  repo.getPublicIGSNsByUserCode(usercode.toUpperCase(),PageRequest.of(pagenum, limit));
 		else
-			rl =  repo.getAllIGSNsByUserCode(usercode,PageRequest.of(pagenum,limit));
+			rl =  repo.getAllIGSNsByUserCode(usercode.toUpperCase(),PageRequest.of(pagenum,limit));
 
 		return rl;
 	}

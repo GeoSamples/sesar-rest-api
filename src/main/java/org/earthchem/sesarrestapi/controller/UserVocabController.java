@@ -22,10 +22,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/v1")
 @Api(value="UserVocab", description="Collected Vocaburaries from User in SESAR",  tags = { "UserVocab" })
+@ApiResponses(value = {
+        @ApiResponse(code = 200, message = "The operation is successfully."),
+        @ApiResponse(code = 401, message = "You are not authorized to access the resource"),
+        @ApiResponse(code = 403, message = "You try to access the forbidden resource."),
+        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+}
+)
 public class UserVocabController {
 	@Autowired
 	private SampleService service;

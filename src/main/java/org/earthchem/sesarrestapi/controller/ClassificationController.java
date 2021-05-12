@@ -18,11 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 //@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/v1/vocabularies")
 @Api(value="Classification", description="Classifications from SESAR",  tags = { "Classification" })
+@ApiResponses(value = {
+        @ApiResponse(code = 200, message = "The operation is successfully."),
+        @ApiResponse(code = 401, message = "You are not authorized to access the resource"),
+        @ApiResponse(code = 403, message = "You try to access the forbidden resource."),
+        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+}
+)
 public class ClassificationController {
 
 	@Autowired

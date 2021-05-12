@@ -61,29 +61,14 @@ public class SampleController {
 			    produces={"application/json", "application/xml"})  
 	@ResponseBody
 	public ResponseEntity<SampleProfileDAO> get(@PathVariable Integer id) {
-		StopWatch sw = new StopWatch();
-		sw.start("Method-1"); // Start a named task
-		   
-	
-		 
 		Sample s = service.get(id);
-		  sw.stop();
-		  System.out.println("Total time in milliseconds for all tasks :\n"+sw.getTotalTimeMillis());
-			  
 		if(s == null )
 		{
 			return new ResponseEntity<SampleProfileDAO>(new SampleProfileDAO(), HttpStatus.NOT_FOUND);		
 		}
-		 StopWatch sw1 = new StopWatch();
-		   sw1.start("Method-1"); // Start a named task
-		   
 	     
 		SampleProfileDAO sp = s.getDAO();
 		
-	    sw1.stop();
-					System.out.println("Total getDAO convert time :\n"+sw1.getTotalTimeMillis());
-			
-					
 		return new ResponseEntity<SampleProfileDAO>(sp, HttpStatus.OK);
 	}
 	
@@ -143,29 +128,15 @@ public class SampleController {
 	@GetMapping(path="/sample/igsn-ev-json-ld/igsn/{igsn}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<SampleIGSNJSONLDDAO> getIGSNEVJSONLDByIGSN(@PathVariable String igsn) {
-		StopWatch sw = new StopWatch();
-		sw.start("Method-1"); // Start a named task
-		   
-	
+
 		   Sample sobj = service.getByIGSN(igsn);
-		   
-			sw.stop();
-			System.out.println("Total time in milliseconds for all tasks :\n"+sw.getTotalTimeMillis());
-	
 		   if(sobj==null)
 		   {
 			   return new ResponseEntity<SampleIGSNJSONLDDAO>(new SampleIGSNJSONLDDAO(), HttpStatus.NOT_FOUND);
 		   }
 		   else
 		   {
-			   StopWatch sw1 = new StopWatch();
-			   sw1.start("Method-1"); // Start a named task
-			   
 		     SampleIGSNJSONLDDAO obj = sobj.getIGSNJSONLDDAO();
-		     
-		     sw1.stop();
-				System.out.println("Total JSONLD convert time :\n"+sw1.getTotalTimeMillis());
-		
 		     
 		     return new ResponseEntity<SampleIGSNJSONLDDAO>(obj, HttpStatus.OK);
 		   }

@@ -20,6 +20,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,14 @@ import io.swagger.annotations.ApiResponses;
 //@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/v1")
 @Api(value="Sample", description="Sample Metadata from SESAR",  tags = { "Sample" })
+@ApiResponses(value = {
+        @ApiResponse(code = 200, message = "The operation is successfully."),
+        @ApiResponse(code = 401, message = "You are not authorized to access the resource"),
+        @ApiResponse(code = 403, message = "You try to access the forbidden resource."),
+        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+}
+)
 public class SampleController {
 
 	@Autowired
@@ -51,13 +60,30 @@ public class SampleController {
 	            headers ={"Accept=application/json,application/xml"},
 			    produces={"application/json", "application/xml"})  
 	@ResponseBody
-	public ResponseEntity<SampleProfileDAO> get(@PathVariable Integer id) {      
+	public ResponseEntity<SampleProfileDAO> get(@PathVariable Integer id) {
+		StopWatch sw = new StopWatch();
+		sw.start("Method-1"); // Start a named task
+		   
+	
+		 
 		Sample s = service.get(id);
+		  sw.stop();
+		  System.out.println("Total time in milliseconds for all tasks :\n"+sw.getTotalTimeMillis());
+			  
 		if(s == null )
 		{
 			return new ResponseEntity<SampleProfileDAO>(new SampleProfileDAO(), HttpStatus.NOT_FOUND);		
 		}
+		 StopWatch sw1 = new StopWatch();
+		   sw1.start("Method-1"); // Start a named task
+		   
+	     
 		SampleProfileDAO sp = s.getDAO();
+		
+	    sw1.stop();
+					System.out.println("Total getDAO convert time :\n"+sw1.getTotalTimeMillis());
+			
+					
 		return new ResponseEntity<SampleProfileDAO>(sp, HttpStatus.OK);
 	}
 	
@@ -98,13 +124,6 @@ public class SampleController {
 
 
 	@ApiOperation(value = "Get Sample JSON-LD content by igsn.")
-	@ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrive the content."),
-            @ApiResponse(code = 401, message = "You are not authorized to access the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-    }
-    )
 	@GetMapping(path="/sample/json-ld/igsn/{igsn}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<SampleJSONLDDAO> getJSONLDByIGSN(@PathVariable String igsn) {
@@ -121,24 +140,33 @@ public class SampleController {
 	}
 		
 	@ApiOperation(value = "Get Sample IGSN-ev JSON-LD content by igsn.")
-	@ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrive the content."),
-            @ApiResponse(code = 401, message = "You are not authorized to access the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-    }
-    )
 	@GetMapping(path="/sample/igsn-ev-json-ld/igsn/{igsn}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<SampleIGSNJSONLDDAO> getIGSNEVJSONLDByIGSN(@PathVariable String igsn) {
+		StopWatch sw = new StopWatch();
+		sw.start("Method-1"); // Start a named task
+		   
+	
 		   Sample sobj = service.getByIGSN(igsn);
+		   
+			sw.stop();
+			System.out.println("Total time in milliseconds for all tasks :\n"+sw.getTotalTimeMillis());
+	
 		   if(sobj==null)
 		   {
 			   return new ResponseEntity<SampleIGSNJSONLDDAO>(new SampleIGSNJSONLDDAO(), HttpStatus.NOT_FOUND);
 		   }
 		   else
 		   {
-		     SampleIGSNJSONLDDAO obj = sobj.getIGSNJSONLDDAO();		   
+			   StopWatch sw1 = new StopWatch();
+			   sw1.start("Method-1"); // Start a named task
+			   
+		     SampleIGSNJSONLDDAO obj = sobj.getIGSNJSONLDDAO();
+		     
+		     sw1.stop();
+				System.out.println("Total JSONLD convert time :\n"+sw1.getTotalTimeMillis());
+		
+		     
 		     return new ResponseEntity<SampleIGSNJSONLDDAO>(obj, HttpStatus.OK);
 		   }
 	}

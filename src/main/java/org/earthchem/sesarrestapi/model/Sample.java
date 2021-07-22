@@ -34,9 +34,6 @@ import org.earthchem.sesarrestapi.dao.SamplePublicationUrlDAO;
 import org.earthchem.sesarrestapi.dao.SampleSupplementData;
 import org.postgresql.geometric.PGpoint;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-
 /**
  * The persistent class for the sample database table. 
    */
@@ -1313,6 +1310,7 @@ public class Sample implements Serializable {
 		return a;
 	}
 
+	/** IGSN-ev JSON-LD */
 	public SampleIGSNJSONLDDAO getIGSNJSONLDDAO()
 	{
 		SampleIGSNJSONLDDAO obj = new SampleIGSNJSONLDDAO();
@@ -1438,17 +1436,21 @@ public class Sample implements Serializable {
 		HashMap<String, Object> spc= new HashMap<String, Object>();
 		spc.put("@type", "Place");
 		ArrayList<HashMap<String, String>> geos = new ArrayList<HashMap<String, String>>();
-		NumberFormat formatter = new DecimalFormat("#0.0000");
+		NumberFormat formatter = new DecimalFormat("#0.000000");
 		if(latitudeEnd != null && longitudeEnd !=null)
 		{
 			HashMap<String, String> me = new HashMap<String, String>();
-			me.put("@type", "GeoSpace");
+			me.put("@type", "GeoShape");
 
 			String lat = formatter.format(latitude);
 			String lon = formatter.format(longitude);
 			String lat2 = formatter.format(latitudeEnd);
 			String lon2 = formatter.format(longitudeEnd);
-			me.put("MultiplePoints", lat+" "+lon+","+lat2+" "+lon2);
+			me.put("Line", lat+" "+lon+","+lat2+" "+lon2);
+			if(elevation != null)
+			{
+			  me.put("elevation", formatter.format(elevation)+elevationUnit);
+			}
 			geos.add(me);
 		}
 		else if(latitude != null && longitude !=null)
@@ -1460,6 +1462,10 @@ public class Sample implements Serializable {
 			String lon = formatter.format(longitude);
 			me.put("latitude", lat);
 			me.put("longitude", lon);
+			if(elevation != null)
+			{
+			  me.put("elevation", formatter.format(elevation)+elevationUnit);
+			}
 			geos.add(me);
 		}
 		if(geos.size() !=0 )
@@ -1728,17 +1734,21 @@ public class Sample implements Serializable {
 		HashMap<String, Object> spc= new HashMap<String, Object>();
 		spc.put("@type", "Place");
 		ArrayList<HashMap<String, String>> geos = new ArrayList<HashMap<String, String>>();
-		NumberFormat formatter = new DecimalFormat("#0.0000");
+		NumberFormat formatter = new DecimalFormat("#0.000000");
 		if(latitudeEnd != null && longitudeEnd !=null)
 		{
 			HashMap<String, String> me = new HashMap<String, String>();
-			me.put("@type", "GeoSpace");
+			me.put("@type", "GeoShape");
 			
 			String lat = formatter.format(latitude);
 			String lon = formatter.format(longitude);
 			String lat2 = formatter.format(latitudeEnd);
 			String lon2 = formatter.format(longitudeEnd);
 			me.put("Line", lat+" "+lon+","+lat2+" "+lon2);
+			if(elevation != null)
+			{
+			  me.put("elevation", formatter.format(elevation)+elevationUnit);
+			}
 			geos.add(me);
 		}
 		else if(latitude != null && longitude !=null)
@@ -1750,6 +1760,10 @@ public class Sample implements Serializable {
 			String lon = formatter.format(longitude);
 			me.put("latitude", lat);
 			me.put("longitude", lon);
+			if(elevation != null)
+			{
+			  me.put("elevation", formatter.format(elevation)+elevationUnit);
+			}
 			geos.add(me);
 		}
 		if(geos.size() !=0 )

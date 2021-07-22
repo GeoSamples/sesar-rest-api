@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SampleRepo extends CrudRepository<Sample, Integer> {
+	@Query("SELECT CASE WHEN COUNT(u) > 0 THEN 'true' ELSE 'false' END FROM Sample u WHERE u.igsn = ?1")
+    public Boolean existsByIGSN(String igsn);
 	
     @Query("SELECT distinct e.collectionMethod from Sample e  where (e.archiveDate is null or e.archiveDate >= now()) and e.collectionMethod is not null order by e.collectionMethod")
 	public List<String> getCollectionMethods();

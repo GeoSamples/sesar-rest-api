@@ -50,8 +50,12 @@ public class SampleService {
 	 */
 	public Sample getByIGSN(String name)
 	{
-	    Optional<Sample> al = repo.getByIGSN(name.toUpperCase());
-	    return al.get();
+		if(repo.existsByIGSN(name) == true)
+		{
+	      Optional<Sample> al = repo.getByIGSN(name.toUpperCase());
+	      return al.get();
+		}
+		return null;
 	}
 
 	/**

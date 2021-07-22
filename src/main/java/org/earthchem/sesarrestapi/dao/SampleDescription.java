@@ -2,12 +2,9 @@ package org.earthchem.sesarrestapi.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 
 /**
  * The IGSN-ev JSON-LD Sample Description Block Content for sample profile.
@@ -40,7 +37,7 @@ public class SampleDescription {
 
 		private String description;
 
-		@JsonProperty("geoLocation")
+		@JsonProperty("spatialCoverage")
 		private HashMap<String, Object> geolocation;
         
 		@JsonProperty("sampleName")

@@ -1449,7 +1449,7 @@ public class Sample implements Serializable {
 			me.put("Line", lat+" "+lon+","+lat2+" "+lon2);
 			if(elevation != null)
 			{
-			  me.put("elevation", formatter.format(elevation)+elevationUnit);
+			  me.put("elevation", formatter.format(elevation)+' '+elevationUnit);
 			}
 			geos.add(me);
 		}
@@ -1464,7 +1464,7 @@ public class Sample implements Serializable {
 			me.put("longitude", lon);
 			if(elevation != null)
 			{
-			  me.put("elevation", formatter.format(elevation)+elevationUnit);
+			  me.put("elevation", formatter.format(elevation)+' '+elevationUnit);
 			}
 			geos.add(me);
 		}
@@ -1747,7 +1747,7 @@ public class Sample implements Serializable {
 			me.put("Line", lat+" "+lon+","+lat2+" "+lon2);
 			if(elevation != null)
 			{
-			  me.put("elevation", formatter.format(elevation)+elevationUnit);
+			  me.put("elevation", formatter.format(elevation)+' '+elevationUnit);
 			}
 			geos.add(me);
 		}
@@ -1762,7 +1762,7 @@ public class Sample implements Serializable {
 			me.put("longitude", lon);
 			if(elevation != null)
 			{
-			  me.put("elevation", formatter.format(elevation)+elevationUnit);
+			  me.put("elevation", formatter.format(elevation)+' '+elevationUnit);
 			}
 			geos.add(me);
 		}
@@ -1780,7 +1780,7 @@ public class Sample implements Serializable {
 			String idtype = exid.getUrlType();
 			String idvalue= exid.getDescription();
 			String url = exid.getUrl();
-			Identifier idf = new Identifier(idtype, url+idvalue, idvalue);
+			Identifier idf = new Identifier(idtype, url, idvalue);
 			exids.add(idf);
 		}
 		if(exids.size() !=0 )

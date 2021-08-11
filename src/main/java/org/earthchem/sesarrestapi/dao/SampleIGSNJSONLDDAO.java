@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
- * The IGSN-ev JSON-LD Content for sample profile
+ * The IGSN-ev JSON-LD Content for sample profile. See https://github.com/IGSN/igsn-json for more details.
  */
 @JsonPropertyOrder({ "context", "id", "title", "type", "igsn", "registrant","log", "description"})
 @JsonInclude(JsonInclude.Include.NON_NULL)

@@ -124,7 +124,7 @@ public class SampleController {
 		   }
 	}
 		
-	@ApiOperation(value = "Get Sample IGSN-ev JSON-LD content by igsn.")
+	@ApiOperation(value = "Get Sample IGSN-ev JSON-LD content by igsn. See <a href='https://github.com/IGSN/igsn-json'> here </a> for more details.")
 	@GetMapping(path="/sample/igsn-ev-json-ld/igsn/{igsn}", produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
 	public ResponseEntity<SampleIGSNJSONLDDAO> getIGSNEVJSONLDByIGSN(@PathVariable String igsn) {

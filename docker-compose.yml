@@ -1,8 +1,8 @@
 version: '3'
 services:
   sesar:
-    image: earthchemdocker/sesar-rest-api:0.0.9
-    container_name: sesar-rest-api-0.0.8
+    image: earthchemdocker/sesar-rest-api:1.0.0
+    container_name: sesar-rest-api-1.0.0
     ports:
      - "8080:8080"
     volumes:

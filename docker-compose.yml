@@ -1,6 +1,6 @@
 version: '3'
 services:
-  sesar:
+  sesar-rest-api:
     image: earthchemdocker/sesar-rest-api:1.0.0
     container_name: sesar-rest-api-1.0.0
     ports:

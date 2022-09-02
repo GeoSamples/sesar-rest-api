@@ -3,7 +3,7 @@ on:
   push:
     branches:
       # Change this to your branch to deploy your changes to Fargate
-      - docker-build-configuration
+      - master
 
 jobs:
   build_publish_development:

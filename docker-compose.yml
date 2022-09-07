@@ -4,7 +4,7 @@ services:
     image: earthchemdocker/sesar-rest-api:1.0.0
     container_name: sesar-rest-api-1.0.0
     ports:
-     - "8080:80"
+     - "80:80"
     volumes:
      - $PWD:/tmp
     environment:

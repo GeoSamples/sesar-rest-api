@@ -40,3 +40,4 @@ jobs:
           push: true
           tags: |
             ${{ steps.login-ecr.outputs.registry }}/${{ inputs.APPLICATION }}:${{ env.SHA }}
+         

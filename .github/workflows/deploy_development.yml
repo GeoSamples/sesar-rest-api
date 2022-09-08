@@ -1,0 +1,27 @@
+name: deploy_development
+on:
+  push:
+    branches:
+      # Change this to your branch to deploy your changes to Fargate
+      - master
+
+jobs:
+  build_publish_development:
+    uses: ./.github/workflows/build_publish.yml
+    with:
+      APPLICATION: sesar-rest-api
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.SESAR_AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.SESAR_AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.SESAR_AWS_REGION }}
+  deploy_ecs_development:
+    needs: [build_publish_development]
+    uses: ./.github/workflows/deploy_ecs.yml
+    with:
+      APPLICATION: sesar-rest-api
+      ENVIRONMENT: production
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.SESAR_AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.SESAR_AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.SESAR_AWS_REGION }}
+     

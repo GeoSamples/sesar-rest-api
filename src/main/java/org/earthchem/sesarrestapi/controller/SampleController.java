@@ -73,12 +73,18 @@ public class SampleController {
 	}
 	
 	@ApiOperation(value = "Get sample profile by igsn")
-	@GetMapping(path="/sample/igsn/{igsn}", 
+	@GetMapping(path={"/sample/igsn/{igsn}", "/sample/igsn/{prefix}/{igsn}"}, 
                 headers ={"Accept=application/json,application/xml"},
 		        produces={"application/json", "application/xml"})  
 	@ResponseBody
-	public ResponseEntity<SampleProfileDAO> getByIGSN(@PathVariable String igsn) {
-		Sample s = service.getByIGSN(igsn);
+	public ResponseEntity<SampleProfileDAO> getByIGSN(@PathVariable (required = false) String prefix, @PathVariable String igsn) {
+		String fullIgsn = null;
+		if (prefix != null) {
+			fullIgsn = prefix + "/" + igsn;
+		} else {
+			fullIgsn = igsn;
+		}
+		Sample s = service.getByIGSN(fullIgsn);
 		if(s == null )
 		{
 			return new ResponseEntity<SampleProfileDAO>(new SampleProfileDAO(), HttpStatus.NOT_FOUND);		
@@ -109,36 +115,47 @@ public class SampleController {
 
 
 	@ApiOperation(value = "Get Sample JSON-LD content by igsn.")
-	@GetMapping(path="/sample/json-ld/igsn/{igsn}", produces = MediaType.APPLICATION_JSON_VALUE)  
+	@GetMapping(path={"/sample/json-ld/igsn/{igsn}", "/sample/json-ld/igsn/{prefix}/{igsn}"}, produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
-	public ResponseEntity<SampleJSONLDDAO> getJSONLDByIGSN(@PathVariable String igsn) {
-		   Sample sobj = service.getByIGSN(igsn);
-		   if(sobj==null)
-		   {
-			   return new ResponseEntity<SampleJSONLDDAO>(new SampleJSONLDDAO(), HttpStatus.NOT_FOUND);
-		   }
-		   else
-		   {
-		     SampleJSONLDDAO obj = sobj.getJSONLDDAO();		   
-		     return new ResponseEntity<SampleJSONLDDAO>(obj, HttpStatus.OK);
-		   }
+	public ResponseEntity<SampleJSONLDDAO> getJSONLDByIGSN(@PathVariable (required = false) String prefix, @PathVariable String igsn) {
+			String fullIgsn = null;
+			if (prefix != null) {
+				fullIgsn = prefix + "/" + igsn;
+			} else {
+				fullIgsn = igsn;
+			}   
+			Sample sobj = service.getByIGSN(fullIgsn);
+			if(sobj==null)
+			{
+				return new ResponseEntity<SampleJSONLDDAO>(new SampleJSONLDDAO(), HttpStatus.NOT_FOUND);
+			}
+			else
+			{
+				SampleJSONLDDAO obj = sobj.getJSONLDDAO();		   
+				return new ResponseEntity<SampleJSONLDDAO>(obj, HttpStatus.OK);
+			}
 	}
 		
 	@ApiOperation(value = "Get Sample IGSN-ev JSON-LD content by igsn. See <a href='https://github.com/IGSN/igsn-json'> here </a> for more details.")
-	@GetMapping(path="/sample/igsn-ev-json-ld/igsn/{igsn}", produces = MediaType.APPLICATION_JSON_VALUE)  
+	@GetMapping(path={"/sample/igsn-ev-json-ld/igsn/{igsn}", "/sample/igsn-ev-json-ld/igsn/{prefix}/{igsn}"}, produces = MediaType.APPLICATION_JSON_VALUE)  
 	@ResponseBody
-	public ResponseEntity<SampleIGSNJSONLDDAO> getIGSNEVJSONLDByIGSN(@PathVariable String igsn) {
-
-		   Sample sobj = service.getByIGSN(igsn);
-		   if(sobj==null)
-		   {
-			   return new ResponseEntity<SampleIGSNJSONLDDAO>(new SampleIGSNJSONLDDAO(), HttpStatus.NOT_FOUND);
-		   }
-		   else
-		   {
-		     SampleIGSNJSONLDDAO obj = sobj.getIGSNJSONLDDAO();
-		     
-		     return new ResponseEntity<SampleIGSNJSONLDDAO>(obj, HttpStatus.OK);
-		   }
+	public ResponseEntity<SampleIGSNJSONLDDAO> getIGSNEVJSONLDByIGSN(@PathVariable (required = false) String prefix, @PathVariable String igsn) {
+			String fullIgsn = null;
+			if (prefix != null) {
+				fullIgsn = prefix + "/" + igsn;
+			} else {
+				fullIgsn = igsn;
+			}
+			Sample sobj = service.getByIGSN(fullIgsn);
+			if(sobj==null)
+			{
+				return new ResponseEntity<SampleIGSNJSONLDDAO>(new SampleIGSNJSONLDDAO(), HttpStatus.NOT_FOUND);
+			}
+			else
+			{
+				SampleIGSNJSONLDDAO obj = sobj.getIGSNJSONLDDAO();
+				
+				return new ResponseEntity<SampleIGSNJSONLDDAO>(obj, HttpStatus.OK);
+			}
 	}
 }

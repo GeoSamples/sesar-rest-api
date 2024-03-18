@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "https://www.geosamples.org")
 @RequestMapping("/v1")
 @Api(value="Statistics", description="SESAR Statistics API",  tags = { "Statistics" })
 @ApiResponses(value = {

@@ -16,17 +16,17 @@ import javax.persistence.Table;
 
 
 /**
- * The persistent class for the sesar_user_code_role database table.
+ * The persistent class for the sample_permission database table.
  * 
  */
 @Entity
-@Table(name="sesar_user_code_role")
+@Table(name="sample_permission")
 @NamedQuery(name="SesarUserCodeRole.findAll", query="SELECT s FROM SesarUserCodeRole s")
 public class SesarUserCodeRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="sesar_user_code_role_id")
+	@Column(name="id")
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sesar_user_code_role_seq")	
 	@SequenceGenerator(name = "sesar_user_code_role_seq", sequenceName = "sesar_user_code_role_sesar_user_code_role_id_seq",allocationSize=1)
 	private Integer sesarUserCodeRoleId;

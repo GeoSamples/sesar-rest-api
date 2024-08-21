@@ -16,11 +16,11 @@ import javax.persistence.Table;
 
 
 /**
- * The persistent class for the sample_permission database table.
+ * The persistent class for the permission database table.
  * 
  */
 @Entity
-@Table(name="sample_permission")
+@Table(name="permission")
 @NamedQuery(name="SesarUserCodeRole.findAll", query="SELECT s FROM SesarUserCodeRole s")
 public class SesarUserCodeRole implements Serializable {
 	private static final long serialVersionUID = 1L;

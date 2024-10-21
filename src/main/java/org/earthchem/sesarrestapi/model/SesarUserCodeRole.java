@@ -28,7 +28,7 @@ public class SesarUserCodeRole implements Serializable {
 	@Id
 	@Column(name="id")
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sesar_user_code_role_seq")	
-	@SequenceGenerator(name = "sesar_user_code_role_seq", sequenceName = "sesar_user_code_role_sesar_user_code_role_id_seq",allocationSize=1)
+	@SequenceGenerator(name = "sesar_user_code_role_seq", sequenceName = "permission_id_seq",allocationSize=1)
 	private Integer sesarUserCodeRoleId;
 
 	@Column(name="activate_date")

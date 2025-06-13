@@ -1,4 +1,11 @@
    [![NSF-1948806](https://img.shields.io/badge/NSF-1928366-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1948806)
+
+# ⚠️ Deprecation Notice
+
+**This repository is no longer maintained and is now deprecated.**
+
+> **Status:** Deprecated  
+
 ## SESAR REST API
    SESAR: the System for Earth Sample Registration
    
